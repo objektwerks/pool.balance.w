@@ -7,6 +7,7 @@ import com.raquo.waypoint.*
 import com.github.plokhotnyuk.jsoniter_scala.core.*
 import com.github.plokhotnyuk.jsoniter_scala.macros.*
 
+import Page.given
 import Serializer.given
 
 object PageRouter:
@@ -16,8 +17,8 @@ object PageRouter:
 
   val router = com.raquo.waypoint.Router[Page](
     routes = routes,
-    serializePage = page => write(page)(pageRW),
-    deserializePage = pageAsString => read(pageAsString)(pageRW),
+    serializePage = page => writeToString(page),
+    deserializePage = pageAsString => readFromString(pageAsString),
     getPageTitle = _.title,
   )(
     $popStateEvent = L.windowEvents.onPopState,
