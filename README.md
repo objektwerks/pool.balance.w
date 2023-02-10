@@ -2,6 +2,12 @@ Pool Balance ( Web Edition )
 ----------------
 >***WIP*** Pool cleaning, measurement and chemical balancing distributed web app using ScalaJs, Scala3 and PostgreSql.
 
+Install
+-------
+1. brew install node
+2. npm install ( in project root directory )
+>See **package.json** for installable dependencies.
+
 Build
 -----
 1. sbt clean compile
