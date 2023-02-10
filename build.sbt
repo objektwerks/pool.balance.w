@@ -28,6 +28,7 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .settings(
     libraryDependencies ++= Seq(
       "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core" % jsoniterVersion,
+      "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-macros" % jsoniterVersion % Provided,
       "io.github.cquiroz" %% "scala-java-time" % scalaJavaTimeVersion,
       "org.scalatest" %% "scalatest" % scalaTestVersion % Test
     )
