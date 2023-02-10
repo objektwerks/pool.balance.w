@@ -14,17 +14,14 @@ Build
 2. sbt clean compile fastLinkJS
 >See **js/target/public** directory.
 
-Test
-----
-1. sbt clean test
-
-Server Run
-----------
-1. sbt server/run
-
-Client Run
-----------
-1. sbt client/run
+Dev
+---
+1. sbt jvm/run ( new session, curl -v http://localhost:7272/now )
+2. sbt ( new session )
+3. ~ js/fastLinkJS
+4. npx snowpack dev ( new session )
+>Edits are reflected in the **fastLinkJS** and **snowpack** sessions.
+>See **snowpack.config.json** and [Snowpack Config](https://www.snowpack.dev/reference/configuration) for configurable options.
 
 Package Server
 --------------
