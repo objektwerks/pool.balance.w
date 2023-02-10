@@ -20,22 +20,23 @@ lazy val poolbalance = (project in file("."))
     publishLocal := {}
   )
 
-lazy val client = project
-  .dependsOn(shared)
+lazy val sharedJs = shared.js
+lazy val sharedJvm = shared.jvm
+lazy val public = "public"
+
+lazy val client = (project in file("client"))
+  .dependsOn(sharedJs)
+  .enablePlugins(ScalaJSPlugin)
   .settings(common)
   .settings(
-    libraryDependencies ++= {
-      Seq(
-        "org.scalafx" %% "scalafx" % "19.0.0-R30",
-        "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5",
-        "ch.qos.logback" % "logback-classic" % "1.4.5"
-      )
-    }
-  )
-  .settings(
-    libraryDependencies ++= Seq("base", "controls", "web").map( jfxModule =>
-      "org.openjfx" % s"javafx-$jfxModule" % "19" classifier OS
-    )
+    libraryDependencies ++= Seq(
+      "com.raquo" %%% "laminar" % laminarVersion,
+      "com.raquo" %%% "waypoint" % waypointVersion,
+      "com.lihaoyi" %%% "upickle" % upickleVersion,
+      "io.github.cquiroz" %%% "scala-java-time" % scalaJavaTimeVersion
+    ),
+    Compile / fastLinkJS / scalaJSLinkerOutputDirectory := target.value / public,
+    Compile / fullLinkJS / scalaJSLinkerOutputDirectory := target.value / public
   )
 
 lazy val shared = project
