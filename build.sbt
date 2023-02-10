@@ -3,6 +3,7 @@ name := "pool.balance.w"
 lazy val laminarVersion = "0.14.5"
 lazy val waypointVersion = "0.5.0"
 lazy val scalaJavaTimeVersion = "2.5.0"
+lazy val jsoniterVersion = "2.20.7"
 
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
@@ -12,7 +13,7 @@ lazy val common = Defaults.coreDefaultSettings ++ Seq(
 )
 
 lazy val poolbalance = (project in file("."))
-  .aggregate(sharedClient, sharedJvm, client, server)
+  .aggregate(sharedClient, sharedServer, client, server)
   .settings(common)
   .settings(
     publish := {},
@@ -25,36 +26,37 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .settings(common)
   .settings(
     libraryDependencies ++= Seq(
-      "com.lihaoyi" %% "upickle" % upickleVersion,
+      "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core" % jsoniterVersion,
       "io.github.cquiroz" %% "scala-java-time" % scalaJavaTimeVersion,
       "org.scalatest" %% "scalatest" % scalaTestVersion % Test
     )
   )
 
 lazy val sharedClient = shared.js
-lazy val sharedJvm = shared.jvm
+lazy val sharedServer = shared.jvm
 lazy val public = "public"
 
 lazy val client = (project in file("client"))
-  .dependsOn(sharedJs)
+  .dependsOn(sharedClient)
   .enablePlugins(ScalaJSPlugin)
   .settings(common)
   .settings(
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % laminarVersion,
       "com.raquo" %%% "waypoint" % waypointVersion,
-      "com.lihaoyi" %%% "upickle" % upickleVersion,
+      "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core" % jsoniterVersion,
       "io.github.cquiroz" %%% "scala-java-time" % scalaJavaTimeVersion
     ),
     Compile / fastLinkJS / scalaJSLinkerOutputDirectory := target.value / public,
     Compile / fullLinkJS / scalaJSLinkerOutputDirectory := target.value / public
   )
 
-lazy val server = project
+lazy val server = (project in file("server"))
   .enablePlugins(JavaServerAppPackaging)
-  .dependsOn(shared)
+  .dependsOn(sharedServer)
   .settings(common)
   .settings(
+    reStart / mainClass := Some("pool.Server"),
     libraryDependencies ++= {
       Seq(
         "org.scalikejdbc" %% "scalikejdbc" % "4.0.0",
@@ -62,6 +64,7 @@ lazy val server = project
         "org.postgresql" % "postgresql" % "42.5.3",
         "com.github.blemale" %% "scaffeine" % "5.2.1",
         "org.jodd" % "jodd-mail" % "6.0.5",
+        "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core" % jsoniterVersion,
         "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5",
         "ch.qos.logback" % "logback-classic" % "1.4.5",
         "org.scalatest" %% "scalatest" % "3.2.15" % Test
