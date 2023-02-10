@@ -1,0 +1,11 @@
+body {
+  color: indigo;
+}
+
+input, select, textarea {
+  color: indigo;
+}
+
+input:focus, select:focus, textarea:focus {
+  color: indigo;
+}
