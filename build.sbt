@@ -13,7 +13,7 @@ lazy val common = Defaults.coreDefaultSettings ++ Seq(
 )
 
 lazy val poolbalance = (project in file("."))
-  .aggregate(sharedClient, sharedServer, client, server)
+  .aggregate(sharedJs, sharedJvm, client, server)
   .settings(common)
   .settings(
     publish := {},
@@ -32,13 +32,13 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
     )
   )
 
-lazy val sharedClient = shared.js
-lazy val sharedServer = shared.jvm
+lazy val sharedJs = shared.js
+lazy val sharedJvm = shared.jvm
 lazy val public = "public"
 
 lazy val client = (project in file("client"))
-  .dependsOn(sharedClient)
   .enablePlugins(ScalaJSPlugin)
+  .dependsOn(sharedJs)
   .settings(common)
   .settings(
     libraryDependencies ++= Seq(
@@ -53,7 +53,7 @@ lazy val client = (project in file("client"))
 
 lazy val server = (project in file("server"))
   .enablePlugins(JavaServerAppPackaging)
-  .dependsOn(sharedServer)
+  .dependsOn(sharedJvm)
   .settings(common)
   .settings(
     reStart / mainClass := Some("pool.Server"),
