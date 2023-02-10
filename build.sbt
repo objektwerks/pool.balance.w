@@ -1,26 +1,25 @@
+name := "pool.balance.w"
+
+lazy val laminarVersion = "0.14.5"
+lazy val waypointVersion = "0.5.0"
+lazy val scalaJavaTimeVersion = "2.5.0"
+
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
-  version := "0.9-SNAPSHOT",
+  version := "0.1-SNAPSHOT",
   scalaVersion := "3.2.2",
-  libraryDependencies ++= {
-    val jsoniterVersion = "2.20.6"
-    Seq(
-      "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core" % jsoniterVersion,
-      "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-macros" % jsoniterVersion % Provided,
-      "com.typesafe" % "config" % "1.4.2"
-    )
-  }
+  parallelExecution := false
 )
 
 lazy val poolbalance = (project in file("."))
-  .aggregate(client, shared, server)
+  .aggregate(sharedClient, sharedJvm, client, server)
   .settings(common)
   .settings(
     publish := {},
     publishLocal := {}
   )
 
-lazy val sharedJs = shared.js
+lazy val sharedClient = shared.js
 lazy val sharedJvm = shared.jvm
 lazy val public = "public"
 
