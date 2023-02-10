@@ -23,28 +23,6 @@ Package Server
 1. sbt server/universal:packageBin
 2. see server/target/universal
 
-Client Assembly
----------------
->To build for a "mac", "m1', "win" or "linux" os target:
-1. sbt -Dtarget="mac" clean test assembly copyAssemblyJar
-2. sbt -Dtarget="m1" clean test assembly copyAssemblyJar
-3. sbt -Dtarget="win" clean test assembly copyAssemblyJar
-4. sbt -Dtarget="linux" clean test assembly copyAssemblyJar
-
-Execute Client
---------------
->To execute an assembled jar locally:
-1. java -jar .assembly/pool-balance-mac-0.3.jar
-2. java -jar .assembly/pool-balance-m1-0.3.jar
-3. java -jar .assembly/pool-balance-win-0.3.jar
-4. java -jar .assembly/pool-balance-linux-0.3.jar
-
-Deploy
-------
->Consider these options:
-1. [jDeploy](https://www.npmjs.com/package/jdeploy)
-2. [Conveyor](https://hydraulic.software/index.html)
-
 Features
 --------
 1. dashboard
@@ -100,12 +78,6 @@ Model
 * Conext 1 --> 1 Model | View
 * Model 1 --> 1 Proxy
 * View 1 --> 1 Context
-
-UI
---
-1. Top: dashboard(total chlorine, free chlorine, ph, calcium hardness, total alkalinity, cyanuric acid, total bromine)
-2. Left: pane(pools)
-3. Right: tabbedpane(cleanings, measurements, chemicals)
 
 Charts
 ------
@@ -169,17 +141,9 @@ Environment
 * export POOL_BALANCE_EMAIL_ADDRESS="your-email@provider.com"
 * export POOL_BALANCE_EMAIL_PASSWORD="your-email-password"
 
-Resources
----------
-1. [JavaFX](https://openjfx.io/index.html)
-2. [ScalaFX](http://www.scalafx.org/)
-3. [ScalikeJdbc](http://scalikejdbc.org/)
-4. [jDeploy](https://www.jdeploy.com/)
-5. [JavaFX Tutorial](https://jenkov.com/tutorials/javafx/index.html)
-
 License
 -------
->Copyright (c) [2022, 2023] [Objektwerks]
+>Copyright (c) [2023] [Objektwerks]
 
 >Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
