@@ -50,12 +50,6 @@ object Components:
   def street: Input =
     input(cls("w3-input w3-hover-light-gray w3-text-indigo"), minLength(7), required(true))
 
-  def roles: Select =
-    select(cls("w3-select w3-text-indigo"),
-      option(Roles.homeowner, selected(true)),
-      option(Roles.serviceProvider)
-    )
-
   def list(items: List[String]): Select =
     select(cls("w3-select w3-text-indigo"),
       children <-- Var(items.map(item => option(item))).signal
