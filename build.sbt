@@ -19,6 +19,18 @@ lazy val poolbalance = (project in file("."))
     publishLocal := {}
   )
 
+lazy val shared = crossProject(JSPlatform, JVMPlatform)
+  .crossType(CrossType.Pure)
+  .in(file("shared"))
+  .settings(common)
+  .settings(
+    libraryDependencies ++= Seq(
+      "com.lihaoyi" %% "upickle" % upickleVersion,
+      "io.github.cquiroz" %% "scala-java-time" % scalaJavaTimeVersion,
+      "org.scalatest" %% "scalatest" % scalaTestVersion % Test
+    )
+  )
+
 lazy val sharedClient = shared.js
 lazy val sharedJvm = shared.jvm
 lazy val public = "public"
@@ -36,23 +48,6 @@ lazy val client = (project in file("client"))
     ),
     Compile / fastLinkJS / scalaJSLinkerOutputDirectory := target.value / public,
     Compile / fullLinkJS / scalaJSLinkerOutputDirectory := target.value / public
-  )
-
-lazy val shared = project
-  .settings(common)
-  .settings(
-    libraryDependencies ++= {
-      Seq(
-        "org.scalafx" %% "scalafx" % "19.0.0-R30"
-         exclude("org.openjfx", "javafx-controls")
-         exclude("org.openjfx", "javafx-fxml")
-         exclude("org.openjfx", "javafx-graphics")
-         exclude("org.openjfx", "javafx-media")
-         exclude("org.openjfx", "javafx-swing")
-         exclude("org.openjfx", "javafx-web"),
-        "org.scalatest" %% "scalatest" % "3.2.15" % Test
-      )
-    }
   )
 
 lazy val server = project
