@@ -32,13 +32,6 @@ object Fetcher:
     method = HttpMethod.POST
     headers = jsonHeaders
   }
-  val formDataHeaders = new Headers {
-    js.Array()
-  }
-  val formDataParameters = new RequestInit {
-    method = HttpMethod.POST
-    headers = formDataHeaders
-  }
 
   def now: Future[String] =
     ( for
@@ -52,19 +45,6 @@ object Fetcher:
     val event: Future[Event] = command match
       case Register(_, _, _, _) => post(command, jsonParameters, Urls.register)
       case Login(_, _) => post(command, jsonParameters, Urls.login)
-      case SaveUser(_) => post(command, jsonParameters, Urls.userSave)
-      case AddWorkOrder(_, _) =>
-        // addWorkOrder: AddWorkOrder =>
-        // val formData = addWorkOrderToFormData(addWorkOrder)
-        // post(formData, formDataParameters, Urls.workOrderAdd)
-        post(command, jsonParameters, Urls.workOrderAdd)
-      case SaveWorkOrder(_, _) =>
-        // saveWorkOrder: SaveWorkOrder =>
-        // val formData = saveWorkOrderToFormData(command)
-        // post(formData, formDataParameters, Urls.workOrderAdd)
-        post(command, jsonParameters, Urls.workOrderSave)
-      case ListWorkOrders(_, _) => post(command, jsonParameters, Urls.workOrdersList)
-
     handle(event, handler)
 
   // Uncomment to enable client formdata support.
@@ -98,32 +78,3 @@ object Fetcher:
             if event.success then Right(event) else Left(Fault(event.error))
       )
     }
-
-  private def addWorkOrderToFormData(addWorkOrder: AddWorkOrder): FormData =
-    val workOrder = addWorkOrder.workOrder.copy(imageUrl = Model.imageFileUrl)
-    workOrderToFormData(addWorkOrder.copy(workOrder = workOrder))
-
-  private def saveWorkOrderToFormData(saveWorkOrder: SaveWorkOrder): FormData =
-    val workOrder = saveWorkOrder.workOrder.copy(imageUrl = Model.imageFileUrl)
-    workOrderToFormData(saveWorkOrder.copy(workOrder = workOrder))
-
-  private def workOrderToFormData(command: AddWorkOrder | SaveWorkOrder): FormData =
-    val formData = new FormData()
-    val imageFile = Model.imageFile
-    log("fetcher: model image file: %o", imageFile)
-    if imageFile.isDefined then
-      val image = imageFile.get
-      formData.append("imageFileName", image.filename)
-      formData.append("image", image.file, image.filename)
-      log("fetcher: real image file: %s", image.filename)
-    else
-      val filename = s"z-${DateTime.now}.txt"
-      val file = new File(new js.Array(0), "delete me!")
-      formData.append("imageFileName", filename)
-      formData.append("image", file, filename)
-      log("fetcher: fake image file: %s", filename)
-    command match
-      case addWorkOrder: AddWorkOrder =>  formData.append("addWorkOrderAsJson", write[AddWorkOrder](addWorkOrder))
-      case saveWorkOrder: SaveWorkOrder => formData.append("saveWorkOrderAsJson", write[SaveWorkOrder](saveWorkOrder))
-    log("fetcher:workOrderToFormData formdata: %o", formData)
-    formData
