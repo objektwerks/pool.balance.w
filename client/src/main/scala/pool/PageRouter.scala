@@ -26,4 +26,4 @@ object PageRouter:
   )
 
   val splitter = SplitRender[Page, HtmlElement](router.currentPageSignal)
-    .collectStatic(LoginRegisterPage) { LoginRegisterView() }
+    .collectStatic(LoginRegisterPage) { MainView() }
