@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "chart.js": "4.2.1"
   },
   "devDependencies": {
     "snowpack": "3.8.8",
