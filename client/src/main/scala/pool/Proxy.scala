@@ -18,6 +18,12 @@ import scala.scalajs.js.Thenable.Implicits.*
 import Serializer.given
 
 object Proxy:
+  var serverUrl = ""
+
+  def set(url: String): Unit =
+    serverUrl = url
+    log("server url: %s", serverUrl)
+  
   private val hdrs = new Headers {
       js.Array(
         js.Array("Content-Type", "application/json; charset=utf-8"),
