@@ -29,16 +29,6 @@ object Proxy:
     headers = hdrs
   }
 
-  def now: Future[String] =
-    ( 
-      for
-        response <- dom.fetch(Urls.now)
-        text     <- response.text()
-      yield text
-    ).recover {
-      case failure: Exception => s"Now failed: ${failure.getMessage}"
-    }
-
   def call(command: Command,
            handler: (either: Either[Fault, Event]) => Unit) =
     val event = post(command)
@@ -50,7 +40,7 @@ object Proxy:
     log(s"Proxy:post params: $params")
     (
       for
-        response <- dom.fetch(Urls.command, params)
+        response <- dom.fetch(Urls.server, params)
         text     <- response.text()
       yield
         log(s"Proxy:post text: $text")
