@@ -46,7 +46,7 @@ object Proxy:
     log(s"Proxy:post params: $params")
     (
       for
-        response <- dom.fetch(Urls.server, params)
+        response <- dom.fetch(serverUrl, params)
         text     <- response.text()
       yield
         log(s"Proxy:post text: $text")
