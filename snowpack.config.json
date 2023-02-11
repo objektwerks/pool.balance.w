@@ -4,6 +4,6 @@
   },
   "mount": {
     "public": "/",
-    "js/target/public": "/"
+    "client/target/public": "/"
   }
 }
