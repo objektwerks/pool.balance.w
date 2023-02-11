@@ -28,7 +28,7 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .settings(
     libraryDependencies ++= Seq(
       "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core" % jsoniterVersion,
-      "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-macros" % jsoniterVersion % Provided,
+      "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-macros" % jsoniterVersion % "compile-internal",
       "io.github.cquiroz" %% "scala-java-time" % scalaJavaTimeVersion,
       "org.scalatest" %% "scalatest" % scalaTestVersion % Test
     )
@@ -46,8 +46,8 @@ lazy val client = (project in file("client"))
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % laminarVersion,
       "com.raquo" %%% "waypoint" % waypointVersion,
-      "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core" % jsoniterVersion,
-      "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-macros" % jsoniterVersion % Provided,
+      "com.github.plokhotnyuk.jsoniter-scala" %%% "jsoniter-scala-core" % jsoniterVersion,
+      "com.github.plokhotnyuk.jsoniter-scala" %%% "jsoniter-scala-macros" % jsoniterVersion % "compile-internal",
       "io.github.cquiroz" %%% "scala-java-time" % scalaJavaTimeVersion
     ),
     Compile / fastLinkJS / scalaJSLinkerOutputDirectory := target.value / public,
