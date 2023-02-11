@@ -12,7 +12,7 @@ import Serializer.given
 
 object PageRouter:
   val routes = List(
-    Route.static(LoginRegisterPage, root / endOfSegments)
+    Route.static(MainPage, root / endOfSegments)
   )
 
   val router = com.raquo.waypoint.Router[Page](
@@ -26,4 +26,4 @@ object PageRouter:
   )
 
   val splitter = SplitRender[Page, HtmlElement](router.currentPageSignal)
-    .collectStatic(LoginRegisterPage) { MainView() }
+    .collectStatic(MainPage) { MainView() }
