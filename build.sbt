@@ -39,7 +39,7 @@ lazy val sharedJvm = shared.jvm
 lazy val public = "public"
 
 lazy val client = (project in file("client"))
-  .enablePlugins(ScalaJSPlugin)
+  .enablePlugins(ScalaJSPlugin, ScalablyTypedConverterExternalNpmPlugin)
   .dependsOn(sharedJs)
   .settings(common)
   .settings(
@@ -50,6 +50,10 @@ lazy val client = (project in file("client"))
       "com.github.plokhotnyuk.jsoniter-scala" %%% "jsoniter-scala-macros" % jsoniterVersion % "compile-internal",
       "io.github.cquiroz" %%% "scala-java-time" % scalaJavaTimeVersion
     ),
+    useYarn := true,
+    externalNpm := {
+      baseDirectory.value
+    },
     Compile / fastLinkJS / scalaJSLinkerOutputDirectory := target.value / public,
     Compile / fullLinkJS / scalaJSLinkerOutputDirectory := target.value / public
   )
