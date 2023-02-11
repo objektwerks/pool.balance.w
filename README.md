@@ -14,13 +14,13 @@ Build
 -----
 1. npm install ( only when package.json changes )
 2. sbt clean compile fastLinkJS
->See **js/target/public** directory.
+>See **client/target/public** directory.
 
 Dev
 ---
 1. sbt jvm/run ( new session, curl -v http://localhost:7272/now )
 2. sbt ( new session )
-3. ~ js/fastLinkJS
+3. ~ client/fastLinkJS
 4. npx snowpack dev ( new session )
 >Edits are reflected in the **fastLinkJS** and **snowpack** sessions.
 >See **snowpack.config.json** and [Snowpack Config](https://www.snowpack.dev/reference/configuration) for configurable options.
