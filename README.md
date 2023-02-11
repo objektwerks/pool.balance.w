@@ -1,5 +1,5 @@
 Pool Balance ( Web Edition - **WIP** )
-----------------
+--------------------------------------
 >Pool cleaning, measurement and chemical balancing distributed web app ScalaJs,
 >JDK Http, Jsoniter, Scalikejdbc, Laminar, Waypoint, W3.CSS, Scaffeine, JoddMail, Postgresql,
 >Snowpack and Scala 3.
