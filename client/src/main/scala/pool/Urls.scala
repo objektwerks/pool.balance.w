@@ -6,16 +6,13 @@ import org.scalajs.dom.console.log
 object Urls:
   var root = ""
   var now = ""
-  var register = ""
-  var login = ""
+  var command = ""
 
   def set(rootUrl: String): Unit =
     root = rootUrl
     now = s"$root/now"
-    register = s"$root/register"
-    login = s"$root/login"
+    command = s"$root/command"
 
     log("root url: %s", root)
     log("now url: %s", now)
-    log("register url: %s", register)
-    log("login url: %s", login)
+    log("command url: %s", command)
