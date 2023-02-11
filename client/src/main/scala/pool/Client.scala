@@ -16,5 +16,5 @@ class Client(rootUrl: String) extends js.Object:
 
   render(
     container = document.getElementById("content"),
-    rootNode = div( child <-- PageRouter.splitter.$view )
+    rootNode = div( child <-- PageRouter.splitter.signal )
   )
