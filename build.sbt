@@ -37,6 +37,7 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
 lazy val sharedJs = shared.js
 lazy val sharedJvm = shared.jvm
 lazy val public = "public"
+lazy val nodeModulesDir = baseDirectory.value
 
 lazy val client = (project in file("client"))
   .enablePlugins(ScalaJSPlugin, ScalablyTypedConverterExternalNpmPlugin)
@@ -55,7 +56,7 @@ lazy val client = (project in file("client"))
     },
     useYarn := true,
     externalNpm := {
-      baseDirectory.value
+      nodeModulesDir
     },
     Compile / fastLinkJS / scalaJSLinkerOutputDirectory := target.value / public,
     Compile / fullLinkJS / scalaJSLinkerOutputDirectory := target.value / public
