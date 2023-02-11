@@ -47,9 +47,6 @@ object Components:
   def err(errBus: EventBus[String]): Div =
     div(cls("w3-container w3-border-white w3-text-red"), child.text <-- errBus.events)
 
-  def street: Input =
-    input(cls("w3-input w3-hover-light-gray w3-text-indigo"), minLength(7), required(true))
-
   def list(items: List[String]): Select =
     select(cls("w3-select w3-text-indigo"),
       children <-- Var(items.map(item => option(item))).signal
