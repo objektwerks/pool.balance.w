@@ -13,7 +13,7 @@ lazy val common = Defaults.coreDefaultSettings ++ Seq(
   parallelExecution := false
 )
 
-lazy val poolbalance = (project in file("."))
+lazy val poolbalance: Project = (project in file("."))
   .aggregate(sharedJs, sharedJvm, client, server)
   .settings(common)
   .settings(
@@ -37,7 +37,6 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
 lazy val sharedJs = shared.js
 lazy val sharedJvm = shared.jvm
 lazy val public = "public"
-lazy val nodeModulesDir = baseDirectory.value
 
 lazy val client = (project in file("client"))
   .enablePlugins(ScalaJSPlugin, ScalablyTypedConverterExternalNpmPlugin)
@@ -56,7 +55,7 @@ lazy val client = (project in file("client"))
     },
     useYarn := true,
     externalNpm := {
-      nodeModulesDir
+      poolbalance.base.getAbsoluteFile()
     },
     Compile / fastLinkJS / scalaJSLinkerOutputDirectory := target.value / public,
     Compile / fullLinkJS / scalaJSLinkerOutputDirectory := target.value / public
