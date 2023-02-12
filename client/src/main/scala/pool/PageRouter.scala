@@ -11,10 +11,6 @@ import Page.given
 import Serializer.given
 
 object PageRouter:
-  val routes = List(
-    Route.static(HomePage, root / endOfSegments)
-  )
-
   val poolRoute = Route[PoolPage, Long](
     encode = page => page.id,
     decode = arg => PoolPage(id = arg),
