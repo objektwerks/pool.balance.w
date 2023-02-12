@@ -60,3 +60,14 @@ object Component:
 
   def item(stringSignal: Signal[String]): Li =
     li(cls("w3-text-indigo w3-display-container"), child.text <-- stringSignal)
+
+  def split[E <: Entity](entities: Var[Seq[E]], toEntityPage: Long => EntityPage): Signal[Seq[Li]] =
+    entities.signal.split(_.id)( (id, _, entitySignal) =>
+      item( entitySignal.map(_.display) ).amend {
+        onClick --> { _ =>
+          entities.now().find(_.id == id).foreach { entity =>
+            PageRouter.router.pushState(toEntityPage(id))
+          }
+        }
+      }
+    )

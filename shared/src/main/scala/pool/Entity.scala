@@ -32,6 +32,7 @@ object TypeOfChemical:
 
 sealed trait Entity:
   val id: Long
+  def display: String
 
 object Entity:
   def applyLocalDateChanges(sourceLocalDate: LocalDate, targetLocalDateAsLong: Long): Long =
@@ -52,7 +53,7 @@ final case class Account(id: Long = 0,
                          pin: String = newPin,
                          activated: Long = LocalDate.now.toEpochDay,
                          deactivated: Long = 0) extends Entity:
-  def toArray: Array[Any] = Array(id, license, pin, activated, deactivated)
+  def display = emailAddress
 
 object Account:
   private val specialChars = "~!@#$%^&*-+=<>?/:;".toList
@@ -88,7 +89,8 @@ final case class Pool(id: Long = 0,
                       license: String = "",
                       name: String = "", 
                       volume: Int = 0,
-                      unit: String = UnitOfMeasure.gl.toString) extends Entity
+                      unit: String = UnitOfMeasure.gl.toString) extends Entity:
+  def display = name
 
 final case class Cleaning(id: Long = 0,
                           poolId: Long = 0,
@@ -98,7 +100,8 @@ final case class Cleaning(id: Long = 0,
                           pumpBasket: Boolean = false,
                           pumpFilter: Boolean = false,
                           vacuum: Boolean = false,
-                          cleaned: Long = LocalDate.now.toEpochDay) extends Entity
+                          cleaned: Long = LocalDate.now.toEpochDay) extends Entity:
+  def display = cleaned.toString
 
 object Measurement:
   val totalChlorineRange = Range(1, 5).inclusive
@@ -124,11 +127,14 @@ final case class Measurement(id: Long = 0,
                              totalBromine: Int = 5,
                              salt: Int = 3200,
                              temperature: Int = 85,
-                             measured: Long = LocalDate.now.toEpochDay) extends Entity
+                             measured: Long = LocalDate.now.toEpochDay) extends Entity:
+  def display = measured.toString
+
 
 final case class Chemical(id: Long = 0,
                           poolId: Long = 0,
                           typeof: String = TypeOfChemical.LiquidChlorine.toString,
                           amount: Double = 1.0, 
                           unit: String = UnitOfMeasure.gl.toString,
-                          added: Long = LocalDate.now.toEpochDay) extends Entity
+                          added: Long = LocalDate.now.toEpochDay) extends Entity:
+  def display = added.toString
