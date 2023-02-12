@@ -11,3 +11,5 @@ sealed trait Page:
   val title = "Pool Balance"
 
 case object MainPage extends Page
+case object RegisterPage extends Page
+case object LoginPage extends Page
