@@ -9,3 +9,4 @@ object Model:
   val poolsVar = Var(List.empty[Pool])
   val cleaningsVar = Var(List.empty[Cleaning])
   val measurementsVar = Var(List.empty[Measurement])
+  val chemicalsVar = Var(List.empty[Chemical])
