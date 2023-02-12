@@ -33,6 +33,12 @@ object PageRouter:
     pattern = root / "app" / "pool" / segment[Long] / endOfSegments
   )
 
+  val chemicalRoute = Route[ChemicalPage, Long](
+    encode = page => page.id,
+    decode = arg => ChemicalPage(id = arg),
+    pattern = root / "app" / "pool" / segment[Long] / endOfSegments
+  )
+
   val routees = List(
     Route.static(HomePage, root / endOfSegments),
     Route.static(RegisterPage, root / "register" / endOfSegments),
@@ -42,7 +48,8 @@ object PageRouter:
     Route.static(PoolsPage, root / "app" / "pools" / endOfSegments),
     poolRoute,
     cleaningRoute,
-    measurementRoute
+    measurementRoute,
+    chemicalRoute
   )
 
   val router = com.raquo.waypoint.Router[Page](
