@@ -7,7 +7,7 @@ import org.scalajs.dom.console.log
 import Component.*
 
 object PoolsView extends View:
-  def apply(poolsVar: Var[List[Pool]], accountVar: Var[Account]): HtmlElement =
+  def apply(model: Model[Pool], accountVar: Var[Account]): HtmlElement =
     def handler(either: Either[Fault, Event]): Unit =
       either match
         case Left(fault) => errorBus.emit(s"List pools failed: ${fault.cause}")
@@ -15,7 +15,7 @@ object PoolsView extends View:
           event match
             case PoolsListed(pools: List[Pool]) =>
               clearErrors()
-              poolsVar.set(pools)
+              model.setEntities(pools)
             case _ => log(s"Pools -> handler failed: $event")
 
     div(

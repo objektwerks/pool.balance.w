@@ -91,7 +91,7 @@ final case class Pool(id: Long = 0,
                       unit: String = UnitOfMeasure.gl.toString) extends Entity
 
 final case class Cleaning(id: Long = 0,
-                          poolId: Long,
+                          poolId: Long = 0,
                           brush: Boolean = true,
                           net: Boolean = true,
                           skimmerBasket: Boolean = true,
@@ -113,7 +113,7 @@ object Measurement:
   val temperatureRange = Range(50, 100).inclusive
 
 final case class Measurement(id: Long = 0,
-                             poolId: Long,
+                             poolId: Long = 0,
                              totalChlorine: Int = 3,
                              freeChlorine: Int = 3,
                              combinedChlorine: Double = 0.0,
@@ -127,7 +127,7 @@ final case class Measurement(id: Long = 0,
                              measured: Long = LocalDate.now.toEpochDay) extends Entity
 
 final case class Chemical(id: Long = 0,
-                          poolId: Long,
+                          poolId: Long = 0,
                           typeof: String = TypeOfChemical.LiquidChlorine.toString,
                           amount: Double = 1.0, 
                           unit: String = UnitOfMeasure.gl.toString,
