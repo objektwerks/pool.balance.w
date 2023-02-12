@@ -9,6 +9,7 @@ import scala.concurrent.Future
 
 import Components.*
 import Error.*
+import Message.*
 import Validator.*
 
 object RegisterView extends View:
