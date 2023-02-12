@@ -27,6 +27,12 @@ object PageRouter:
     pattern = root / "app" / "pool" / segment[Long] / endOfSegments
   )
 
+  val measurementRoute = Route[MeasurementPage, Long](
+    encode = page => page.id,
+    decode = arg => MeasurementPage(id = arg),
+    pattern = root / "app" / "pool" / segment[Long] / endOfSegments
+  )
+
   val routees = List(
     Route.static(HomePage, root / endOfSegments),
     Route.static(RegisterPage, root / "register" / endOfSegments),
@@ -35,7 +41,8 @@ object PageRouter:
     Route.static(AccountPage, root / "app" / "account" / endOfSegments),
     Route.static(PoolsPage, root / "app" / "pools" / endOfSegments),
     poolRoute,
-    cleaningRoute
+    cleaningRoute,
+    measurementRoute
   )
 
   val router = com.raquo.waypoint.Router[Page](
