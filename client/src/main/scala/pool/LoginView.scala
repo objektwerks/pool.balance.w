@@ -4,7 +4,7 @@ import com.raquo.laminar.api.L.*
 
 import org.scalajs.dom.console.log
 
-import Components.*
+import Component.*
 import Error.*
 import Message.*
 import Validator.*

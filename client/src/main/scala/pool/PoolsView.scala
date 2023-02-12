@@ -4,7 +4,7 @@ import com.raquo.laminar.api.L.*
 
 import org.scalajs.dom.console.log
 
-import Components.*
+import Component.*
 
 object PoolsView extends View:
   def apply(poolsVar: Var[List[Pool]], accountVar: Var[Account]): HtmlElement =

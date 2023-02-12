@@ -7,7 +7,7 @@ import org.scalajs.dom.console.log
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-import Components.*
+import Component.*
 import Error.*
 import Message.*
 import Validator.*

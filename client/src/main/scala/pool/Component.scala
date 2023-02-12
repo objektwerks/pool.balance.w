@@ -4,7 +4,7 @@ import com.raquo.laminar.api.L.*
 
 import scala.scalajs.js.Date
 
-object Components:
+object Component:
   def bar(elms: HtmlElement*): Div =
     div(cls("w3-bar"), elms)
 
