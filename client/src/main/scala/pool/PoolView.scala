@@ -67,7 +67,7 @@ object PoolView extends View:
         btn("Save").amend {
           disabled <-- model.selectedEntityVar.signal.map { pool => pool.id.isGreaterThanZero }
           onClick --> { _ =>
-            log(s"Pool -> Add onClick")
+            log(s"Pool -> Save onClick")
             val command = SavePool(accountVar.now().license, model.selectedEntityVar.now())
             call(command, handler)
           }
