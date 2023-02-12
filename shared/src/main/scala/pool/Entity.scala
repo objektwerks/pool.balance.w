@@ -101,7 +101,7 @@ final case class Cleaning(id: Long = 0,
                           pumpFilter: Boolean = false,
                           vacuum: Boolean = false,
                           cleaned: Long = LocalDate.now.toEpochDay) extends Entity:
-  def display = cleaned.toString
+  def display = LocalDate.ofEpochDay(cleaned).toString
 
 object Measurement:
   val totalChlorineRange = Range(1, 5).inclusive
@@ -128,7 +128,7 @@ final case class Measurement(id: Long = 0,
                              salt: Int = 3200,
                              temperature: Int = 85,
                              measured: Long = LocalDate.now.toEpochDay) extends Entity:
-  def display = measured.toString
+  def display = LocalDate.ofEpochDay(measured).toString
 
 
 final case class Chemical(id: Long = 0,
@@ -137,4 +137,4 @@ final case class Chemical(id: Long = 0,
                           amount: Double = 1.0, 
                           unit: String = UnitOfMeasure.gl.toString,
                           added: Long = LocalDate.now.toEpochDay) extends Entity:
-  def display = added.toString
+  def display = LocalDate.ofEpochDay(added).toString
