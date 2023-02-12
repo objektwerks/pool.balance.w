@@ -16,4 +16,4 @@ trait View:
 
   def clear(bus: EventBus[String]): Unit = bus.emit("")
 
-  def clearErrorBus(): Unit = errorBus.emit("")
+  def clearErrors(): Unit = errorBus.emit("")
