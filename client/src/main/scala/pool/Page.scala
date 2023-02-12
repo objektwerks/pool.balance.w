@@ -16,3 +16,4 @@ case object LoginPage extends Page
 case object AppPage extends Page
 case object AccountPage extends Page
 case object PoolsPage extends Page
+final case class PoolPage(id: Long = 0) extends Page

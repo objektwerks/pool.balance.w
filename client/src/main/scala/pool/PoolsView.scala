@@ -34,7 +34,8 @@ object PoolsView extends View:
         },
         hdr("Pools"),
         list(
-          split(poolsVar.entitiesVar, (id: Long) => PoolPage(id))
+          // TODO split(poolsVar.entitiesVar, (id: Long) => PoolPage(id))
+          List.empty[String]
         )
       ),
       cbar(
