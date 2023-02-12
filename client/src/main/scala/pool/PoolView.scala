@@ -14,26 +14,16 @@ object PoolView extends View:
     val builtErrorBus = new EventBus[String]
     val volumeErrorBus = new EventBus[String]
 
-    def addHandler(either: Either[Fault, Event]): Unit =
+    def handler(either: Either[Fault, Event]): Unit =
       either match
         case Left(fault) => errorBus.emit(s"Add pool failed: ${fault.cause}")
         case Right(event) =>
           event match
             case PoolSaved(id) =>
               clearErrors()
-              // model.addEntity(id)
+              // model.addEntity(id) added or updated?
               route(PoolsPage)
             case _ => log(s"Pool -> add handler failed: $event")
-
-    def updateHandler(either: Either[Fault, Event]): Unit =
-      either match
-        case Left(fault) => errorBus.emit(s"Update pool failed: ${fault.cause}")
-        case Right(event) =>
-          event match
-            case Updated() =>
-              clearErrors()
-              route(PoolsPage)
-            case _ => log(s"Pool -> update handler failed: $event")
 
     div(
       bar(
@@ -57,7 +47,6 @@ object PoolView extends View:
           }
         },
         err(nameErrorBus),
-        err(builtErrorBus),
         lbl("Volume"),
         txt.amend {
           value <-- model.selectedEntityVar.signal.map(_.volume.toString)
@@ -71,21 +60,12 @@ object PoolView extends View:
         err(volumeErrorBus)
       ),
       cbar(
-        btn("Add").amend {
+        btn("Save").amend {
           disabled <-- model.selectedEntityVar.signal.map { pool => pool.id.isGreaterThanZero }
           onClick --> { _ =>
             log(s"Pool -> Add onClick")
-            val command = AddPool(accountVar.now().license, model.selectedEntityVar.now())
-            call(command, addHandler)
-
-          }
-        },
-        btn("Update").amend {
-          disabled <-- model.selectedEntityVar.signal.map { pool => pool.id.isZero }
-          onClick --> { _ =>
-            log(s"Pool -> Update onClick")
-            val command = UpdatePool(accountVar.now().license, model.selectedEntityVar.now())
-            call(command, updateHandler)
+            val command = SavePool(accountVar.now().license, model.selectedEntityVar.now())
+            call(command, handler)
           }
         }
       )
