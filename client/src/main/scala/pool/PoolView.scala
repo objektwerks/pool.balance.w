@@ -11,7 +11,6 @@ import Validator.*
 object PoolView extends View:
   def apply(model: Model[Pool], accountVar: Var[Account]): HtmlElement =
     val nameErrorBus = new EventBus[String]
-    val builtErrorBus = new EventBus[String]
     val volumeErrorBus = new EventBus[String]
 
     def handler(either: Either[Fault, Event]): Unit =
@@ -57,7 +56,12 @@ object PoolView extends View:
             if volume.isGreaterThan999 then clear(volumeErrorBus) else emit(volumeErrorBus, volumeError)
           }
         },
-        err(volumeErrorBus)
+        err(volumeErrorBus),
+        lbl("Unit"),
+        txt.amend {
+          value <-- model.selectedEntityVar.signal.map(_.unit.toString)
+          // TODO! Requires a select dropdown.
+        },
       ),
       cbar(
         btn("Save").amend {
