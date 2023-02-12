@@ -7,3 +7,4 @@ object Model:
   val pinVar = Var("")
   val accountVar = Var(Account.empty)
   val poolsVar = Var(List.empty[Pool])
+  val cleaningsVar = Var(List.empty[Cleaning])
