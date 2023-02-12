@@ -10,7 +10,6 @@ import com.github.plokhotnyuk.jsoniter_scala.macros.*
 import Page.given
 import Serializer.given
 
-import pool.MainView
 object PageRouter:
   val routes = List(
     Route.static(MainPage, root / endOfSegments)
@@ -27,4 +26,4 @@ object PageRouter:
   )
 
   val splitter = SplitRender[Page, HtmlElement](router.currentPageSignal)
-    .collectStatic(MainPage) { MainView() }
+    .collectStatic(MainPage) { HomeView() }
