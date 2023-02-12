@@ -48,3 +48,4 @@ object PageRouter:
     .collectStatic(AppPage) { AppView(Model.accountVar) }
     .collectStatic(AccountPage) { AccountView(Model.accountVar) }
     .collectStatic(PoolsPage) { PoolsView(Model.poolsModel, Model.accountVar) }
+    .collect[PoolPage] { page => PoolView(Model.poolsModel.setSelectedEntityById(page.id), Model.accountVar) }
