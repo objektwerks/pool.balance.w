@@ -16,9 +16,15 @@ object PageRouter:
   )
 
   val poolRoute = Route[PoolPage, Long](
-    encode = poolPage => poolPage.id,
+    encode = page => page.id,
     decode = arg => PoolPage(id = arg),
     pattern = root / "app" / "pools" / segment[Long] / endOfSegments
+  )
+
+  val cleaningRoute = Route[CleaningPage, Long](
+    encode = page => page.id,
+    decode = arg => CleaningPage(id = arg),
+    pattern = root / "app" / "pool" / segment[Long] / endOfSegments
   )
 
   val routees = List(
@@ -28,7 +34,8 @@ object PageRouter:
     Route.static(AppPage, root / "app" / endOfSegments),
     Route.static(AccountPage, root / "app" / "account" / endOfSegments),
     Route.static(PoolsPage, root / "app" / "pools" / endOfSegments),
-    poolRoute
+    poolRoute,
+    cleaningRoute
   )
 
   val router = com.raquo.waypoint.Router[Page](
