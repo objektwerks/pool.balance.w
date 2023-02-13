@@ -16,7 +16,7 @@ object LoginView extends View:
 
     def handler(either: Either[Fault, Event]): Unit =
       either match
-        case Left(fault) => errorBus.emit(s"Login failed: ${fault.cause}")
+        case Left(fault) => emitError(s"Login failed: ${fault.cause}")
         case Right(event) =>
           event match
             case LoggedIn(account) =>
