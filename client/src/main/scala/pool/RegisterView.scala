@@ -31,7 +31,6 @@ object RegisterView extends View:
     div(
       hdr("Register"),
       info(registerMessage),
-      err(errorBus),
       lbl("Email Address"),
       email.amend {
         value <-- emailAddressVar
