@@ -33,14 +33,7 @@ object Server extends LazyLogging:
       val response = writeToString[Event](event)
 
       exchange.sendResponseHeaders(200, response.length())
-
-      val headers = exchange.getResponseHeaders()
-      headers.add("Content-Type", "application/json; charset=UTF-8")
-      headers.add("Access-Control-Allow-Origin", "*")
-      headers.add("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS")
-      headers.add("Access-Control-Allow-Headers", "*")
-      headers.add("Access-Control-Allow-Credentials", "true")
-      headers.add("Access-Control-Allow-Credentials-Header", "*")
+      exchange.getResponseHeaders().add("Content-Type", "application/json; charset=UTF-8")
 
       val outputStream = exchange.getResponseBody
       outputStream.write(response.getBytes())

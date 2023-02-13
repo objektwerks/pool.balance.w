@@ -7,7 +7,6 @@ import com.sun.net.httpserver.HttpExchange
 class CorsFilter extends Filter:
   override def doFilter(exchange: HttpExchange, chain: Chain): Unit =
     val headers = exchange.getResponseHeaders()
-    headers.add("Content-Type", "application/json; charset=UTF-8")
     headers.add("Access-Control-Allow-Origin", "*")
     headers.add("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS")
     headers.add("Access-Control-Allow-Headers", "*")
