@@ -59,7 +59,7 @@ object PoolView extends View:
         err(volumeErrorBus),
         lbl("Unit"),
         txt.amend {
-          value <-- model.selectedEntityVar.signal.map(_.unit.toString)
+          value <-- model.selectedEntityVar.signal.map(_.unit)
           // TODO! Requires a select dropdown.
         },
       ),
