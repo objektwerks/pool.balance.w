@@ -18,7 +18,7 @@ object RegisterView extends View:
 
     def handler(either: Either[Fault, Event]): Unit =
       either match
-        case Left(fault) => errorBus.emit(s"Register failed: ${fault.cause}")
+        case Left(fault) => emitError(s"Register failed: ${fault.cause}")
         case Right(event) =>
           event match
             case Registered(account) =>
