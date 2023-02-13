@@ -10,7 +10,7 @@ object PoolsView extends View:
   def apply(model: Model[Pool], accountVar: Var[Account]): HtmlElement =
     def handler(either: Either[Fault, Event]): Unit =
       either match
-        case Left(fault) => errorBus.emit(s"List pools failed: ${fault.cause}")
+        case Left(fault) => emitError(s"List pools failed: ${fault.cause}")
         case Right(event) =>
           event match
             case PoolsListed(pools: List[Pool]) =>
