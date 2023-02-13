@@ -14,26 +14,25 @@ object Server extends LazyLogging:
   private val host = config.getString("host")
   private val port = config.getInt("port")
   private val address = InetSocketAddress(port)
-  private val backlog = config.getInt("backlog")
+  private val backlog = 0
+  private val handler = CommandHandler(dispatcher)
+  private val filter = CorsFilter()
 
   private val store = Store(config, Store.cache(minSize = 4, maxSize = 10, expireAfter = 24.hour))
   private val emailer = Emailer(config)
   private val dispatcher = Dispatcher(store, emailer)
 
-  private val handler = CommandHandler(dispatcher)
-  private val filter = CorsFilter()
   private val http = HttpServer
     .create(
       address,
       backlog,
-      "/now",
+      "/command",
       handler,
       filter
     )
 
   @main def main(): Unit =
     http.setExecutor(Executors.newVirtualThreadPerTaskExecutor())
-    http.createContext("/command", handler)
     http.start()
 
     println(s"*** Press Control-C to shutdown server at: $host:$port")
