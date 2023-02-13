@@ -15,7 +15,7 @@ object PoolView extends View:
 
     def handler(either: Either[Fault, Event]): Unit =
       either match
-        case Left(fault) => errorBus.emit(s"Add pool failed: ${fault.cause}")
+        case Left(fault) => emitError(s"Add pool failed: ${fault.cause}")
         case Right(event) =>
           event match
             case PoolSaved(id) =>
