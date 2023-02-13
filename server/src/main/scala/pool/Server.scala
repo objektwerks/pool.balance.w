@@ -51,15 +51,14 @@ object Server extends LazyLogging:
   @main def main(): Unit =
     http.setExecutor(Executors.newVirtualThreadPerTaskExecutor())
     http.createContext("/command", handler)
-
     http.start()
-    logger.info(s"*** Http Server started at: $host:$port")
+
     println(s"*** Press Control-C to shutdown server at: $host:$port")
+    logger.info(s"*** Http Server started at: $host:$port")
+
+    sys.addShutdownHook {
+      logger.info(s"*** Http Server shutting down at: $host:$port")
+      http.stop(10)
+    }
 
     Thread.currentThread().join()
-
-  sys.addShutdownHook {
-    http.stop(10)
-    logger.info(s"*** Http Server shutdown at: $host:$port")
-    println(s"*** Server shutdown at: $host:$port")
-  }
