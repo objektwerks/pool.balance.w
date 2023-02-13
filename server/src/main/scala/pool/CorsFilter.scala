@@ -12,7 +12,6 @@ final class CorsFilter extends Filter:
     headers.add("Access-Control-Allow-Headers", "*")
     headers.add("Access-Control-Allow-Credentials", "true")
     headers.add("Access-Control-Allow-Credentials-Header", "*")
-
     chain.doFilter(exchange)
 
   override def description(): String = "Cors Filter"
