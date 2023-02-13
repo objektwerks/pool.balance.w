@@ -1,14 +1,13 @@
 package pool
 
 import com.github.plokhotnyuk.jsoniter_scala.core.*
-
 import com.sun.net.httpserver.{HttpExchange, HttpHandler}
 
 import scala.io.{Codec, Source}
 
 import Serializer.given
 
-class CommandHandler(dispatcher: Dispatcher) extends HttpHandler:
+final class CommandHandler(dispatcher: Dispatcher) extends HttpHandler:
   override def handle(exchange: HttpExchange): Unit =
     val json = Source.fromInputStream( exchange.getRequestBody )(Codec.UTF8).mkString("")
     val command = readFromString[Command](json)
