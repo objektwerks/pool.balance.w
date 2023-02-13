@@ -24,7 +24,6 @@ object Server extends LazyLogging:
   private val emailer = Emailer(config)
   private val dispatcher = Dispatcher(store, emailer)
 
-  private val http = HttpServer.create(InetSocketAddress(port), backlog)
   private val handler = new HttpHandler {
     override def handle(exchange: HttpExchange): Unit =
       val json = Source.fromInputStream( exchange.getRequestBody )(Codec.UTF8).mkString("")
@@ -40,6 +39,15 @@ object Server extends LazyLogging:
       outputStream.flush()
       outputStream.close()
   }
+
+  private val http = HttpServer
+    .create(
+      InetSocketAddress(port),
+      backlog,
+      "/now",
+      handler,
+      filter
+    )
 
   @main def main(): Unit =
     http.setExecutor(Executors.newVirtualThreadPerTaskExecutor())
