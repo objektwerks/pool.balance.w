@@ -10,21 +10,23 @@ final class Dispatcher(store: Store,
   def dispatch[E <: Event](command: Command): Event =
     Try {
       if command.isValid && isAuthorized(command) then command match
-        case Register(emailAddress)          => register(emailAddress)
-        case Login(emailAddress, pin)        => login(emailAddress, pin)
-        case Deactivate(license)             => deactivateAccount(license)
-        case Reactivate(license)             => reactivateAccount(license)
-        case ListPools(license)              => listPools(license)
-        case AddPool(_, pool)                => addPool(pool)
-        case UpdatePool(_, pool)             => updatePool(pool)
-        case ListCleanings(_, poolId)        => listCleanings(poolId)
-        case SaveCleaning(_, cleaning)       => saveCleaning(cleaning)
-        case AddCleaning(_, cleaning)        => addCleaning(cleaning)
-        case UpdateCleaning(_, cleaning)     => updateCleaning(cleaning)
-        case ListMeasurements(_, poolId)     => listMeasurements(poolId)
-        case SaveMeasurement(_, measurement) => saveMeasurement(measurement)
-        case ListChemicals(_, poolId)        => listChemicals(poolId)
-        case SaveChemical(_, chemical)       => saveChemical(chemical)
+        case Register(emailAddress)            => register(emailAddress)
+        case Login(emailAddress, pin)          => login(emailAddress, pin)
+        case Deactivate(license)               => deactivateAccount(license)
+        case Reactivate(license)               => reactivateAccount(license)
+        case ListPools(license)                => listPools(license)
+        case AddPool(_, pool)                  => addPool(pool)
+        case UpdatePool(_, pool)               => updatePool(pool)
+        case ListCleanings(_, poolId)          => listCleanings(poolId)
+        case SaveCleaning(_, cleaning)         => saveCleaning(cleaning)
+        case AddCleaning(_, cleaning)          => addCleaning(cleaning)
+        case UpdateCleaning(_, cleaning)       => updateCleaning(cleaning)
+        case ListMeasurements(_, poolId)       => listMeasurements(poolId)
+        case SaveMeasurement(_, measurement)   => saveMeasurement(measurement)
+        case AddMeasurement(_, measurement)    => addMeasurement(measurement)
+        case UpdateMeasurement(_, measurement) => updateMeasurement(measurement)
+        case ListChemicals(_, poolId)          => listChemicals(poolId)
+        case SaveChemical(_, chemical)         => saveChemical(chemical)
       else Fault(s"Failed to process invalid command: $command")
     }.recover {
       case error: Throwable => Fault(s"Failed to process command: $command, due to this error: ${error.getMessage}")
@@ -82,11 +84,11 @@ final class Dispatcher(store: Store,
 
   private def listMeasurements(poolId: Long): MeasurementsListed = MeasurementsListed( store.listMeasurements(poolId) )
 
-  private def saveMeasurement(measurement: Measurement): MeasurementSaved =
-    MeasurementSaved(
-      if measurement.id == 0 then store.addMeasurement(measurement)
-      else store.updateMeasurement(measurement)
-    )
+  private def addMeasurement(measurement: Measurement): MeasurementAdded = MeasurementAdded( measurement.copy(id = store.addMeasurement(measurement)) )
+
+  private def updateMeasurement(measurement: Measurement): Updated =
+    store.updateMeasurement(measurement)
+    Updated()
 
   private def listChemicals(poolId: Long): ChemicalsListed = ChemicalsListed( store.listChemicals(poolId) )
 
