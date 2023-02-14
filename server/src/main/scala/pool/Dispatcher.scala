@@ -27,6 +27,8 @@ final class Dispatcher(store: Store,
         case UpdateMeasurement(_, measurement) => updateMeasurement(measurement)
         case ListChemicals(_, poolId)          => listChemicals(poolId)
         case SaveChemical(_, chemical)         => saveChemical(chemical)
+        case AddChemical(_, chemical)          => addChemical(chemical)
+        case UpdateChemical(_, chemical)       => updateChemical(chemical)
       else Fault(s"Failed to process invalid command: $command")
     }.recover {
       case error: Throwable => Fault(s"Failed to process command: $command, due to this error: ${error.getMessage}")
@@ -92,8 +94,8 @@ final class Dispatcher(store: Store,
 
   private def listChemicals(poolId: Long): ChemicalsListed = ChemicalsListed( store.listChemicals(poolId) )
 
-  private def saveChemical(chemical: Chemical): ChemicalSaved =
-    ChemicalSaved(
-      if chemical.id == 0 then store.addChemical(chemical)
-      else store.updateChemical(chemical)
-    )
+  private def addChemical(chemical: Chemical): ChemicalAdded = ChemicalAdded( chemical.copy(id = store.addChemical(chemical)) )
+
+  private def updateChemical(chemical: Chemical): Updated =
+    store.updateChemical(chemical)
+    Updated()

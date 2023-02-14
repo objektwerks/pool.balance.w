@@ -284,11 +284,10 @@ final class Store(config: Config,
       .updateAndReturnGeneratedKey()
   }
 
-  def updateChemical(chemical: Chemical): Long = DB localTx { implicit session =>
+  def updateChemical(chemical: Chemical): Unit = DB localTx { implicit session =>
     sql"""
       update chemical set typeof = ${chemical.typeof.toString}, amount = ${chemical.amount}, unit = ${chemical.unit.toString},
       added = ${chemical.added} where id = ${chemical.id}
       """
       .update()
-    chemical.id
   }
