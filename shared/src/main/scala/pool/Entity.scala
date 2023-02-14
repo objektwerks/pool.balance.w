@@ -1,9 +1,6 @@
 package pool
 
 import java.time.LocalDate
-import java.util.UUID
-
-import scala.util.Random
 
 enum UnitOfMeasure:
   case gl, l, lb, kg, tablet
