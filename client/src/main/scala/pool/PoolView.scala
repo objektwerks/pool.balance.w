@@ -29,7 +29,7 @@ object PoolView extends View:
         case Left(fault) => emitError(s"Update pool failed: ${fault.cause}")
         case Right(event) =>
           event match
-            case Updated() =>
+            case Updated(id) =>
               clearErrors()
               route(PoolsPage)
             case _ => log(s"Pool -> update handler failed: $event")
