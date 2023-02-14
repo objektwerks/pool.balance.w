@@ -113,10 +113,9 @@ class IntegrationTest extends AnyFunSuite with Matchers:
 
   def updateCleaning: Unit =
     testCleaning = testCleaning.copy(vacuum = true)
-    val saveCleaning = SaveCleaning(testAccount.license, testCleaning)
-    dispatcher.dispatch(saveCleaning) match
-      case CleaningSaved(id) =>
-        id shouldBe testCleaning.id
+    val updateCleaning = UpdateCleaning(testAccount.license, testCleaning)
+    dispatcher.dispatch(updateCleaning) match
+      case Updated() =>
       case fault => fail(s"Invalid cleaning saved event: $fault")
 
   def listCleanings: Unit =
