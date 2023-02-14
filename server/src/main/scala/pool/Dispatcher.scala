@@ -71,7 +71,7 @@ final class Dispatcher(store: Store,
 
   private def updatePool(pool: Pool): Updated =
     store.updatePool(pool)
-    Updated()
+    Updated(pool.id)
 
   private def listCleanings(poolId: Long): CleaningsListed = CleaningsListed( store.listCleanings(poolId) )
 
@@ -79,7 +79,7 @@ final class Dispatcher(store: Store,
 
   private def updateCleaning(cleaning: Cleaning): Updated =
     store.updateCleaning(cleaning)
-    Updated()
+    Updated(cleaning.id)
 
   private def listMeasurements(poolId: Long): MeasurementsListed = MeasurementsListed( store.listMeasurements(poolId) )
 
@@ -87,7 +87,7 @@ final class Dispatcher(store: Store,
 
   private def updateMeasurement(measurement: Measurement): Updated =
     store.updateMeasurement(measurement)
-    Updated()
+    Updated(measurement.id)
 
   private def listChemicals(poolId: Long): ChemicalsListed = ChemicalsListed( store.listChemicals(poolId) )
 
@@ -95,4 +95,4 @@ final class Dispatcher(store: Store,
 
   private def updateChemical(chemical: Chemical): Updated =
     store.updateChemical(chemical)
-    Updated()
+    Updated(chemical.id)
