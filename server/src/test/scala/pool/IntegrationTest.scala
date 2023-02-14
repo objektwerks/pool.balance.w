@@ -90,9 +90,9 @@ class IntegrationTest extends AnyFunSuite with Matchers:
 
   def updatePool: Unit =
     testPool = testPool.copy(volume = 10000)
-    val savePool = SavePool(testAccount.license, testPool)
-    dispatcher.dispatch(savePool) match
-      case PoolSaved(id) => id shouldBe testPool.id
+    val updatePool = UpdatePool(testAccount.license, testPool)
+    dispatcher.dispatch(updatePool) match
+      case Updated() =>
       case fault => fail(s"Invalid pool saved event: $fault")
     
   def listPools: Unit =
