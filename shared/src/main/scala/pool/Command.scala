@@ -13,12 +13,20 @@ final case class Reactivate(license: String) extends Command with License
 
 final case class ListPools(license: String) extends Command with License
 final case class SavePool(license: String, pool: Pool) extends Command with License
+final case class AddPool(license: String, pool: Pool) extends Command with License
+final case class UpdatePool(license: String, pool: Pool) extends Command with License
 
 final case class ListCleanings(license: String, poolId: Long) extends Command with License
 final case class SaveCleaning(license: String, cleaning: Cleaning) extends Command with License
+final case class AddCleaning(license: String, cleaning: Cleaning) extends Command with License
+final case class UpdateCleaning(license: String, cleaning: Cleaning) extends Command with License
 
 final case class ListMeasurements(license: String, poolId: Long) extends Command with License
 final case class SaveMeasurement(license: String, measurement: Measurement) extends Command with License
+final case class AddMeasurement(license: String, measurement: Measurement) extends Command with License
+final case class UpdateMeasurement(license: String, measurement: Measurement) extends Command with License
 
 final case class ListChemicals(license: String, poolId: Long) extends Command with License
 final case class SaveChemical(license: String, chemical: Chemical) extends Command with License
+final case class AddChemical(license: String, chemical: Chemical) extends Command with License
+final case class UpdateChemical(license: String, chemical: Chemical) extends Command with License
