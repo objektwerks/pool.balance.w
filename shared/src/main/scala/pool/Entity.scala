@@ -48,9 +48,9 @@ object Entity:
   given chemicalOrdering: Ordering[Chemical] = Ordering.by[Chemical, Long](c => c.added).reverse
 
 final case class Account(id: Long = 0,
-                         license: String = newLicense,
+                         license: String = Ids.newLicense,
                          emailAddress: String = "",
-                         pin: String = newPin,
+                         pin: String = Ids.newPin,
                          activated: Long = LocalDate.now.toEpochDay,
                          deactivated: Long = 0) extends Entity:
   def display = emailAddress
