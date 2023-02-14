@@ -127,11 +127,11 @@ class IntegrationTest extends AnyFunSuite with Matchers:
       case fault => fail(s"Invalid cleanings listed event: $fault")
     
   def addMeasurement: Unit =
-    val saveMeasurement = SaveMeasurement(testAccount.license, testMeasurement)
-    dispatcher.dispatch(saveMeasurement) match
-      case MeasurementSaved(id) =>
-        id should not be 0
-        testMeasurement = testMeasurement.copy(id = id)
+    val addMeasurement = AddMeasurement(testAccount.license, testMeasurement)
+    dispatcher.dispatch(addMeasurement) match
+      case MeasurementAdded(measurement) =>
+        measurement.id should not be 0
+        testMeasurement = testMeasurement.copy(id = measurement.id)
       case fault => fail(s"Invalid measurement saved event: $fault")
 
   def updateMeasurement: Unit =
