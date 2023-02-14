@@ -10,7 +10,7 @@ final case class LoggedIn(account: Account) extends Event
 final case class Deactivated(account: Account) extends Event
 final case class Reactivated(account: Account) extends Event
 
-final case class Updated() extends Event
+final case class Updated(id: Long) extends Event
 
 final case class PoolsListed(pools: List[Pool]) extends Event
 final case class PoolAdded(pool: Pool) extends Event
