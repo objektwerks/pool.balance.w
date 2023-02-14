@@ -159,9 +159,9 @@ class IntegrationTest extends AnyFunSuite with Matchers:
 
   def updateChemical: Unit =
     testChemical = testChemical.copy(amount = 2.0)
-    val saveChemical = SaveChemical(testAccount.license, testChemical)
-    dispatcher.dispatch(saveChemical) match
-      case ChemicalSaved(id) => id shouldBe testChemical.id
+    val updateChemical = UpdateChemical(testAccount.license, testChemical)
+    dispatcher.dispatch(updateChemical) match
+      case Updated() =>
       case fault => fail(s"Invalid chemical saved event: $fault")
 
   def listChemicals: Unit =
