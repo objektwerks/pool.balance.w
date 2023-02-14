@@ -4,7 +4,7 @@ import java.util.UUID
 
 import scala.util.Random
 
-object Pin:
+object Ids:
   private val specialChars = "~!@#$%^&*-+=<>?/:;".toList
   private val random = new Random
 
