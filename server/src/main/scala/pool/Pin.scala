@@ -24,4 +24,4 @@ object Pin:
         .appended(newSpecialChar)
     ).mkString
 
-  private def newLicense: String = UUID.randomUUID.toString
+  def newLicense: String = UUID.randomUUID.toString

@@ -56,27 +56,6 @@ final case class Account(id: Long = 0,
   def display = emailAddress
 
 object Account:
-  private val specialChars = "~!@#$%^&*-+=<>?/:;".toList
-  private val random = new Random
-
-  private def newSpecialChar: Char = specialChars(random.nextInt(specialChars.length))
-
-  /**
-   * 26 letters + 10 numbers + 18 special characters = 54 combinations
-   * 7 alphanumeric char pin = 54^7 ( 1,338,925,209,984 )
-   */
-  private def newPin: String =
-    Random.shuffle(
-      Random
-        .alphanumeric
-        .take(5)
-        .mkString
-        .prepended(newSpecialChar)
-        .appended(newSpecialChar)
-    ).mkString
-
-  private def newLicense: String = UUID.randomUUID.toString
-
   val empty = Account(
     license = "",
     emailAddress = "",
