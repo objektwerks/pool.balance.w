@@ -39,7 +39,7 @@ final class Dispatcher(store: Store,
       case Register(_) | Login(_, _) => true
 
   private def register(emailAddress: String): Registered | Fault =
-    val account = Account(emailAddress = emailAddress)
+    val account = Account(license = Ids.newLicense, emailAddress = emailAddress, pin = Ids.newPin)
     val sent = email(account.emailAddress, account.pin)
     val unique = store.isEmailAddressUnique(emailAddress)
     if sent && unique then Registered( store.register(account) )
