@@ -15,7 +15,8 @@ final class Dispatcher(store: Store,
         case Deactivate(license)             => deactivateAccount(license)
         case Reactivate(license)             => reactivateAccount(license)
         case ListPools(license)              => listPools(license)
-        case SavePool(_, pool)               => savePool(pool)
+        case AddPool(_, pool)                => addPool(pool)
+        case UpdatePool(_, pool)             => updatePool(pool)
         case ListCleanings(_, poolId)        => listCleanings(poolId)
         case SaveCleaning(_, cleaning)       => saveCleaning(cleaning)
         case ListMeasurements(_, poolId)     => listMeasurements(poolId)
@@ -63,11 +64,11 @@ final class Dispatcher(store: Store,
 
   private def listPools(license: String): PoolsListed = PoolsListed(store.listPools(license))
 
-  private def savePool(pool: Pool): PoolSaved =
-    PoolSaved(
-      if pool.id == 0 then store.addPool(pool)
-      else store.updatePool(pool)
-    )
+  private def addPool(pool: Pool): PoolAdded = PoolAdded( pool.copy(id = store.addPool(pool)) )
+
+  private def updatePool(pool: Pool): Updated =
+    store.updatePool(pool)
+    Updated()
 
   private def listCleanings(poolId: Long): CleaningsListed = CleaningsListed( store.listCleanings(poolId) )
 
