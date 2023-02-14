@@ -20,18 +20,22 @@ object Validator:
   extension (command: Command)
     def isValid: Boolean =
       command match
-        case register @ Register(emailAddress)         => register.isValid
-        case login @ Login(_, _)                       => login.isValid
-        case deactivate @ Deactivate(_)                => deactivate.isValid
-        case reactivate @ Reactivate(_)                => reactivate.isValid
-        case listPools @ ListPools(_)                  => listPools.isValid
-        case savePool @ SavePool(_, _)                 => savePool.isValid
-        case listCleanings @ ListCleanings(_, _)       => listCleanings.isValid
-        case saveCleaning @ SaveCleaning(_, _)         => saveCleaning.isValid
-        case listMeasurements @ ListMeasurements(_, _) => listMeasurements.isValid
-        case saveMeasurement @ SaveMeasurement(_, _)   => saveMeasurement.isValid
-        case listChemicals @ ListChemicals(_, _)       => listChemicals.isValid
-        case saveChemical @ SaveChemical(_, _)         => saveChemical.isValid
+        case register @ Register(emailAddress)           => register.isValid
+        case login @ Login(_, _)                         => login.isValid
+        case deactivate @ Deactivate(_)                  => deactivate.isValid
+        case reactivate @ Reactivate(_)                  => reactivate.isValid
+        case listPools @ ListPools(_)                    => listPools.isValid
+        case addPool @ AddPool(_, _)                     => addPool.isValid
+        case updatePool @ UpdatePool(_, _)               => updatePool.isValid
+        case listCleanings @ ListCleanings(_, _)         => listCleanings.isValid
+        case addCleaning @ AddCleaning(_, _)             => addCleaning.isValid
+        case updateCleaning @ UpdateCleaning(_, _)       => updateCleaning.isValid
+        case listMeasurements @ ListMeasurements(_, _)   => listMeasurements.isValid
+        case addMeasurement @ AddMeasurement(_, _)       => addMeasurement.isValid
+        case updateMeasurement @ UpdateMeasurement(_, _) => updateMeasurement.isValid
+        case listChemicals @ ListChemicals(_, _)         => listChemicals.isValid
+        case addChemical @ AddChemical(_, _)             => addChemical.isValid
+        case updateChemical @ UpdateChemical(_, _)       => updateChemical.isValid
 
   extension (register: Register)
     def isValid: Boolean = register.emailAddress.isEmailAddress
@@ -48,26 +52,38 @@ object Validator:
   extension (listPools: ListPools)
     def isValid: Boolean = listPools.license.isLicense
 
-  extension (savePool: SavePool)
-    def isValid: Boolean = savePool.license.isLicense && savePool.pool.isValid
+  extension (addPool: AddPool)
+    def isValid: Boolean = addPool.license.isLicense && addPool.pool.isValid
+
+  extension (updatePool: UpdatePool)
+    def isValid: Boolean = updatePool.license.isLicense && updatePool.pool.isValid
 
   extension (listCleanings: ListCleanings)
     def isValid: Boolean = listCleanings.license.isLicense
 
-  extension (saveCleaning: SaveCleaning)
-    def isValid: Boolean = saveCleaning.license.isLicense && saveCleaning.cleaning.isValid
+  extension (addCleaning: AddCleaning)
+    def isValid: Boolean = addCleaning.license.isLicense && addCleaning.cleaning.isValid
+
+  extension (updateCleaning: UpdateCleaning)
+    def isValid: Boolean = updateCleaning.license.isLicense && updateCleaning.cleaning.isValid
 
   extension (listMeasurements: ListMeasurements)
     def isValid: Boolean = listMeasurements.license.isLicense
 
-  extension (saveMeasurement: SaveMeasurement)
-    def isValid: Boolean = saveMeasurement.license.isLicense && saveMeasurement.measurement.isValid
+  extension (addMeasurement: AddMeasurement)
+    def isValid: Boolean = addMeasurement.license.isLicense && addMeasurement.measurement.isValid
+
+  extension (updateMeasurement: UpdateMeasurement)
+    def isValid: Boolean = updateMeasurement.license.isLicense && updateMeasurement.measurement.isValid
 
   extension (listChemicals: ListChemicals)
     def isValid: Boolean = listChemicals.license.isLicense
 
-  extension (saveChemical: SaveChemical)
-    def isValid: Boolean = saveChemical.license.isLicense && saveChemical.chemical.isValid
+  extension (addChemical: AddChemical)
+    def isValid: Boolean = addChemical.license.isLicense && addChemical.chemical.isValid
+
+  extension (updateChemical: UpdateChemical)
+    def isValid: Boolean = updateChemical.license.isLicense && updateChemical.chemical.isValid
 
   extension  (license: License)
     def isLicense: Boolean = license.license.isLicense
