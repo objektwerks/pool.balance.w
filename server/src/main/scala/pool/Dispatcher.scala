@@ -19,6 +19,8 @@ final class Dispatcher(store: Store,
         case UpdatePool(_, pool)             => updatePool(pool)
         case ListCleanings(_, poolId)        => listCleanings(poolId)
         case SaveCleaning(_, cleaning)       => saveCleaning(cleaning)
+        case AddCleaning(_, cleaning)        => addCleaning(cleaning)
+        case UpdateCleaning(_, cleaning)     => updateCleaning(cleaning)
         case ListMeasurements(_, poolId)     => listMeasurements(poolId)
         case SaveMeasurement(_, measurement) => saveMeasurement(measurement)
         case ListChemicals(_, poolId)        => listChemicals(poolId)
@@ -72,11 +74,11 @@ final class Dispatcher(store: Store,
 
   private def listCleanings(poolId: Long): CleaningsListed = CleaningsListed( store.listCleanings(poolId) )
 
-  private def saveCleaning(cleaning: Cleaning): CleaningSaved =
-    CleaningSaved(
-      if cleaning.id == 0 then store.addCleaning(cleaning)
-      else store.updateCleaning(cleaning)
-    )
+  private def addCleaning(cleaning: Cleaning): CleaningAdded = CleaningAdded( cleaning.copy(id = store.addCleaning(cleaning)) )
+
+  private def updateCleaning(cleaning: Cleaning): Updated =
+    store.updateCleaning(cleaning)
+    Updated()
 
   private def listMeasurements(poolId: Long): MeasurementsListed = MeasurementsListed( store.listMeasurements(poolId) )
 
