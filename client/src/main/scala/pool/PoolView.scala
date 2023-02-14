@@ -13,16 +13,26 @@ object PoolView extends View:
     val nameErrorBus = new EventBus[String]
     val volumeErrorBus = new EventBus[String]
 
-    def handler(either: Either[Fault, Event]): Unit =
+    def addHandler(either: Either[Fault, Event]): Unit =
       either match
         case Left(fault) => emitError(s"Add pool failed: ${fault.cause}")
         case Right(event) =>
           event match
-            case PoolSaved(id) =>
+            case PoolAdded(pool) =>
               clearErrors()
-              // model.addEntity(id) added or updated?
+              model.addEntity(pool)
               route(PoolsPage)
             case _ => log(s"Pool -> add handler failed: $event")
+
+    def updateHandler(either: Either[Fault, Event]): Unit =
+      either match
+        case Left(fault) => emitError(s"Update pool failed: ${fault.cause}")
+        case Right(event) =>
+          event match
+            case Updated() =>
+              clearErrors()
+              route(PoolsPage)
+            case _ => log(s"Pool -> update handler failed: $event")
 
     div(
       bar(
@@ -64,12 +74,21 @@ object PoolView extends View:
         },
       ),
       cbar(
-        btn("Save").amend {
+        btn("Add").amend {
           disabled <-- model.selectedEntityVar.signal.map { pool => pool.id.isGreaterThanZero }
           onClick --> { _ =>
-            log(s"Pool -> Save onClick")
-            val command = SavePool(accountVar.now().license, model.selectedEntityVar.now())
-            call(command, handler)
+            log(s"Pool -> Add onClick")
+            val command = AddPool(accountVar.now().license, model.selectedEntityVar.now())
+            call(command, addHandler)
+
+          }
+        },
+        btn("Update").amend {
+          disabled <-- model.selectedEntityVar.signal.map { pool => pool.id.isZero }
+          onClick --> { _ =>
+            log(s"Pool -> Update onClick")
+            val command = UpdatePool(accountVar.now().license, model.selectedEntityVar.now())
+            call(command, updateHandler)
           }
         }
       )
