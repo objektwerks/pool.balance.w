@@ -7,7 +7,7 @@ import org.scalajs.dom.console.log
 object Model:
   val emailAddressVar = Var("")
   val pinVar = Var("")
-  val accountVar = Var(Account.empty)
+  val accountVar = Var(Account())
 
   val poolsModel = Model[Pool](Var(List.empty[Pool]), Var(Pool()), Pool())
   val cleaningsModel = Model[Cleaning](Var(List.empty[Cleaning]), Var(Cleaning()), Cleaning())
