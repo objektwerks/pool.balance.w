@@ -50,9 +50,6 @@ lazy val client = (project in file("client"))
       "com.github.plokhotnyuk.jsoniter-scala" %%% "jsoniter-scala-macros" % jsoniterVersion % "compile-internal",
       "io.github.cquiroz" %%% "scala-java-time" % scalaJavaTimeVersion
     ),
-    scalaJSLinkerConfig ~= {
-      _.withModuleKind(ModuleKind.ESModule)
-    },
     useYarn := true,
     externalNpm := {
       poolbalance.base.getAbsoluteFile()
