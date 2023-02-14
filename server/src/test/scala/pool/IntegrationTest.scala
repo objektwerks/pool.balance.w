@@ -92,7 +92,7 @@ class IntegrationTest extends AnyFunSuite with Matchers:
     testPool = testPool.copy(volume = 10000)
     val updatePool = UpdatePool(testAccount.license, testPool)
     dispatcher.dispatch(updatePool) match
-      case Updated() =>
+      case Updated(id) => testPool.id shouldBe id
       case fault => fail(s"Invalid pool saved event: $fault")
     
   def listPools: Unit =
@@ -115,7 +115,7 @@ class IntegrationTest extends AnyFunSuite with Matchers:
     testCleaning = testCleaning.copy(vacuum = true)
     val updateCleaning = UpdateCleaning(testAccount.license, testCleaning)
     dispatcher.dispatch(updateCleaning) match
-      case Updated() =>
+      case Updated(id) => testCleaning.id shouldBe id
       case fault => fail(s"Invalid cleaning saved event: $fault")
 
   def listCleanings: Unit =
@@ -138,7 +138,7 @@ class IntegrationTest extends AnyFunSuite with Matchers:
     testMeasurement = testMeasurement.copy(temperature = 82)
     val updateMeasurement = UpdateMeasurement(testAccount.license, testMeasurement)
     dispatcher.dispatch(updateMeasurement) match
-      case Updated() =>
+      case Updated(id) => testMeasurement.id shouldBe id
       case fault => fail(s"Invalid measurement saved event: $fault")
 
   def listMeasurements: Unit =
@@ -161,7 +161,7 @@ class IntegrationTest extends AnyFunSuite with Matchers:
     testChemical = testChemical.copy(amount = 2.0)
     val updateChemical = UpdateChemical(testAccount.license, testChemical)
     dispatcher.dispatch(updateChemical) match
-      case Updated() =>
+      case Updated(id) => testChemical.id shouldBe id
       case fault => fail(s"Invalid chemical saved event: $fault")
 
   def listChemicals: Unit =
