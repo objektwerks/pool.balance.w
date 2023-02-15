@@ -14,6 +14,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.scalajs.js
 import scala.scalajs.js.Thenable.Implicits.*
+import scala.util.control.NonFatal
 
 import Serializer.given
 
@@ -53,7 +54,7 @@ object Proxy:
         log(s"Proxy:post json: $json")
         readFromString[Event](json)
     ).recover {
-      case failure: Exception =>
+      case NonFatal(failure) =>
         log(s"Proxy:post failure: ${failure.getCause}")
         Fault(failure.getMessage)
     }
