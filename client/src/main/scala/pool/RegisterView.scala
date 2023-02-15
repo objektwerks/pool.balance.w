@@ -16,17 +16,15 @@ object RegisterView extends View:
   def apply(emailAddressVar: Var[String], pinVar: Var[String], accountVar: Var[Account]): HtmlElement =
     val emailAddressErrorBus = new EventBus[String]
 
-    def handler(either: Either[Fault, Event]): Unit =
-      either match
-        case Left(fault) => emitError(s"Register failed: ${fault.cause}")
-        case Right(event) =>
-          event match
-            case Registered(account) =>
-              clearErrors()
-              accountVar.set(account)
-              pinVar.set(account.pin)
-              route(LoginPage)
-            case _ => log(s"Register -> handler failed: $event")
+    def handler(event: Event): Unit =
+      event match
+        case Fault(cause, _) => emitError(s"Register failed: $cause")
+        case Registered(account) =>
+          clearErrors()
+          accountVar.set(account)
+          pinVar.set(account.pin)
+          route(LoginPage)
+        case _ => log(s"Register -> handler failed: $event")
       
     div(
       hdr("Register"),
