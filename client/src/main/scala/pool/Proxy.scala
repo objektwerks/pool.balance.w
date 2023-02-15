@@ -37,8 +37,8 @@ object Proxy:
 
   def call(command: Command,
            handler: (event: Event) => Unit) =
-    val event = post(command)
-    handle(event, handler)
+    val future = post(command)
+    handle(future, handler)
 
   private def post(command: Command): Future[Event] =
     log(s"Proxy:post command: $command")
