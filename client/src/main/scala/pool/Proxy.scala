@@ -18,11 +18,7 @@ import scala.scalajs.js.Thenable.Implicits.*
 import Serializer.given
 
 object Proxy:
-  var serverUrl = ""
-
-  def set(url: String): Unit =
-    serverUrl = url
-    log("server url: %s", serverUrl)
+  private var serverUrl = ""
   
   private val hdrs = new Headers {
       js.Array(
@@ -34,6 +30,10 @@ object Proxy:
     method = HttpMethod.POST
     headers = hdrs
   }
+
+  def setServerUrl(url: String): Unit =
+    serverUrl = url
+    log("server url: %s", serverUrl)
 
   def call(command: Command,
            handler: (event: Event) => Unit) =

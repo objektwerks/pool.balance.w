@@ -10,7 +10,7 @@ import scala.scalajs.js.annotation.JSExportTopLevel
 
 @JSExportTopLevel("Client")
 class Client(serverUrl: String) extends js.Object:
-  Proxy.set(serverUrl)
+  Proxy.setServerUrl(serverUrl)
 
   render(
     container = document.getElementById("content"),
