@@ -48,12 +48,10 @@ object Proxy:
     (
       for
         response <- dom.fetch(serverUrl, params)
-        text     <- response.text()
+        json     <- response.text()
       yield
-        log(s"Proxy:post text: $text")
-        val event = readFromString[Event](text)
-        log(s"Proxy:post event: $event")
-        event
+        log(s"Proxy:post json: $json")
+        readFromString[Event](json)
     ).recover {
       case failure: Exception =>
         log(s"Proxy:post failure: ${failure.getCause}")
