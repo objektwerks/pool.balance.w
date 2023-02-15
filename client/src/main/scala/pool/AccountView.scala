@@ -9,16 +9,14 @@ import Validator.*
 
 object AccountView extends View:
   def apply(accountVar: Var[Account]): HtmlElement =
-    def deactivateHandler(either: Either[Fault, Event]): Unit =
-      either match
-        case Left(fault) => emitError(s"Deactivate failed: ${fault.cause}")
-        case Right(event) =>
-          event match
-            case Deactivated(account) =>
-              clearErrors()
-              accountVar.set(account)
-              route(AppPage)
-            case _ => log(s"Account -> deactivate handler failed: $event")
+    def deactivateHandler(event: Event): Unit =
+      event match
+        case Fault(cause, _) => emitError(s"Deactivate failed: $cause")
+        case Deactivated(account) =>
+          clearErrors()
+          accountVar.set(account)
+          route(AppPage)
+        case _ => log(s"Account -> deactivate handler failed: $event")
  
     def reactivateHandler(either: Either[Fault, Event]): Unit =
       either match
