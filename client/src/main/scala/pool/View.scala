@@ -2,6 +2,8 @@ package pool
 
 import com.raquo.laminar.api.L.*
 
+import org.scalajs.dom.console.log
+
 enum Mode:
   case add, edit, readonly
 
@@ -12,7 +14,9 @@ trait View:
   
   def route(page: Page): Unit = PageRouter.router.pushState(page)
 
-  def emitError(message: String): Unit = errorBus.emit(message)
+  def emitError(message: String): Unit =
+    errorBus.emit(message)
+    log(message)
 
   def clearErrors(): Unit = errorBus.emit("")
 
