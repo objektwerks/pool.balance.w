@@ -32,7 +32,7 @@ final class Emailer(config: Config) extends LazyLogging:
 
   private def sendEmail(recipients: List[String],
                         subject: String,
-                        message: String): Boolean =
+                        message: String): Unit =
     Using( smtpServer.createSession ) { session =>
       val email = Email.create
         .from(sender)
@@ -45,8 +45,9 @@ final class Emailer(config: Config) extends LazyLogging:
       logger.info("*** Emailer subject: {} to: {} message id: {}", subject, recipients.mkString, messageId)
     }.recover { error =>
       logger.error("*** Emailer subject: {} to: {} failed: {}",  subject, recipients.mkString, error.getMessage)
-    }.isSuccess
+      throw error
+    }
 
   def send(recipients: List[String],
            subject: String,
-           message: String): Boolean = retry(1)(sendEmail(recipients, subject, message))
+           message: String): Unit = retry(1)(sendEmail(recipients, subject, message))

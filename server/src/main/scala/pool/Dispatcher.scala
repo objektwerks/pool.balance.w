@@ -50,7 +50,7 @@ final class Dispatcher(store: Store,
      .get
 
 
-  private def email(emailAddress: String, pin: String): Boolean =
+  private def email(emailAddress: String, pin: String): Unit =
     val recipients = List(emailAddress)
     val message = s"<p>Save this pin: <b>${pin}</b> in a safe place; then delete this email.</p>"
     emailer.send(recipients, subject, message)
