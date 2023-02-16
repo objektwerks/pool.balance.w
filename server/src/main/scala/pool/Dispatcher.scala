@@ -67,9 +67,10 @@ final class Dispatcher(store: Store,
     else Fault(s"Failed to reactivate account due to invalid license: $license")
 
   private def listPools(license: String): Event =
-    Try { PoolsListed(store.listPools(license)) }.recover { case NonFatal(error) => Fault("List pools failed: $error") }.get
+    Try { PoolsListed(store.listPools(license)) }.recover { case NonFatal(error) => Fault(s"List pools failed: $error") }.get
 
-  private def addPool(pool: Pool): PoolAdded = PoolAdded( pool.copy(id = store.addPool(pool)) )
+  private def addPool(pool: Pool): Event =
+    Try { PoolAdded( pool.copy(id = store.addPool(pool)) ) }.recover { case NonFatal(error) => Fault(s"Add pool failed: $error") }.get
 
   private def updatePool(pool: Pool): Updated = Updated( store.updatePool(pool) )
 
