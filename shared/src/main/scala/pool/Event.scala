@@ -24,4 +24,7 @@ final case class MeasurementAdded(measurement: Measurement) extends Event
 final case class ChemicalsListed(chemicals: List[Chemical]) extends Event
 final case class ChemicalAdded(chemical: Chemical) extends Event
 
+object Fault:
+  def apply(throwable: Throwable): Fault = Fault(throwable.getMessage)
+
 final case class Fault(cause: String, occurred: Long = LocalDate.now.toEpochDay) extends Event

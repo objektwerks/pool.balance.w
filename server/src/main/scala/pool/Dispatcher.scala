@@ -87,7 +87,8 @@ final class Dispatcher(store: Store,
   private def updateCleaning(cleaning: Cleaning): Event =
     Try { Updated( store.updateCleaning(cleaning) ) }.recover { case NonFatal(error) => Fault(s"Update cleaning failed: $error") }.get
     
-  private def listMeasurements(poolId: Long): Event = MeasurementsListed( store.listMeasurements(poolId) )
+  private def listMeasurements(poolId: Long): Event =
+    Try { MeasurementsListed( store.listMeasurements(poolId) ) }.recover { case NonFatal(error) => Fault(s"List measurements failed: $error") }.get
 
   private def addMeasurement(measurement: Measurement): Event = MeasurementAdded( measurement.copy(id = store.addMeasurement(measurement)) )
 
