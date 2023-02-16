@@ -129,10 +129,19 @@ final class Dispatcher(store: Store,
      .get
     
   private def listChemicals(poolId: Long): Event =
-    Try { ChemicalsListed( store.listChemicals(poolId) ) }.recover { case NonFatal(error) => Fault("List chemicals failed:", error) }.get
+    Try {
+      ChemicalsListed( store.listChemicals(poolId) )
+    }.recover { case NonFatal(error) => Fault("List chemicals failed:", error) }
+     .get
 
   private def addChemical(chemical: Chemical): Event =
-    Try { ChemicalAdded( chemical.copy(id = store.addChemical(chemical)) ) }.recover { case NonFatal(error) => Fault("Add chemical failed:", error) }.get
+    Try {
+      ChemicalAdded( chemical.copy(id = store.addChemical(chemical)) )
+    }.recover { case NonFatal(error) => Fault("Add chemical failed:", error) }
+     .get
 
   private def updateChemical(chemical: Chemical): Event =
-    Try { Updated( store.updateChemical(chemical) ) }.recover { case NonFatal(error) => Fault("Update chemical failed:", error) }.get
+    Try {
+      Updated( store.updateChemical(chemical) )
+    }.recover { case NonFatal(error) => Fault("Update chemical failed:", error) }
+     .get
