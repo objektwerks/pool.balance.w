@@ -29,7 +29,7 @@ final class Dispatcher(store: Store,
         case UpdateChemical(_, chemical)       => updateChemical(chemical)
       else Fault(s"Failed to process invalid command: $command")
     }.recover {
-      case error: Throwable => Fault(s"Failed to process command: $command, due to this error: ${error.getMessage}")
+      case NonFatal(error) => Fault(s"Failed to process command: $command, because: ${error.getMessage}")
     }.get
 
   private val subject = "Account Registration"
@@ -40,11 +40,15 @@ final class Dispatcher(store: Store,
       case Register(_) | Login(_, _) => true
 
   private def register(emailAddress: String): Event =
-    val account = Account(license = Ids.newLicense, emailAddress = emailAddress, pin = Ids.newPin)
-    val unique = store.isEmailAddressUnique(emailAddress)
-    val sent = email(account.emailAddress, account.pin)
-    if unique && sent then Registered( store.register(account) )
-    else Fault(s"Registration failed for: $emailAddress")
+    Try {
+      val account = Account(license = Ids.newLicense, emailAddress = emailAddress, pin = Ids.newPin)
+      if store.isEmailAddressUnique(emailAddress) then
+        email(account.emailAddress, account.pin)
+        Registered( store.register(account) )
+      else Fault(s"Registration failed for: $emailAddress")
+    }.recover { case NonFatal(error) => Fault(s"Registration failed for: $emailAddress, because: ${error.getMessage}") }
+     .get
+
 
   private def email(emailAddress: String, pin: String): Boolean =
     val recipients = List(emailAddress)
