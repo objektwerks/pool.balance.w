@@ -41,9 +41,9 @@ final class Dispatcher(store: Store,
 
   private def register(emailAddress: String): Event =
     val account = Account(license = Ids.newLicense, emailAddress = emailAddress, pin = Ids.newPin)
-    val sent = email(account.emailAddress, account.pin)
     val unique = store.isEmailAddressUnique(emailAddress)
-    if sent && unique then Registered( store.register(account) )
+    val sent = email(account.emailAddress, account.pin)
+    if unique && sent then Registered( store.register(account) )
     else Fault(s"Registration failed for: $emailAddress")
 
   private def email(emailAddress: String, pin: String): Boolean =
@@ -75,11 +75,14 @@ final class Dispatcher(store: Store,
   private def updatePool(pool: Pool): Event =
     Try { Updated( store.updatePool(pool) ) }.recover { case NonFatal(error) => Fault(s"Update pool failed: $error") }.get
 
-  private def listCleanings(poolId: Long): Event = CleaningsListed( store.listCleanings(poolId) )
+  private def listCleanings(poolId: Long): Event =
+    Try { CleaningsListed( store.listCleanings(poolId) ) }.recover { case NonFatal(error) => Fault(s"List cleanings failed: $error") }.get
 
-  private def addCleaning(cleaning: Cleaning): Event = CleaningAdded( cleaning.copy(id = store.addCleaning(cleaning)) )
+  private def addCleaning(cleaning: Cleaning): Event =
+    Try { CleaningAdded( cleaning.copy(id = store.addCleaning(cleaning)) ) }.recover { case NonFatal(error) => Fault(s"Add Cleaning failed: $error") }.get
 
-  private def updateCleaning(cleaning: Cleaning): Event = Updated( store.updateCleaning(cleaning) )
+  private def updateCleaning(cleaning: Cleaning): Event =
+    Try { Updated( store.updateCleaning(cleaning) ) }.recover { case NonFatal(error) => Fault(s"Update cleaning failed: $error") }.get
     
   private def listMeasurements(poolId: Long): Event = MeasurementsListed( store.listMeasurements(poolId) )
 
