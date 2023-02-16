@@ -4,6 +4,7 @@ import scala.util.Try
 
 import Serializer.given
 import Validator.*
+import scala.util.control.NonFatal
 
 final class Dispatcher(store: Store,
                        emailer: Emailer):
@@ -38,7 +39,7 @@ final class Dispatcher(store: Store,
       case license: License          => store.isAuthorized(license.license)
       case Register(_) | Login(_, _) => true
 
-  private def register(emailAddress: String): Registered | Fault =
+  private def register(emailAddress: String): Event =
     val account = Account(license = Ids.newLicense, emailAddress = emailAddress, pin = Ids.newPin)
     val sent = email(account.emailAddress, account.pin)
     val unique = store.isEmailAddressUnique(emailAddress)
@@ -50,22 +51,23 @@ final class Dispatcher(store: Store,
     val message = s"<p>Save this pin: <b>${pin}</b> in a safe place; then delete this email.</p>"
     emailer.send(recipients, subject, message)
 
-  private def login(emailAddress: String, pin: String): LoggedIn | Fault =
+  private def login(emailAddress: String, pin: String): Event =
     val optionalAccount = store.login(emailAddress, pin)
     if optionalAccount.isDefined then LoggedIn(optionalAccount.get)
     else Fault(s"Failed to login due to invalid email address: $emailAddress and/or pin: $pin")
 
-  private def deactivateAccount(license: String): Deactivated | Fault =
+  private def deactivateAccount(license: String): Event =
     val optionalAccount = store.deactivateAccount(license)
     if optionalAccount.isDefined then Deactivated(optionalAccount.get)
     else Fault(s"Failed to deactivated account due to invalid license: $license")
 
-  private def reactivateAccount(license: String): Reactivated | Fault =
+  private def reactivateAccount(license: String): Event =
     val optionalAccount = store.reactivateAccount(license)
     if optionalAccount.isDefined then Reactivated(optionalAccount.get)
     else Fault(s"Failed to reactivate account due to invalid license: $license")
 
-  private def listPools(license: String): PoolsListed = PoolsListed(store.listPools(license))
+  private def listPools(license: String): Event =
+    Try { PoolsListed(store.listPools(license)) }.recover { case NonFatal(error) => Fault("List pools failed: $error") }.get
 
   private def addPool(pool: Pool): PoolAdded = PoolAdded( pool.copy(id = store.addPool(pool)) )
 
