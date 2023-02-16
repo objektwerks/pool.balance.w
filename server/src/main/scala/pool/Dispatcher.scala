@@ -41,7 +41,7 @@ final class Dispatcher(store: Store,
 
   private def isAuthorized(command: Command): Boolean =
     command match
-      case license: License          => store.isAuthorized(license.license)
+      case license: License          => Try { store.isAuthorized(license.license) }.getOrElse(false)
       case Register(_) | Login(_, _) => true
 
   private def register(emailAddress: String): Event =
