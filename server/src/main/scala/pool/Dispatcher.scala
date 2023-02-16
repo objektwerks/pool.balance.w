@@ -76,9 +76,12 @@ final class Dispatcher(store: Store,
     )
 
   private def reactivateAccount(license: String): Event =
-    val optionalAccount = Try { store.reactivateAccount(license) }.getOrElse(None)
-    if optionalAccount.isDefined then Reactivated(optionalAccount.get)
-    else Fault(s"Failed to reactivate account due to invalid license: $license")
+    Try { store.reactivateAccount(license) }.fold(
+      error => Fault("Reactivate account failed:", error),
+      optionalAccount =>
+        if optionalAccount.isDefined then Reactivated(optionalAccount.get)
+        else Fault(s"Reactivate account failed for license: $license")
+    )
 
   private def listPools(license: String): Event =
     Try {
