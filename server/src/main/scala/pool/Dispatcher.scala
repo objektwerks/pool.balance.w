@@ -87,6 +87,4 @@ final class Dispatcher(store: Store,
 
   private def addChemical(chemical: Chemical): ChemicalAdded = ChemicalAdded( chemical.copy(id = store.addChemical(chemical)) )
 
-  private def updateChemical(chemical: Chemical): Updated =
-    store.updateChemical(chemical)
-    Updated(chemical.id)
+  private def updateChemical(chemical: Chemical): Updated = Updated( store.updateChemical(chemical) )
