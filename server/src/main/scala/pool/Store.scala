@@ -251,7 +251,7 @@ final class Store(config: Config,
       .updateAndReturnGeneratedKey()
   }
 
-  def updateMeasurement(measurement: Measurement): Unit = DB localTx { implicit session =>
+  def updateMeasurement(measurement: Measurement): Long = DB localTx { implicit session =>
     sql"""
       update measurement set total_chlorine = ${measurement.totalChlorine}, free_chlorine = ${measurement.freeChlorine},
       combined_chlorine = ${measurement.combinedChlorine}, ph = ${measurement.ph}, calcium_hardness = ${measurement.calciumHardness},
@@ -261,6 +261,7 @@ final class Store(config: Config,
       where id = ${measurement.id}
       """
       .update()
+    measurement.id
   }
 
   def listChemicals(poolId: Long): List[Chemical] = DB readOnly { implicit session =>

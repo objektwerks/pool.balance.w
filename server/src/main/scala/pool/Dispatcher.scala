@@ -81,10 +81,8 @@ final class Dispatcher(store: Store,
 
   private def addMeasurement(measurement: Measurement): MeasurementAdded = MeasurementAdded( measurement.copy(id = store.addMeasurement(measurement)) )
 
-  private def updateMeasurement(measurement: Measurement): Updated =
-    store.updateMeasurement(measurement)
-    Updated(measurement.id)
-
+  private def updateMeasurement(measurement: Measurement): Updated = Updated( store.updateMeasurement(measurement) )
+    
   private def listChemicals(poolId: Long): ChemicalsListed = ChemicalsListed( store.listChemicals(poolId) )
 
   private def addChemical(chemical: Chemical): ChemicalAdded = ChemicalAdded( chemical.copy(id = store.addChemical(chemical)) )
