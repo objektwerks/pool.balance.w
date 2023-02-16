@@ -26,5 +26,6 @@ final case class ChemicalAdded(chemical: Chemical) extends Event
 
 object Fault:
   def apply(throwable: Throwable): Fault = Fault(throwable.getMessage)
+  def apply(message: String, throwable: Throwable): Fault = Fault(message + throwable.getMessage)
 
 final case class Fault(cause: String, occurred: Long = LocalDate.now.toEpochDay) extends Event
