@@ -65,7 +65,7 @@ final class Dispatcher(store: Store,
     else Fault(s"Failed to login due to invalid email address: $emailAddress and/or pin: $pin")
 
   private def deactivateAccount(license: String): Event =
-    val optionalAccount = store.deactivateAccount(license)
+    val optionalAccount = Try { store.deactivateAccount(license) }.recover { case NonFatal(_) => None }.get
     if optionalAccount.isDefined then Deactivated(optionalAccount.get)
     else Fault(s"Failed to deactivated account due to invalid license: $license")
 
