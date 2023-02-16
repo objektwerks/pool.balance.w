@@ -2,15 +2,13 @@ package pool
 
 import com.raquo.laminar.api.L.*
 
-import org.scalajs.dom.console.log
-
 import Component.*
 
 object PoolsView extends View:
   def apply(model: Model[Pool], accountVar: Var[Account]): HtmlElement =
     def handler(event: Event): Unit =
       event match
-        case Fault(cause, _) => emitError(s"List pools failed: $cause")
+        case Fault(cause, _) => emitError(cause)
         case PoolsListed(pools: List[Pool]) =>
           clearErrors()
           model.setEntities(pools)

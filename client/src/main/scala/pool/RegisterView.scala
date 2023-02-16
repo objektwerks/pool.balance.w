@@ -2,8 +2,6 @@ package pool
 
 import com.raquo.laminar.api.L.*
 
-import org.scalajs.dom.console.log
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
@@ -18,7 +16,7 @@ object RegisterView extends View:
 
     def handler(event: Event): Unit =
       event match
-        case Fault(cause, _) => emitError(s"Register failed: $cause")
+        case Fault(cause, _) => emitError(cause)
         case Registered(account) =>
           clearErrors()
           accountVar.set(account)

@@ -2,8 +2,6 @@ package pool
 
 import com.raquo.laminar.api.L.*
 
-import org.scalajs.dom.console.log
-
 import Component.*
 import Error.*
 import Validator.*
@@ -15,7 +13,7 @@ object PoolView extends View:
 
     def addHandler(event: Event): Unit =
       event match
-        case Fault(cause, _) => emitError(s"Add pool failed: $cause")
+        case Fault(cause, _) => emitError(cause)
         case PoolAdded(pool) =>
           clearErrors()
           model.addEntity(pool)
@@ -24,7 +22,7 @@ object PoolView extends View:
 
     def updateHandler(event: Event): Unit =
       event match
-        case Fault(cause, _) => emitError(s"Update pool failed: $cause")
+        case Fault(cause, _) => emitError(cause)
         case Updated(id) =>
           clearErrors()
           route(PoolsPage)

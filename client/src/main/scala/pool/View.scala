@@ -14,6 +14,8 @@ trait View:
   
   def route(page: Page): Unit = PageRouter.router.pushState(page)
 
+  def log(message: String): Unit = log(message)
+
   def emitError(message: String): Unit =
     errorBus.emit(message)
     log(message)

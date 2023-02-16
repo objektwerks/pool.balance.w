@@ -2,8 +2,6 @@ package pool
 
 import com.raquo.laminar.api.L.*
 
-import org.scalajs.dom.console.log
-
 import Component.*
 import Error.*
 import Message.*
@@ -16,7 +14,7 @@ object LoginView extends View:
 
     def handler(event: Event): Unit =
       event match
-        case Fault(cause, _) => emitError(s"Login failed: $cause")
+        case Fault(cause, _) => emitError(cause)
         case LoggedIn(account) =>
           clearErrors()
           accountVar.set(account)
