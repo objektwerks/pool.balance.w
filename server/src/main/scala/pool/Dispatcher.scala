@@ -70,7 +70,7 @@ final class Dispatcher(store: Store,
     else Fault(s"Failed to deactivated account due to invalid license: $license")
 
   private def reactivateAccount(license: String): Event =
-    val optionalAccount = store.reactivateAccount(license)
+    val optionalAccount = Try { store.reactivateAccount(license) }.recover { case NonFatal(_) => None }.get
     if optionalAccount.isDefined then Reactivated(optionalAccount.get)
     else Fault(s"Failed to reactivate account due to invalid license: $license")
 
