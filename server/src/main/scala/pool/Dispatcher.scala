@@ -60,9 +60,12 @@ final class Dispatcher(store: Store,
     emailer.send(recipients, subject, message)
 
   private def login(emailAddress: String, pin: String): Event =
-    val optionalAccount = Try { store.login(emailAddress, pin) }.getOrElse(None)
-    if optionalAccount.isDefined then LoggedIn(optionalAccount.get)
-    else Fault(s"Failed to login due to invalid email address: $emailAddress and/or pin: $pin")
+    Try { store.login(emailAddress, pin) }.fold(
+      error => Fault("Login failed:", error),
+      optionalAccount =>
+        if optionalAccount.isDefined then LoggedIn(optionalAccount.get)
+        else Fault(s"Login failed for email address: $emailAddress and pin: $pin")
+    )
 
   private def deactivateAccount(license: String): Event =
     val optionalAccount = Try { store.deactivateAccount(license) }.getOrElse(None)
