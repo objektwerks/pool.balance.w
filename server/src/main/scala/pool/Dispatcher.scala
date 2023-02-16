@@ -90,9 +90,11 @@ final class Dispatcher(store: Store,
   private def listMeasurements(poolId: Long): Event =
     Try { MeasurementsListed( store.listMeasurements(poolId) ) }.recover { case NonFatal(error) => Fault(s"List measurements failed:", error) }.get
 
-  private def addMeasurement(measurement: Measurement): Event = MeasurementAdded( measurement.copy(id = store.addMeasurement(measurement)) )
+  private def addMeasurement(measurement: Measurement): Event =
+    Try { MeasurementAdded( measurement.copy(id = store.addMeasurement(measurement)) ) }.recover { case NonFatal(error) => Fault("Add measurement failed:", error) }.get
 
-  private def updateMeasurement(measurement: Measurement): Event = Updated( store.updateMeasurement(measurement) )
+  private def updateMeasurement(measurement: Measurement): Event =
+    Try { Updated( store.updateMeasurement(measurement) ) }.recover { case NonFatal(error) => Fault("Update measurement failed:", error) }.get
     
   private def listChemicals(poolId: Long): Event = ChemicalsListed( store.listChemicals(poolId) )
 
