@@ -70,25 +70,25 @@ final class Dispatcher(store: Store,
     else Fault(s"Failed to reactivate account due to invalid license: $license")
 
   private def listPools(license: String): Event =
-    Try { PoolsListed(store.listPools(license)) }.recover { case NonFatal(error) => Fault(s"List pools failed: $error") }.get
+    Try { PoolsListed(store.listPools(license)) }.recover { case NonFatal(error) => Fault("List pools failed:", error) }.get
 
   private def addPool(pool: Pool): Event =
-    Try { PoolAdded( pool.copy(id = store.addPool(pool)) ) }.recover { case NonFatal(error) => Fault(s"Add pool failed: $error") }.get
+    Try { PoolAdded( pool.copy(id = store.addPool(pool)) ) }.recover { case NonFatal(error) => Fault("Add pool failed:", error) }.get
 
   private def updatePool(pool: Pool): Event =
-    Try { Updated( store.updatePool(pool) ) }.recover { case NonFatal(error) => Fault(s"Update pool failed: $error") }.get
+    Try { Updated( store.updatePool(pool) ) }.recover { case NonFatal(error) => Fault("Update pool failed:", error) }.get
 
   private def listCleanings(poolId: Long): Event =
-    Try { CleaningsListed( store.listCleanings(poolId) ) }.recover { case NonFatal(error) => Fault(s"List cleanings failed: $error") }.get
+    Try { CleaningsListed( store.listCleanings(poolId) ) }.recover { case NonFatal(error) => Fault("List cleanings failed:", error) }.get
 
   private def addCleaning(cleaning: Cleaning): Event =
-    Try { CleaningAdded( cleaning.copy(id = store.addCleaning(cleaning)) ) }.recover { case NonFatal(error) => Fault(s"Add Cleaning failed: $error") }.get
+    Try { CleaningAdded( cleaning.copy(id = store.addCleaning(cleaning)) ) }.recover { case NonFatal(error) => Fault("Add Cleaning failed:", error) }.get
 
   private def updateCleaning(cleaning: Cleaning): Event =
-    Try { Updated( store.updateCleaning(cleaning) ) }.recover { case NonFatal(error) => Fault(s"Update cleaning failed: $error") }.get
+    Try { Updated( store.updateCleaning(cleaning) ) }.recover { case NonFatal(error) => Fault(s"Update cleaning failed:", error) }.get
     
   private def listMeasurements(poolId: Long): Event =
-    Try { MeasurementsListed( store.listMeasurements(poolId) ) }.recover { case NonFatal(error) => Fault(s"List measurements failed: $error") }.get
+    Try { MeasurementsListed( store.listMeasurements(poolId) ) }.recover { case NonFatal(error) => Fault(s"List measurements failed:", error) }.get
 
   private def addMeasurement(measurement: Measurement): Event = MeasurementAdded( measurement.copy(id = store.addMeasurement(measurement)) )
 
