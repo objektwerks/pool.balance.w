@@ -69,10 +69,8 @@ final class Dispatcher(store: Store,
 
   private def addPool(pool: Pool): PoolAdded = PoolAdded( pool.copy(id = store.addPool(pool)) )
 
-  private def updatePool(pool: Pool): Updated =
-    store.updatePool(pool)
-    Updated(pool.id)
-
+  private def updatePool(pool: Pool): Updated = Updated( store.updatePool(pool) )
+  
   private def listCleanings(poolId: Long): CleaningsListed = CleaningsListed( store.listCleanings(poolId) )
 
   private def addCleaning(cleaning: Cleaning): CleaningAdded = CleaningAdded( cleaning.copy(id = store.addCleaning(cleaning)) )
