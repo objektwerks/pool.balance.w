@@ -72,22 +72,23 @@ final class Dispatcher(store: Store,
   private def addPool(pool: Pool): Event =
     Try { PoolAdded( pool.copy(id = store.addPool(pool)) ) }.recover { case NonFatal(error) => Fault(s"Add pool failed: $error") }.get
 
-  private def updatePool(pool: Pool): Updated = Updated( store.updatePool(pool) )
+  private def updatePool(pool: Pool): Event =
+    Try { Updated( store.updatePool(pool) ) }.recover { case NonFatal(error) => Fault(s"Update pool failed: $error") }.get
 
-  private def listCleanings(poolId: Long): CleaningsListed = CleaningsListed( store.listCleanings(poolId) )
+  private def listCleanings(poolId: Long): Event = CleaningsListed( store.listCleanings(poolId) )
 
-  private def addCleaning(cleaning: Cleaning): CleaningAdded = CleaningAdded( cleaning.copy(id = store.addCleaning(cleaning)) )
+  private def addCleaning(cleaning: Cleaning): Event = CleaningAdded( cleaning.copy(id = store.addCleaning(cleaning)) )
 
-  private def updateCleaning(cleaning: Cleaning): Updated = Updated( store.updateCleaning(cleaning) )
+  private def updateCleaning(cleaning: Cleaning): Event = Updated( store.updateCleaning(cleaning) )
     
-  private def listMeasurements(poolId: Long): MeasurementsListed = MeasurementsListed( store.listMeasurements(poolId) )
+  private def listMeasurements(poolId: Long): Event = MeasurementsListed( store.listMeasurements(poolId) )
 
-  private def addMeasurement(measurement: Measurement): MeasurementAdded = MeasurementAdded( measurement.copy(id = store.addMeasurement(measurement)) )
+  private def addMeasurement(measurement: Measurement): Event = MeasurementAdded( measurement.copy(id = store.addMeasurement(measurement)) )
 
-  private def updateMeasurement(measurement: Measurement): Updated = Updated( store.updateMeasurement(measurement) )
+  private def updateMeasurement(measurement: Measurement): Event = Updated( store.updateMeasurement(measurement) )
     
-  private def listChemicals(poolId: Long): ChemicalsListed = ChemicalsListed( store.listChemicals(poolId) )
+  private def listChemicals(poolId: Long): Event = ChemicalsListed( store.listChemicals(poolId) )
 
-  private def addChemical(chemical: Chemical): ChemicalAdded = ChemicalAdded( chemical.copy(id = store.addChemical(chemical)) )
+  private def addChemical(chemical: Chemical): Event = ChemicalAdded( chemical.copy(id = store.addChemical(chemical)) )
 
-  private def updateChemical(chemical: Chemical): Updated = Updated( store.updateChemical(chemical) )
+  private def updateChemical(chemical: Chemical): Event = Updated( store.updateChemical(chemical) )
