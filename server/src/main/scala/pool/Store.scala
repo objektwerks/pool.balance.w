@@ -208,13 +208,14 @@ final class Store(config: Config,
       .updateAndReturnGeneratedKey()
   }
 
-  def updateCleaning(cleaning: Cleaning): Unit = DB localTx { implicit session =>
+  def updateCleaning(cleaning: Cleaning): Long = DB localTx { implicit session =>
     sql"""
       update cleaning set brush = ${cleaning.brush}, net = ${cleaning.net}, skimmer_basket = ${cleaning.skimmerBasket},
       pump_basket = ${cleaning.pumpBasket}, pump_filter = ${cleaning.pumpFilter}, vacuum = ${cleaning.vacuum},
       cleaned = ${cleaning.cleaned} where id = ${cleaning.id}
       """
       .update()
+    cleaning.id
   }
 
   def listMeasurements(poolId: Long): List[Measurement] = DB readOnly { implicit session =>
