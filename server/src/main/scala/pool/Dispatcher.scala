@@ -93,13 +93,22 @@ final class Dispatcher(store: Store,
      .get
 
   private def listCleanings(poolId: Long): Event =
-    Try { CleaningsListed( store.listCleanings(poolId) ) }.recover { case NonFatal(error) => Fault("List cleanings failed:", error) }.get
+    Try {
+      CleaningsListed( store.listCleanings(poolId) )
+    }.recover { case NonFatal(error) => Fault("List cleanings failed:", error) }
+     .get
 
   private def addCleaning(cleaning: Cleaning): Event =
-    Try { CleaningAdded( cleaning.copy(id = store.addCleaning(cleaning)) ) }.recover { case NonFatal(error) => Fault("Add Cleaning failed:", error) }.get
+    Try {
+      CleaningAdded( cleaning.copy(id = store.addCleaning(cleaning)) )
+    }.recover { case NonFatal(error) => Fault("Add Cleaning failed:", error) }
+     .get
 
   private def updateCleaning(cleaning: Cleaning): Event =
-    Try { Updated( store.updateCleaning(cleaning) ) }.recover { case NonFatal(error) => Fault(s"Update cleaning failed:", error) }.get
+    Try {
+      Updated( store.updateCleaning(cleaning) )
+    }.recover { case NonFatal(error) => Fault(s"Update cleaning failed:", error) }
+     .get
     
   private def listMeasurements(poolId: Long): Event =
     Try { MeasurementsListed( store.listMeasurements(poolId) ) }.recover { case NonFatal(error) => Fault(s"List measurements failed:", error) }.get
