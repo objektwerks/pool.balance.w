@@ -60,7 +60,7 @@ final class Dispatcher(store: Store,
     emailer.send(recipients, subject, message)
 
   private def login(emailAddress: String, pin: String): Event =
-    val optionalAccount = store.login(emailAddress, pin)
+    val optionalAccount = Try { store.login(emailAddress, pin) }.recover { case NonFatal(_) => None }.get
     if optionalAccount.isDefined then LoggedIn(optionalAccount.get)
     else Fault(s"Failed to login due to invalid email address: $emailAddress and/or pin: $pin")
 
