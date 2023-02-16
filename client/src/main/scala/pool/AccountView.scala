@@ -11,7 +11,7 @@ object AccountView extends View:
   def apply(accountVar: Var[Account]): HtmlElement =
     def deactivateHandler(event: Event): Unit =
       event match
-        case Fault(cause, _) => emitError(s"Deactivate failed: $cause")
+        case Fault(cause, _) => emitError(cause)
         case Deactivated(account) =>
           clearErrors()
           accountVar.set(account)
@@ -20,7 +20,7 @@ object AccountView extends View:
  
     def reactivateHandler(event: Event): Unit =
       event match
-        case Fault(cause, _) => emitError(s"Reactivate failed: $cause")
+        case Fault(cause, _) => emitError(cause)
         case Reactivated(account) =>
           clearErrors()
           accountVar.set(account)
