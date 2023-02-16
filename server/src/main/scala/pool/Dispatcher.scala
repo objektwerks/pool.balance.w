@@ -68,9 +68,12 @@ final class Dispatcher(store: Store,
     )
 
   private def deactivateAccount(license: String): Event =
-    val optionalAccount = Try { store.deactivateAccount(license) }.getOrElse(None)
-    if optionalAccount.isDefined then Deactivated(optionalAccount.get)
-    else Fault(s"Failed to deactivated account due to invalid license: $license")
+    Try { store.deactivateAccount(license) }.fold(
+      error => Fault("Deactivate account failed:", error),
+      optionalAccount =>
+        if optionalAccount.isDefined then Deactivated(optionalAccount.get)
+        else Fault(s"Deactivate account failed for license: $license")
+    )
 
   private def reactivateAccount(license: String): Event =
     val optionalAccount = Try { store.reactivateAccount(license) }.getOrElse(None)
