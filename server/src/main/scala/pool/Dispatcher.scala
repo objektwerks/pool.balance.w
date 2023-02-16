@@ -41,7 +41,13 @@ final class Dispatcher(store: Store,
 
   private def isAuthorized(command: Command): Boolean =
     command match
-      case license: License          => Try { store.isAuthorized(license.license) }.getOrElse(false)
+      case license: License =>
+        Try {
+          store.isAuthorized(license.license)
+        }.recover { case NonFatal(error) =>
+          logger.error(s"Is authorized failed: $error")
+          false
+        }.get
       case Register(_) | Login(_, _) => true
 
   private def register(emailAddress: String): Event =
