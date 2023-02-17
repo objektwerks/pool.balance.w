@@ -301,7 +301,7 @@ final class Store(config: Config,
       .map(rs =>
         Fault(
           rs.string("cause"),
-          rs.long("occurred")
+          rs.string("occurred")
         )
       )
       .list()
