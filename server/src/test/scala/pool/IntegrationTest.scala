@@ -49,8 +49,7 @@ class IntegrationTest extends AnyFunSuite with Matchers:
     updateChemical
     listChemicals
 
-    addFault
-    listFaults
+    fault
   }
 
   def register: Unit =
@@ -175,9 +174,7 @@ class IntegrationTest extends AnyFunSuite with Matchers:
         chemicals.head shouldBe testChemical
       case fault => fail(s"Invalid chemicals listed event: $fault")
 
-  def addFault: Unit =
+  def fault: Unit =
     val fault = Fault("error message")
     store.addFault(fault)
-
-  def listFaults: Unit =
     store.listFaults().length shouldBe 1

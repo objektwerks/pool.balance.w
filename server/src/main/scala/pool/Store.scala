@@ -311,5 +311,5 @@ final class Store(config: Config,
     sql"""
       insert into fault(cause, occurred) values(${fault.cause}, ${fault.occurred})
       """
-      .execute
+      .update
   }
