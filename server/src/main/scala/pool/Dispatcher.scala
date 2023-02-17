@@ -42,7 +42,7 @@ final class Dispatcher(store: Store,
         Try {
           store.isAuthorized(license.license)
         }.recover { case NonFatal(error) =>
-          logger.error(s" failed: $error")
+          logger.error(s"Authorization failed: $error")
           false
         }.get
       case Register(_) | Login(_, _) => true
