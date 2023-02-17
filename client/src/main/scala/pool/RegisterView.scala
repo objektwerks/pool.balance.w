@@ -16,7 +16,7 @@ object RegisterView extends View:
 
     def handler(event: Event): Unit =
       event match
-        case Fault(cause, _, _) => emitError(cause)
+        case Fault(cause, _) => emitError(cause)
         case Registered(account) =>
           clearErrors()
           accountVar.set(account)
