@@ -296,6 +296,18 @@ final class Store(config: Config,
     chemical.id
   }
 
+  def listFaults(): List[Fault] = DB readOnly { implicit session =>
+    sql"select * from fault order by occurred desc"
+      .map(rs =>
+        Fault(
+          rs.string("cause"),
+          rs.long("occurred"),
+          rs.long("id")
+        )
+      )
+      .list()
+  }
+
   def addFault(fault: Fault): Unit = DB localTx { implicit session =>
     sql"""
       insert into fault(cause, occurred) values(${fault.cause}, ${fault.occurred})
