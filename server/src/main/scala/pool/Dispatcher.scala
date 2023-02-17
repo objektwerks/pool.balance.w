@@ -29,7 +29,7 @@ final class Dispatcher(store: Store,
         case ListChemicals(_, poolId)          => listChemicals(poolId)
         case AddChemical(_, chemical)          => addChemical(chemical)
         case UpdateChemical(_, chemical)       => updateChemical(chemical)
-      else Fault(s"Failed to process invalid or unauthorized command: $command")
+      else Fault(s"Command validation or authorization failed for: $command")
     }.recover {
       case NonFatal(error) => Fault(s"Failed to process command: $command, because: ${error.getMessage}")
     }.get
@@ -42,7 +42,7 @@ final class Dispatcher(store: Store,
         Try {
           store.isAuthorized(license.license)
         }.recover { case NonFatal(error) =>
-          logger.error(s"Is authorized failed: $error")
+          logger.error(s" failed: $error")
           false
         }.get
       case Register(_) | Login(_, _) => true
