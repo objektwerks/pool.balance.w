@@ -10,8 +10,10 @@ import Validator.*
 
 final class Dispatcher(store: Store, emailer: Emailer) extends LazyLogging:
   def dispatch[E <: Event](command: Command): Event =
+    if !command.isValid then Fault(s"Command is invalid: $command")
+    if !isAuthorized(command) then Fault(s"Command is unauthorized: $command")
     Try {
-      if command.isValid && isAuthorized(command) then command match
+      command match
         case Register(emailAddress)            => register(emailAddress)
         case Login(emailAddress, pin)          => login(emailAddress, pin)
         case Deactivate(license)               => deactivateAccount(license)
@@ -28,7 +30,6 @@ final class Dispatcher(store: Store, emailer: Emailer) extends LazyLogging:
         case ListChemicals(_, poolId)          => listChemicals(poolId)
         case AddChemical(_, chemical)          => addChemical(chemical)
         case UpdateChemical(_, chemical)       => updateChemical(chemical)
-      else Fault(s"Command validation or authorization failed for: $command")
     }.recover {
       case NonFatal(error) => Fault(s"Failed to process command: $command, because: ${error.getMessage}")
     }.get
