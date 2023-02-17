@@ -12,27 +12,23 @@ final class Dispatcher(store: Store, emailer: Emailer) extends LazyLogging:
   def dispatch[E <: Event](command: Command): Event =
     if !command.isValid then Fault(s"Command is invalid: $command")
     if !isAuthorized(command) then Fault(s"Command is unauthorized: $command")
-    Try {
-      command match
-        case Register(emailAddress)            => register(emailAddress)
-        case Login(emailAddress, pin)          => login(emailAddress, pin)
-        case Deactivate(license)               => deactivateAccount(license)
-        case Reactivate(license)               => reactivateAccount(license)
-        case ListPools(license)                => listPools(license)
-        case AddPool(_, pool)                  => addPool(pool)
-        case UpdatePool(_, pool)               => updatePool(pool)
-        case ListCleanings(_, poolId)          => listCleanings(poolId)
-        case AddCleaning(_, cleaning)          => addCleaning(cleaning)
-        case UpdateCleaning(_, cleaning)       => updateCleaning(cleaning)
-        case ListMeasurements(_, poolId)       => listMeasurements(poolId)
-        case AddMeasurement(_, measurement)    => addMeasurement(measurement)
-        case UpdateMeasurement(_, measurement) => updateMeasurement(measurement)
-        case ListChemicals(_, poolId)          => listChemicals(poolId)
-        case AddChemical(_, chemical)          => addChemical(chemical)
-        case UpdateChemical(_, chemical)       => updateChemical(chemical)
-    }.recover {
-      case NonFatal(error) => Fault(s"Failed to process command: $command, because: ${error.getMessage}")
-    }.get
+    command match
+      case Register(emailAddress)            => register(emailAddress)
+      case Login(emailAddress, pin)          => login(emailAddress, pin)
+      case Deactivate(license)               => deactivateAccount(license)
+      case Reactivate(license)               => reactivateAccount(license)
+      case ListPools(license)                => listPools(license)
+      case AddPool(_, pool)                  => addPool(pool)
+      case UpdatePool(_, pool)               => updatePool(pool)
+      case ListCleanings(_, poolId)          => listCleanings(poolId)
+      case AddCleaning(_, cleaning)          => addCleaning(cleaning)
+      case UpdateCleaning(_, cleaning)       => updateCleaning(cleaning)
+      case ListMeasurements(_, poolId)       => listMeasurements(poolId)
+      case AddMeasurement(_, measurement)    => addMeasurement(measurement)
+      case UpdateMeasurement(_, measurement) => updateMeasurement(measurement)
+      case ListChemicals(_, poolId)          => listChemicals(poolId)
+      case AddChemical(_, chemical)          => addChemical(chemical)
+      case UpdateChemical(_, chemical)       => updateChemical(chemical)
 
   private val subject = "Account Registration"
 
