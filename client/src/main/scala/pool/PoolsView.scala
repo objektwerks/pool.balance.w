@@ -8,7 +8,7 @@ object PoolsView extends View:
   def apply(model: Model[Pool], accountVar: Var[Account]): HtmlElement =
     def handler(event: Event): Unit =
       event match
-        case Fault(cause, _) => emitError(cause)
+        case Fault(cause, _, _) => emitError(cause)
         case PoolsListed(pools: List[Pool]) =>
           clearErrors()
           model.setEntities(pools)

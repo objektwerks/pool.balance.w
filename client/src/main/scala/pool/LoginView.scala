@@ -14,7 +14,7 @@ object LoginView extends View:
 
     def handler(event: Event): Unit =
       event match
-        case Fault(cause, _) => emitError(cause)
+        case Fault(cause, _, _) => emitError(cause)
         case LoggedIn(account) =>
           clearErrors()
           accountVar.set(account)

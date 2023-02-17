@@ -16,7 +16,7 @@ final class CommandHandler(dispatcher: Dispatcher) extends HttpHandler with Lazy
     
     val event = dispatcher.dispatch(command)
     event match
-      case Fault(cause, _) => logger.error(cause)
+      case Fault(cause, _, _) => logger.error(cause)
       case _ =>
     val response = writeToString[Event](event)
 
