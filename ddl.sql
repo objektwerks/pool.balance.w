@@ -56,6 +56,7 @@ CREATE TABLE chemical (
 );
 
 CREATE TABLE fault (
+  id BIGSERIAL PRIMARY KEY,
   cause VARCHAR NOT NULL,
   occurred BIGINT NOT NULL
 );
