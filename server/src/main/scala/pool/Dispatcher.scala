@@ -11,7 +11,11 @@ import Validator.*
 final class Dispatcher(store: Store, emailer: Emailer) extends LazyLogging:
   def dispatch[E <: Event](command: Command): Event =
     if !command.isValid then Fault(s"Command is invalid: $command")
-    if !isAuthorized(command) then Fault(s"Command is unauthorized: $command")
+    isAuthorized(command) match
+      case Authorized(isAuthorized) => if !isAuthorized then Fault(s"License is unauthorized: $command")
+      case fault @ Fault(_, _) => fault
+      case _ =>
+
     command match
       case Register(emailAddress)            => register(emailAddress)
       case Login(emailAddress, pin)          => login(emailAddress, pin)
@@ -30,20 +34,14 @@ final class Dispatcher(store: Store, emailer: Emailer) extends LazyLogging:
       case AddChemical(_, chemical)          => addChemical(chemical)
       case UpdateChemical(_, chemical)       => updateChemical(chemical)
 
-  private val subject = "Account Registration"
-
-  private def isAuthorized(command: Command): Boolean =
+  private def isAuthorized(command: Command): Event =
     command match
       case license: License =>
         Try {
-          store.isAuthorized(license.license)
-        }.recover { case NonFatal(error) =>
-          val message = s"Authorization failed: $error"
-          logger.error(message)
-          store.addFault( Fault(message) )
-          false
-        }.get
-      case Register(_) | Login(_, _) => true
+          Authorized( store.isAuthorized(license.license) )
+        }.recover { case NonFatal(error) => Fault(s"Authorization failed: $error") }
+         .get
+      case Register(_) | Login(_, _) => Authorized(true)
 
   private def register(emailAddress: String): Event =
     Try {
@@ -52,8 +50,11 @@ final class Dispatcher(store: Store, emailer: Emailer) extends LazyLogging:
         email(account.emailAddress, account.pin)
         Registered( store.register(account) )
       else Fault(s"Registration failed because: $emailAddress is already registered.")
-    }.recover { case NonFatal(error) => Fault(s"Registration failed for: $emailAddress, because: ${error.getMessage}") }
-     .get
+    }.recover { case NonFatal(error) =>
+      Fault(s"Registration failed for: $emailAddress, because: ${error.getMessage}")
+    }.get
+
+  private val subject = "Account Registration"
 
   private def email(emailAddress: String, pin: String): Unit =
     val recipients = List(emailAddress)
