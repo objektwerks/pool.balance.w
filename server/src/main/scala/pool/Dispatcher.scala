@@ -1,14 +1,12 @@
 package pool
 
-import com.typesafe.scalalogging.LazyLogging
-
 import scala.util.Try
 import scala.util.control.NonFatal
 
 import Serializer.given
 import Validator.*
 
-final class Dispatcher(store: Store, emailer: Emailer) extends LazyLogging:
+final class Dispatcher(store: Store, emailer: Emailer):
   def dispatch[E <: Event](command: Command): Event =
     if !command.isValid then Fault(s"Command is invalid: $command")
     isAuthorized(command) match
