@@ -38,7 +38,9 @@ final class Dispatcher(store: Store, emailer: Emailer) extends LazyLogging:
         Try {
           store.isAuthorized(license.license)
         }.recover { case NonFatal(error) =>
-          logger.error(s"Authorization failed: $error")
+          val message = s"Authorization failed: $error"
+          logger.error(message)
+          store.addFault( Fault(message) )
           false
         }.get
       case Register(_) | Login(_, _) => true
