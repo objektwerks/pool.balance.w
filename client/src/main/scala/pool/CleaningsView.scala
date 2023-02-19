@@ -19,7 +19,7 @@ object CleaningsView extends View:
         btn("Pool").amend {
           onClick --> { _ =>
             log("Cleanings -> Pool menu item onClick")
-            route(PoolPage())
+            route(PoolPage()) // pool id
           }
         }      
       ),
@@ -30,7 +30,7 @@ object CleaningsView extends View:
         },
         hdr("Cleanings"),
         list(
-          split(model.entitiesVar, (id: Long) => PoolPage(id)) // Cleanings page
+          split(model.entitiesVar, (id: Long) => CleaningPage(id))
         )
       ),
       cbar(
