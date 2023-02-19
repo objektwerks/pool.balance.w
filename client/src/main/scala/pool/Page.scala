@@ -16,6 +16,9 @@ case object LoginPage extends Page
 case object AppPage extends Page
 case object AccountPage extends Page
 case object PoolsPage extends Page
+case object CleaningsPage extends Page
+case object MeasurementsPage extends Page
+case object ChemicalsPage extends Page
 
 sealed trait EntityPage extends Page:
   val id: Long
