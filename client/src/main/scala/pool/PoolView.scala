@@ -28,6 +28,7 @@ object PoolView extends View:
           route(PoolsPage)
         case _ => log(s"Pool -> update handler failed: $event")
 
+    // TODO - Cleanings, Measurements, Chemicals
     div(
       bar(
         btn("Pools").amend {
@@ -35,7 +36,25 @@ object PoolView extends View:
             log("Pool -> Pools menu item onClick")
             route(PoolsPage)
           }
-        } // TODO - Cleanings, Measurements, Chemicals
+        },
+        btn("Cleanings").amend {
+          onClick --> { _ =>
+            log("Pool -> Cleanings menu item onClick")
+            route(PoolsPage)
+          }
+        },
+        btn("Measurements").amend {
+          onClick --> { _ =>
+            log("Pool -> Measurements menu item onClick")
+            route(PoolsPage)
+          }
+        },
+        btn("Chemicals").amend {
+          onClick --> { _ =>
+            log("Pool -> Chemicals menu item onClick")
+            route(PoolsPage)
+          }
+        },
       ),
       div(
         hdr("Pool"),
