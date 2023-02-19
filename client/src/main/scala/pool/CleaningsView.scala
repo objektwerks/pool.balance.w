@@ -5,7 +5,7 @@ import com.raquo.laminar.api.L.*
 import Component.*
 
 object CleaningsView extends View:
-  def apply(model: Model[Cleaning], accountVar: Var[Account]): HtmlElement =
+  def apply(poolId: Long, model: Model[Cleaning], accountVar: Var[Account]): HtmlElement =
     def handler(event: Event): Unit =
       event match
         case Fault(cause, _) => emitError(cause)
