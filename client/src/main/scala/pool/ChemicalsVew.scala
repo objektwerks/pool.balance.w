@@ -5,7 +5,7 @@ import com.raquo.laminar.api.L.*
 import Component.*
 
 object ChemicalsVew extends View:
-  def apply(model: Model[Chemical], accountVar: Var[Account]): HtmlElement =
+  def apply(poolId: Long, model: Model[Chemical], license: String): HtmlElement =
     def handler(event: Event): Unit =
       event match
         case Fault(cause, _) => emitError(cause)
@@ -19,13 +19,13 @@ object ChemicalsVew extends View:
         btn("Pool").amend {
           onClick --> { _ =>
             log("Chemicals -> Pool menu item onClick")
-            route(PoolPage()) // pool id
+            route(PoolPage(poolId))
           }
         }      
       ),
       div(
         onLoad --> { _ => 
-          val command = ListChemicals(accountVar.now().license, 0) // pool id
+          val command = ListChemicals(license, poolId)
           call(command, handler)
         },
         hdr("Chemicals"),
@@ -43,7 +43,7 @@ object ChemicalsVew extends View:
         btn("Refresh").amend {
           onClick --> { _ =>
             log(s"Chemicals -> Refresh button onClick")
-            val command = ListChemicals(accountVar.now().license, 0) // pool id
+            val command = ListChemicals(license, poolId)
             call(command, handler)
           }
         }
