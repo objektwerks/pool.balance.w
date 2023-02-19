@@ -64,7 +64,7 @@ object PageRouter:
     .collectStatic(LoginPage) { LoginView(Model.emailAddressVar, Model.pinVar, Model.accountVar) }
     .collectStatic(AppPage) { AppView(Model.accountVar) }
     .collectStatic(AccountPage) { AccountView(Model.accountVar) }
-    .collectStatic(PoolsPage) { PoolsView(Model.poolsModel, Model.accountVar) }
+    .collectStatic(PoolsPage) { PoolsView(Model.poolsModel, Model.accountVar.now().license) }
     .collect[PoolPage] { page => PoolView(Model.poolsModel.setSelectedEntityById(page.id), Model.accountVar) }
     .collectStatic(CleaningsPage) { CleaningsView(Model.poolsModel.selectedEntityVar.now().id, Model.cleaningsModel, Model.accountVar) }
     .collect[CleaningPage] { page => CleaningView(Model.cleaningsModel.setSelectedEntityById(page.id), Model.accountVar) }
