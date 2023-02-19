@@ -5,7 +5,7 @@ import com.raquo.laminar.api.L.*
 import Component.*
 
 object CleaningsView extends View:
-  def apply(poolId: Long, model: Model[Cleaning], accountVar: Var[Account]): HtmlElement =
+  def apply(poolId: Long, model: Model[Cleaning], license: String): HtmlElement =
     def handler(event: Event): Unit =
       event match
         case Fault(cause, _) => emitError(cause)
@@ -25,7 +25,7 @@ object CleaningsView extends View:
       ),
       div(
         onLoad --> { _ => 
-          val command = ListCleanings(accountVar.now().license, 0) // pool id
+          val command = ListCleanings(license, poolId)
           call(command, handler)
         },
         hdr("Cleanings"),
@@ -43,7 +43,7 @@ object CleaningsView extends View:
         btn("Refresh").amend {
           onClick --> { _ =>
             log(s"Cleanings -> Refresh button onClick")
-            val command = ListCleanings(accountVar.now().license, 0) // pool id
+            val command = ListCleanings(license, poolId)
             call(command, handler)
           }
         }
