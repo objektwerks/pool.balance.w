@@ -5,7 +5,7 @@ import com.raquo.laminar.api.L.*
 import Component.*
 
 object MeasurementsView extends View:
-  def apply(model: Model[Measurement], accountVar: Var[Account]): HtmlElement =
+  def apply(poolId: Long, model: Model[Measurement], license: String): HtmlElement =
     def handler(event: Event): Unit =
       event match
         case Fault(cause, _) => emitError(cause)
@@ -25,7 +25,7 @@ object MeasurementsView extends View:
       ),
       div(
         onLoad --> { _ => 
-          val command = ListMeasurements(accountVar.now().license, 0) // pool id
+          val command = ListMeasurements(license, poolId)
           call(command, handler)
         },
         hdr("Measurements"),
@@ -43,7 +43,7 @@ object MeasurementsView extends View:
         btn("Refresh").amend {
           onClick --> { _ =>
             log(s"Measurements -> Refresh button onClick")
-            val command = ListMeasurements(accountVar.now().license, 0) // pool id
+            val command = ListMeasurements(license, poolId)
             call(command, handler)
           }
         }
