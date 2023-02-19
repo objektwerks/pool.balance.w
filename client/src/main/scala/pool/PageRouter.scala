@@ -70,3 +70,5 @@ object PageRouter:
     .collect[CleaningPage] { page => CleaningView(Model.cleaningsModel.setSelectedEntityById(page.id), Model.accountVar.now().license) }
     .collectStatic(MeasurementsPage) { MeasurementsView(Model.poolsModel.selectedEntityVar.now().id, Model.measurementsModel, Model.accountVar.now().license) }
     .collect[MeasurementPage] { page => MeasurementView(Model.measurementsModel.setSelectedEntityById(page.id), Model.accountVar.now().license) }
+    .collectStatic(ChemicalsPage) { ChemicalsVew(Model.poolsModel.selectedEntityVar.now().id, Model.chemicalsModel, Model.accountVar.now().license) }
+    .collect[ChemicalPage] { page => ChemicalView(Model.chemicalsModel.setSelectedEntityById(page.id), Model.accountVar.now().license) }
