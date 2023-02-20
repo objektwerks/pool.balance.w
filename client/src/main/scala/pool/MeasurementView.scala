@@ -7,19 +7,6 @@ import java.time.LocalDate
 import Component.*
 import Validator.*
 
-/* 
-  totalChlorine: Int = 3,
-  freeChlorine: Int = 3,
-  combinedChlorine: Double = 0.0,
-  ph: Double = 7.4,
-  calciumHardness: Int = 375,
-  totalAlkalinity: Int = 100,
-  cyanuricAcid: Int = 50,
-  totalBromine: Int = 5,
-  salt: Int = 3200,
-  temperature: Int = 85,
-  measured: Long 
-*/
 object MeasurementView extends View:
   def apply(model: Model[Measurement], license: String): HtmlElement =
     def addHandler(event: Event): Unit =
@@ -111,6 +98,13 @@ object MeasurementView extends View:
           value <-- model.selectedEntityVar.signal.map(_.salt.toString)
           onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
             model.updateSelectedEntity( model.selectedEntityVar.now().copy(salt = value) )
+          }
+        },
+        lbl("Temperature"),
+        int.amend {
+          value <-- model.selectedEntityVar.signal.map(_.temperature.toString)
+          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
+            model.updateSelectedEntity( model.selectedEntityVar.now().copy(temperature = value) )
           }
         },
         lbl("Measured"),
