@@ -3,18 +3,7 @@ package pool
 import com.raquo.laminar.api.L.*
 
 import Component.*
-import Error.*
 import Validator.*
-
-/*
-  brush: Boolean = true,
-  net: Boolean = true,
-  skimmerBasket: Boolean = true,
-  pumpBasket: Boolean = false,
-  pumpFilter: Boolean = false,
-  vacuum: Boolean = false,
-  cleaned: Long
-*/
 
 object CleaningView extends View:
   def apply(model: Model[Cleaning], license: String): HtmlElement =
