@@ -2,101 +2,63 @@ package pool
 
 import com.raquo.laminar.api.L.*
 
+import java.time.LocalDate
+
+import Component.*
+import Validator.*
+
 /*
   typeof: String = TypeOfChemical.LiquidChlorine.toString,
   amount: Double = 1.0, 
   unit: String = UnitOfMeasure.gl.toString,
   added: Long
 */
+
 object ChemicalView extends View:
   def apply(model: Model[Chemical], license: String): HtmlElement =
     def addHandler(event: Event): Unit =
       event match
         case Fault(cause, _) => emitError(cause)
-        case CleaningAdded(cleaning) =>
+        case ChemicalAdded(chemical) =>
           clearErrors()
-          model.addEntity(cleaning)
-          route(CleaningsPage)
-        case _ => log(s"Cleaning -> add handler failed: $event")
+          model.addEntity(chemical)
+          route(ChemicalsPage)
+        case _ => log(s"Chemical -> add handler failed: $event")
 
     def updateHandler(event: Event): Unit =
       event match
         case Fault(cause, _) => emitError(cause)
         case Updated(id) =>
           clearErrors()
-          route(CleaningsPage)
-        case _ => log(s"Cleanings -> update handler failed: $event")
+          route(ChemicalsPage)
+        case _ => log(s"Chemicals -> update handler failed: $event")
 
     div(
       bar(
-        btn("Cleanings").amend {
+        btn("Chemicals").amend {
           onClick --> { _ =>
-            log("Cleaning -> Cleanings menu item onClick")
-            route(CleaningsPage)
+            log("Chemical -> Chemicals menu item onClick")
+            route(ChemicalsPage)
           }
         }
       ),
       div(
-        hdr("Cleaning"),
-        lbl("Brush"),
-        checkbox.amend {
-          value("Brush")
-          checked <-- model.selectedEntityVar.signal.map(_.brush)
-          onChange.mapToChecked --> { value =>
-            model.selectedEntityVar.update(cleaning => cleaning.copy(brush = value))
-          }
+        hdr("Chemical"),
+        lbl("Unit"),
+        list( UnitOfMeasure.toList ).amend {
+          value <-- model.selectedEntityVar.signal.map(_.unit)
         },
-        lbl("Net"),
-        checkbox.amend {
-          value("Net")
-          checked <-- model.selectedEntityVar.signal.map(_.net)
-          onChange.mapToChecked --> { value =>
-            model.selectedEntityVar.update(cleaning => cleaning.copy(net = value))
-          }
-        },
-        lbl("Skimmer Basket"),
-        checkbox.amend {
-          value("Skimmer Basket")
-          checked <-- model.selectedEntityVar.signal.map(_.skimmerBasket)
-          onChange.mapToChecked --> { value =>
-            model.selectedEntityVar.update(cleaning => cleaning.copy(skimmerBasket = value))
-          }
-        },
-        lbl("Pump Basket"),
-        checkbox.amend {
-          value("Pump Basket")
-          checked <-- model.selectedEntityVar.signal.map(_.pumpBasket)
-          onChange.mapToChecked --> { value =>
-            model.selectedEntityVar.update(cleaning => cleaning.copy(pumpBasket = value))
-          }
-        },
-        lbl("Pump Filter"),
-        checkbox.amend {
-          value("Pump Filter")
-          checked <-- model.selectedEntityVar.signal.map(_.pumpFilter)
-          onChange.mapToChecked --> { value =>
-            model.selectedEntityVar.update(cleaning => cleaning.copy(pumpFilter = value))
-          }
-        },
-        lbl("Vacuum"),
-        checkbox.amend {
-          value("Vacuum")
-          checked <-- model.selectedEntityVar.signal.map(_.vacuum)
-          onChange.mapToChecked --> { value =>
-            model.selectedEntityVar.update(cleaning => cleaning.copy(vacuum = value))
-          }
-        },
-        lbl("Cleaned"),
+        lbl("Added"),
         rotxt.amend {
-          value <-- model.selectedEntityVar.signal.map( cleaning => LocalDate.ofEpochDay(cleaning.cleaned).toString )
+          value <-- model.selectedEntityVar.signal.map( chemical => LocalDate.ofEpochDay(chemical.added).toString )
         },
       ),
       cbar(
         btn("Add").amend {
           disabled <-- model.selectedEntityVar.signal.map { cleaning => cleaning.id.isGreaterThanZero }
           onClick --> { _ =>
-            log(s"Cleaning -> Add onClick")
-            val command = AddCleaning(license, model.selectedEntityVar.now())
+            log(s"Chemical -> Add onClick")
+            val command = AddChemical(license, model.selectedEntityVar.now())
             call(command, addHandler)
 
           }
@@ -104,8 +66,8 @@ object ChemicalView extends View:
         btn("Update").amend {
           disabled <-- model.selectedEntityVar.signal.map { cleaning => cleaning.id.isZero }
           onClick --> { _ =>
-            log(s"Pool -> Update onClick")
-            val command = UpdateCleaning(license, model.selectedEntityVar.now())
+            log(s"Chemical -> Update onClick")
+            val command = UpdateChemical(license, model.selectedEntityVar.now())
             call(command, updateHandler)
           }
         }
