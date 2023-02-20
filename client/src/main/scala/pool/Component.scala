@@ -38,6 +38,12 @@ object Component:
   def rotxtarea(rowCount: Int = 2): TextArea =
     textArea(cls("w3-light-gray w3-text-indigo"), rows(rowCount), readOnly(true))
 
+  def int: Input =
+    input(typ("number"), pattern("\\d*"), stepAttr("1"), required(true))
+
+  def dbl: Input =
+    input(typ("number"), pattern("[0-9]+([.,][0-9]+)?"), stepAttr("0.01"), required(true))
+
   def email: Input =
     input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), minLength(3), required(true))
 
