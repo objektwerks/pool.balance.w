@@ -43,8 +43,11 @@ object PageRouter:
     Route.static(AccountPage, root / "app" / "account" / endOfSegments),
     Route.static(PoolsPage, root / "app" / "pools" / endOfSegments),
     poolRoute,
+    Route.static(CleaningsPage, root / "app" / "cleanings" / endOfSegments),
     cleaningRoute,
+    Route.static(MeasurementsPage, root / "app" / "measurements" / endOfSegments),
     measurementRoute,
+    Route.static(ChemicalsPage, root / "app" / "chemicals" / endOfSegments),
     chemicalRoute
   )
 
