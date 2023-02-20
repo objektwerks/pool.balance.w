@@ -28,7 +28,6 @@ object PoolView extends View:
           route(PoolsPage)
         case _ => log(s"Pool -> update handler failed: $event")
 
-    // TODO - Cleanings, Measurements, Chemicals
     div(
       bar(
         btn("Pools").amend {
