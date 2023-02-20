@@ -92,6 +92,13 @@ object MeasurementView extends View:
             model.updateSelectedEntity( model.selectedEntityVar.now().copy(totalAlkalinity = value) )
           }
         },
+        lbl("Cyanuric Acid"),
+        int.amend {
+          value <-- model.selectedEntityVar.signal.map(_.cyanuricAcid.toString)
+          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
+            model.updateSelectedEntity( model.selectedEntityVar.now().copy(cyanuricAcid = value) )
+          }
+        },
         lbl("Measured"),
         rotxt.amend {
           value <-- model.selectedEntityVar.signal.map( measurement => LocalDate.ofEpochDay(measurement.measured).toString )
