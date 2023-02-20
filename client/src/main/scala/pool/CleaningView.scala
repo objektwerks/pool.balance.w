@@ -2,9 +2,10 @@ package pool
 
 import com.raquo.laminar.api.L.*
 
+import java.time.LocalDate
+
 import Component.*
 import Validator.*
-import java.time.LocalDate
 
 object CleaningView extends View:
   def apply(model: Model[Cleaning], license: String): HtmlElement =
