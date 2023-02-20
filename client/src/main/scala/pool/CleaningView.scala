@@ -70,6 +70,14 @@ object CleaningView extends View:
             model.selectedEntityVar.update(cleaning => cleaning.copy(skimmerBasket = value))
           }
         },
+        lbl("Pump Basket"),
+        checkbox.amend {
+          value("Pump Basket")
+          checked <-- model.selectedEntityVar.signal.map(_.pumpBasket)
+          onChange.mapToChecked --> { value =>
+            model.selectedEntityVar.update(cleaning => cleaning.copy(pumpBasket = value))
+          }
+        },
       ),
       cbar(
         btn("Add").amend {
