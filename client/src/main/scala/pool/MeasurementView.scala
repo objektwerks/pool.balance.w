@@ -73,9 +73,16 @@ object MeasurementView extends View:
         },
         lbl("Ph"), // TODO - use slider!
         dbl.amend {
-          value <-- model.selectedEntityVar.signal.map(_.combinedChlorine.toString)
+          value <-- model.selectedEntityVar.signal.map(_.ph.toString)
           onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> { value =>
-            model.updateSelectedEntity( model.selectedEntityVar.now().copy(combinedChlorine = value) )
+            model.updateSelectedEntity( model.selectedEntityVar.now().copy(ph = value) )
+          }
+        },
+        lbl("Calcium Hardness"),
+        int.amend {
+          value <-- model.selectedEntityVar.signal.map(_.calciumHardness.toString)
+          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
+            model.updateSelectedEntity( model.selectedEntityVar.now().copy(calciumHardness = value) )
           }
         },
         lbl("Measured"),
