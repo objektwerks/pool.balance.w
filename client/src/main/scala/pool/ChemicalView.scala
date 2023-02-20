@@ -51,6 +51,13 @@ object ChemicalView extends View:
             model.updateSelectedEntity( model.selectedEntityVar.now().copy(typeof = value) )
           }
         },
+        lbl("Amount"),
+        dbl.amend {
+          value <-- model.selectedEntityVar.signal.map(_.amount.toString)
+          onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> { value =>
+            model.updateSelectedEntity( model.selectedEntityVar.now().copy(amount = value) )
+          }
+        },
         lbl("Unit"),
         list( UnitOfMeasure.toList ).amend {
           value <-- model.selectedEntityVar.signal.map(_.unit)
