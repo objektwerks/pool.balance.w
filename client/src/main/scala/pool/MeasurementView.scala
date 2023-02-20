@@ -2,6 +2,8 @@ package pool
 
 import com.raquo.laminar.api.L.*
 
+import java.time.LocalDate
+
 import Component.*
 import Validator.*
 
@@ -23,55 +25,55 @@ object MeasurementView extends View:
     def addHandler(event: Event): Unit =
       event match
         case Fault(cause, _) => emitError(cause)
-        case ChemicalAdded(chemical) =>
+        case MeasurementAdded(measurement) =>
           clearErrors()
-          model.addEntity(chemical)
-          route(ChemicalsPage)
-        case _ => log(s"Chemical -> add handler failed: $event")
+          model.addEntity(measurement)
+          route(MeasurementsPage)
+        case _ => log(s"Measurement -> add handler failed: $event")
 
     def updateHandler(event: Event): Unit =
       event match
         case Fault(cause, _) => emitError(cause)
         case Updated(id) =>
           clearErrors()
-          route(ChemicalsPage)
-        case _ => log(s"Chemicals -> update handler failed: $event")
+          route(MeasurementsPage)
+        case _ => log(s"Measurements -> update handler failed: $event")
 
     div(
       bar(
-        btn("Chemicals").amend {
+        btn("Measurements").amend {
           onClick --> { _ =>
-            log("Chemical -> Chemicals menu item onClick")
-            route(ChemicalsPage)
+            log("Measurement -> Measurements menu item onClick")
+            route(MeasurementsPage)
           }
         }
       ),
       div(
-        hdr("Chemical"),
-        lbl("Type Of"),
-        list( TypeOfChemical.toList ).amend {
-          value <-- model.selectedEntityVar.signal.map(_.unit)
-          onChange.mapToValue --> { value =>
-            model.updateSelectedEntity( model.selectedEntityVar.now().copy(typeof = value) )
+        hdr("Measurement"),
+        lbl("Total Chlorine"),
+        int.amend {
+          value <-- model.selectedEntityVar.signal.map(_.totalChlorine.toString)
+          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
+            model.updateSelectedEntity( model.selectedEntityVar.now().copy(totalChlorine = value) )
           }
         },
-        lbl("Amount"),
+        lbl("Free Chlorine"),
+        int.amend {
+          value <-- model.selectedEntityVar.signal.map(_.freeChlorine.toString)
+          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
+            model.updateSelectedEntity( model.selectedEntityVar.now().copy(freeChlorine = value) )
+          }
+        },
+        lbl("Combined Chlorine"),
         dbl.amend {
-          value <-- model.selectedEntityVar.signal.map(_.amount.toString)
+          value <-- model.selectedEntityVar.signal.map(_.combinedChlorine.toString)
           onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> { value =>
-            model.updateSelectedEntity( model.selectedEntityVar.now().copy(amount = value) )
+            model.updateSelectedEntity( model.selectedEntityVar.now().copy(combinedChlorine = value) )
           }
         },
-        lbl("Unit"),
-        list( UnitOfMeasure.toList ).amend {
-          value <-- model.selectedEntityVar.signal.map(_.unit)
-          onChange.mapToValue --> { value =>
-            model.updateSelectedEntity( model.selectedEntityVar.now().copy(unit = value) )
-          }
-        },
-        lbl("Added"),
+        lbl("Measured"),
         rotxt.amend {
-          value <-- model.selectedEntityVar.signal.map( chemical => LocalDate.ofEpochDay(chemical.added).toString )
+          value <-- model.selectedEntityVar.signal.map( measurement => LocalDate.ofEpochDay(measurement.measured).toString )
         },
       ),
       cbar(
@@ -79,7 +81,7 @@ object MeasurementView extends View:
           disabled <-- model.selectedEntityVar.signal.map { cleaning => cleaning.id.isGreaterThanZero }
           onClick --> { _ =>
             log(s"Chemical -> Add onClick")
-            val command = AddChemical(license, model.selectedEntityVar.now())
+            val command = AddMeasurement(license, model.selectedEntityVar.now())
             call(command, addHandler)
 
           }
@@ -88,7 +90,7 @@ object MeasurementView extends View:
           disabled <-- model.selectedEntityVar.signal.map { cleaning => cleaning.id.isZero }
           onClick --> { _ =>
             log(s"Chemical -> Update onClick")
-            val command = UpdateChemical(license, model.selectedEntityVar.now())
+            val command = UpdateMeasurement(license, model.selectedEntityVar.now())
             call(command, updateHandler)
           }
         }
