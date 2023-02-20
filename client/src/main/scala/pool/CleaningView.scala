@@ -48,12 +48,20 @@ object CleaningView extends View:
         hdr("Cleaning"),
         lbl("Brush"),
         checkbox.amend {
-          value("Brushed")
+          value("Brush")
           checked <-- model.selectedEntityVar.signal.map(_.brush)
           onChange.mapToChecked --> { value =>
             model.selectedEntityVar.update(cleaning => cleaning.copy(brush = value))
           }
-        }
+        },
+        lbl("Net"),
+        checkbox.amend {
+          value("Net")
+          checked <-- model.selectedEntityVar.signal.map(_.net)
+          onChange.mapToChecked --> { value =>
+            model.selectedEntityVar.update(cleaning => cleaning.copy(net = value))
+          }
+        },
       ),
       cbar(
         btn("Add").amend {
