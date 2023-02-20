@@ -4,6 +4,7 @@ import com.raquo.laminar.api.L.*
 
 import Component.*
 import Validator.*
+import java.time.LocalDate
 
 object CleaningView extends View:
   def apply(model: Model[Cleaning], license: String): HtmlElement =
@@ -82,6 +83,10 @@ object CleaningView extends View:
           onChange.mapToChecked --> { value =>
             model.selectedEntityVar.update(cleaning => cleaning.copy(vacuum = value))
           }
+        },
+        lbl("Cleaned"),
+        rotxt.amend {
+          value <-- model.selectedEntityVar.signal.map( cleaning => LocalDate.ofEpochDay(cleaning.cleaned).toString )
         },
       ),
       cbar(
