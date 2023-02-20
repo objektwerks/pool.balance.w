@@ -7,13 +7,6 @@ import java.time.LocalDate
 import Component.*
 import Validator.*
 
-/*
-  typeof: String = TypeOfChemical.LiquidChlorine.toString,
-  amount: Double = 1.0, 
-  unit: String = UnitOfMeasure.gl.toString,
-  added: Long
-*/
-
 object ChemicalView extends View:
   def apply(model: Model[Chemical], license: String): HtmlElement =
     def addHandler(event: Event): Unit =
