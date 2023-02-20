@@ -47,6 +47,9 @@ object ChemicalView extends View:
         lbl("Unit"),
         list( UnitOfMeasure.toList ).amend {
           value <-- model.selectedEntityVar.signal.map(_.unit)
+          onChange.mapToValue --> { uom =>
+            model.updateSelectedEntity( model.selectedEntityVar.now().copy(unit = uom) )
+          }
         },
         lbl("Added"),
         rotxt.amend {
