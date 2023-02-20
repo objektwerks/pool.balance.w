@@ -62,6 +62,14 @@ object CleaningView extends View:
             model.selectedEntityVar.update(cleaning => cleaning.copy(net = value))
           }
         },
+        lbl("Skimmer Basket"),
+        checkbox.amend {
+          value("Skimmer Basket")
+          checked <-- model.selectedEntityVar.signal.map(_.skimmerBasket)
+          onChange.mapToChecked --> { value =>
+            model.selectedEntityVar.update(cleaning => cleaning.copy(skimmerBasket = value))
+          }
+        },
       ),
       cbar(
         btn("Add").amend {
