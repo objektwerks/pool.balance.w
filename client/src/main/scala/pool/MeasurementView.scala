@@ -37,6 +37,7 @@ object MeasurementView extends View:
       ),
       div(
         hdr("Measurement"),
+        err(errorBus),
         lbl("Total Chlorine"),
         int.amend {
           controlled(
