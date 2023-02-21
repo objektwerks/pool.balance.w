@@ -29,6 +29,7 @@ object PoolsView extends View:
           call(command, handler)
         },
         hdr("Pools"),
+        err(errorBus),
         list(
           split(model.entitiesVar, (id: Long) => PoolPage(id))
         )
