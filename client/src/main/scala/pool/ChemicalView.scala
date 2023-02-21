@@ -37,6 +37,7 @@ object ChemicalView extends View:
       ),
       div(
         hdr("Chemical"),
+        err(errorBus),
         lbl("Type Of"),
         list( TypeOfChemical.toList ).amend {
           controlled(
