@@ -135,7 +135,7 @@ object MeasurementView extends View:
       ),
       cbar(
         btn("Add").amend {
-          disabled <-- model.selectedEntityVar.signal.map { cleaning => cleaning.id.isGreaterThanZero }
+          disabled <-- model.selectedEntityVar.signal.map { measurement => !(measurement.id.isZero & measurement.isValid) }
           onClick --> { _ =>
             log(s"Chemical -> Add onClick")
             val command = AddMeasurement(license, model.selectedEntityVar.now())
@@ -144,7 +144,7 @@ object MeasurementView extends View:
           }
         },
         btn("Update").amend {
-          disabled <-- model.selectedEntityVar.signal.map { cleaning => cleaning.id.isZero }
+          disabled <-- model.selectedEntityVar.signal.map { measurement => !(measurement.id.isGreaterThanZero && measurement.isValid) }
           onClick --> { _ =>
             log(s"Chemical -> Update onClick")
             val command = UpdateMeasurement(license, model.selectedEntityVar.now())
