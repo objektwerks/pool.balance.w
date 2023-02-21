@@ -26,6 +26,7 @@ object RegisterView extends View:
       
     div(
       hdr("Register"),
+      err(errorBus),
       info(registerMessage),
       lbl("Email Address"),
       email.amend {
