@@ -8,9 +8,6 @@ import Validator.*
 
 object PoolView extends View:
   def apply(model: Model[Pool], license: String): HtmlElement =
-    val nameErrorBus = new EventBus[String]
-    val volumeErrorBus = new EventBus[String]
-
     def addHandler(event: Event): Unit =
       event match
         case Fault(cause, _) => emitError(cause)
@@ -59,32 +56,30 @@ object PoolView extends View:
         hdr("Pool"),
         lbl("Name"),
         txt.amend {
-          value <-- model.selectedEntityVar.signal.map(_.name)
-          onInput.mapToValue.filter(_.nonEmpty) --> { name =>
-            model.updateSelectedEntity( model.selectedEntityVar.now().copy(name = name) )
-          }
-          onKeyUp.mapToValue --> { name =>
-            if name.isName then clear(nameErrorBus) else emit(nameErrorBus, nameError)
-          }
+          controlled(
+            value <-- model.selectedEntityVar.signal.map(_.name),
+            onInput.mapToValue.filter(_.nonEmpty) --> { name =>
+              model.updateSelectedEntity( model.selectedEntityVar.now().copy(name = name) )
+            }
+          )
         },
-        err(nameErrorBus),
         lbl("Volume"),
         txt.amend {
-          value <-- model.selectedEntityVar.signal.map(_.volume.toString)
-          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { volume =>
-            model.updateSelectedEntity( model.selectedEntityVar.now().copy(volume = volume) )
-          }
-          onKeyUp.mapToValue.map(_.toInt) --> { volume =>
-            if volume.isGreaterThan999 then clear(volumeErrorBus) else emit(volumeErrorBus, volumeError)
-          }
+          controlled(
+            value <-- model.selectedEntityVar.signal.map(_.volume.toString),
+            onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { volume =>
+              model.updateSelectedEntity( model.selectedEntityVar.now().copy(volume = volume) )
+            }
+          )
         },
-        err(volumeErrorBus),
         lbl("Unit"),
         list( UnitOfMeasure.toList ).amend {
-          value <-- model.selectedEntityVar.signal.map(_.unit)
-          onChange.mapToValue --> { value =>
-            model.updateSelectedEntity( model.selectedEntityVar.now().copy(unit = value) )
-          }
+          controlled(
+            value <-- model.selectedEntityVar.signal.map(_.unit),
+            onChange.mapToValue --> { value =>
+              model.updateSelectedEntity( model.selectedEntityVar.now().copy(unit = value) )
+            }
+          )
         },
       ),
       cbar(
