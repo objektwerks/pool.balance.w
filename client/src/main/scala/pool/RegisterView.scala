@@ -2,9 +2,6 @@ package pool
 
 import com.raquo.laminar.api.L.*
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
-
 import Component.*
 import Error.*
 import Message.*
