@@ -29,6 +29,7 @@ object MeasurementsView extends View:
           call(command, handler)
         },
         hdr("Measurements"),
+        err(errorBus),
         list(
           split(model.entitiesVar, (id: Long) => MeasurementPage(id))
         )
