@@ -4,6 +4,11 @@ Pool Balance ( Web Edition - **WIP** )
 >JDK Http, Jsoniter, Scalikejdbc, Laminar, Waypoint, W3.CSS, Chart.js, Scaffeine,
 >JoddMail, Postgresql, Snowpack and Scala 3.
 
+Todo
+----
+1. Build reactive measurements
+2. Build measurements dashboard
+
 Install
 -------
 1. brew install node
