@@ -29,6 +29,7 @@ object CleaningsView extends View:
           call(command, handler)
         },
         hdr("Cleanings"),
+        err(errorBus),
         list(
           split(model.entitiesVar, (id: Long) => CleaningPage(id))
         )
