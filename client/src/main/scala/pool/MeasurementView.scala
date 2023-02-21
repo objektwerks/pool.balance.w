@@ -39,73 +39,93 @@ object MeasurementView extends View:
         hdr("Measurement"),
         lbl("Total Chlorine"),
         int.amend {
-          value <-- model.selectedEntityVar.signal.map(_.totalChlorine.toString)
-          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
-            model.updateSelectedEntity( model.selectedEntityVar.now().copy(totalChlorine = value) )
-          }
+          controlled(
+            value <-- model.selectedEntityVar.signal.map(_.totalChlorine.toString),
+            onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
+              model.updateSelectedEntity( model.selectedEntityVar.now().copy(totalChlorine = value) )
+            }
+          )
         },
         lbl("Free Chlorine"),
         int.amend {
-          value <-- model.selectedEntityVar.signal.map(_.freeChlorine.toString)
-          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
-            model.updateSelectedEntity( model.selectedEntityVar.now().copy(freeChlorine = value) )
-          }
+          controlled(
+            value <-- model.selectedEntityVar.signal.map(_.freeChlorine.toString),
+            onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
+              model.updateSelectedEntity( model.selectedEntityVar.now().copy(freeChlorine = value) )
+            }
+          )
         },
         lbl("Combined Chlorine"),
         dbl.amend {
-          value <-- model.selectedEntityVar.signal.map(_.combinedChlorine.toString)
-          onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> { value =>
-            model.updateSelectedEntity( model.selectedEntityVar.now().copy(combinedChlorine = value) )
-          }
+          controlled(
+            value <-- model.selectedEntityVar.signal.map(_.combinedChlorine.toString),
+            onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> { value =>
+              model.updateSelectedEntity( model.selectedEntityVar.now().copy(combinedChlorine = value) )
+            }
+          )
         },
         lbl("Ph"), // TODO - use slider!
         dbl.amend {
-          value <-- model.selectedEntityVar.signal.map(_.ph.toString)
-          onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> { value =>
-            model.updateSelectedEntity( model.selectedEntityVar.now().copy(ph = value) )
-          }
+          controlled(
+            value <-- model.selectedEntityVar.signal.map(_.ph.toString),
+            onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> { value =>
+              model.updateSelectedEntity( model.selectedEntityVar.now().copy(ph = value) )
+            }
+          )
         },
         lbl("Calcium Hardness"),
         int.amend {
-          value <-- model.selectedEntityVar.signal.map(_.calciumHardness.toString)
-          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
-            model.updateSelectedEntity( model.selectedEntityVar.now().copy(calciumHardness = value) )
-          }
+          controlled(
+            value <-- model.selectedEntityVar.signal.map(_.calciumHardness.toString),
+            onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
+              model.updateSelectedEntity( model.selectedEntityVar.now().copy(calciumHardness = value) )
+            }
+          )
         },
         lbl("Total Alkalinity"),
         int.amend {
-          value <-- model.selectedEntityVar.signal.map(_.totalAlkalinity.toString)
-          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
-            model.updateSelectedEntity( model.selectedEntityVar.now().copy(totalAlkalinity = value) )
-          }
+          controlled(
+            value <-- model.selectedEntityVar.signal.map(_.totalAlkalinity.toString),
+            onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
+              model.updateSelectedEntity( model.selectedEntityVar.now().copy(totalAlkalinity = value) )
+            }
+          )
         },
         lbl("Cyanuric Acid"),
         int.amend {
-          value <-- model.selectedEntityVar.signal.map(_.cyanuricAcid.toString)
-          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
-            model.updateSelectedEntity( model.selectedEntityVar.now().copy(cyanuricAcid = value) )
-          }
+          controlled(
+            value <-- model.selectedEntityVar.signal.map(_.cyanuricAcid.toString),
+            onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
+              model.updateSelectedEntity( model.selectedEntityVar.now().copy(cyanuricAcid = value) )
+            }
+          )
         },
         lbl("Total Bromine"),
         int.amend {
-          value <-- model.selectedEntityVar.signal.map(_.totalBromine.toString)
-          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
-            model.updateSelectedEntity( model.selectedEntityVar.now().copy(totalBromine = value) )
-          }
+          controlled(
+            value <-- model.selectedEntityVar.signal.map(_.totalBromine.toString),
+            onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
+              model.updateSelectedEntity( model.selectedEntityVar.now().copy(totalBromine = value) )
+            }
+          )
         },
         lbl("Salt"),
         int.amend {
-          value <-- model.selectedEntityVar.signal.map(_.salt.toString)
-          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
-            model.updateSelectedEntity( model.selectedEntityVar.now().copy(salt = value) )
-          }
+          controlled(
+            value <-- model.selectedEntityVar.signal.map(_.salt.toString),
+            onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
+              model.updateSelectedEntity( model.selectedEntityVar.now().copy(salt = value) )
+            }
+          )
         },
         lbl("Temperature"),
         int.amend {
-          value <-- model.selectedEntityVar.signal.map(_.temperature.toString)
-          onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
-            model.updateSelectedEntity( model.selectedEntityVar.now().copy(temperature = value) )
-          }
+          controlled(
+            value <-- model.selectedEntityVar.signal.map(_.temperature.toString),
+            onInput.mapToValue.filter(_.toIntOption.nonEmpty).map(_.toInt) --> { value =>
+              model.updateSelectedEntity( model.selectedEntityVar.now().copy(temperature = value) )
+            }
+          )
         },
         lbl("Measured"),
         rotxt.amend {
