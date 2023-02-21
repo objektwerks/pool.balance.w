@@ -72,7 +72,7 @@ object ChemicalView extends View:
       ),
       cbar(
         btn("Add").amend {
-          disabled <-- model.selectedEntityVar.signal.map { cleaning => cleaning.id.isGreaterThanZero }
+          disabled <-- model.selectedEntityVar.signal.map { cleaning => !(cleaning.id.isZero && cleaning.isValid) }
           onClick --> { _ =>
             log(s"Chemical -> Add onClick")
             val command = AddChemical(license, model.selectedEntityVar.now())
@@ -81,7 +81,7 @@ object ChemicalView extends View:
           }
         },
         btn("Update").amend {
-          disabled <-- model.selectedEntityVar.signal.map { cleaning => cleaning.id.isZero }
+          disabled <-- model.selectedEntityVar.signal.map { cleaning => !(cleaning.id.isGreaterThanZero && cleaning.isValid) }
           onClick --> { _ =>
             log(s"Chemical -> Update onClick")
             val command = UpdateChemical(license, model.selectedEntityVar.now())
