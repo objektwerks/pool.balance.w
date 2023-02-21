@@ -105,7 +105,7 @@ object CleaningView extends View:
       ),
       cbar(
         btn("Add").amend {
-          disabled <-- model.selectedEntityVar.signal.map { cleaning => cleaning.id.isGreaterThanZero }
+          disabled <-- model.selectedEntityVar.signal.map { cleaning => !(cleaning.id.isZero && cleaning.isValid) }
           onClick --> { _ =>
             log(s"Cleaning -> Add onClick")
             val command = AddCleaning(license, model.selectedEntityVar.now())
@@ -114,7 +114,7 @@ object CleaningView extends View:
           }
         },
         btn("Update").amend {
-          disabled <-- model.selectedEntityVar.signal.map { cleaning => cleaning.id.isZero }
+          disabled <-- model.selectedEntityVar.signal.map { cleaning => !(cleaning.id.isGreaterThanZero && cleaning.isValid) }
           onClick --> { _ =>
             log(s"Pool -> Update onClick")
             val command = UpdateCleaning(license, model.selectedEntityVar.now())
