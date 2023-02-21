@@ -37,6 +37,7 @@ object CleaningView extends View:
       ),
       div(
         hdr("Cleaning"),
+        err(errorBus),
         lbl("Brush"),
         checkbox.amend {
           value("Brush")
