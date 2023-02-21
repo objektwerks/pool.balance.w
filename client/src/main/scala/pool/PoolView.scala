@@ -54,6 +54,7 @@ object PoolView extends View:
       ),
       div(
         hdr("Pool"),
+        err(errorBus),
         lbl("Name"),
         txt.amend {
           controlled(
