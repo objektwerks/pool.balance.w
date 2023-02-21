@@ -39,24 +39,30 @@ object ChemicalView extends View:
         hdr("Chemical"),
         lbl("Type Of"),
         list( TypeOfChemical.toList ).amend {
-          value <-- model.selectedEntityVar.signal.map(_.unit)
-          onChange.mapToValue --> { value =>
-            model.updateSelectedEntity( model.selectedEntityVar.now().copy(typeof = value) )
-          }
+          controlled(
+            value <-- model.selectedEntityVar.signal.map(_.unit),
+            onChange.mapToValue --> { value =>
+              model.updateSelectedEntity( model.selectedEntityVar.now().copy(typeof = value) )
+            }
+          )
         },
         lbl("Amount"),
         dbl.amend {
-          value <-- model.selectedEntityVar.signal.map(_.amount.toString)
-          onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> { value =>
-            model.updateSelectedEntity( model.selectedEntityVar.now().copy(amount = value) )
-          }
+          controlled(
+            value <-- model.selectedEntityVar.signal.map(_.amount.toString),
+            onInput.mapToValue.filter(_.toDoubleOption.nonEmpty).map(_.toDouble) --> { value =>
+              model.updateSelectedEntity( model.selectedEntityVar.now().copy(amount = value) )
+            }
+          )
         },
         lbl("Unit"),
         list( UnitOfMeasure.toList ).amend {
-          value <-- model.selectedEntityVar.signal.map(_.unit)
-          onChange.mapToValue --> { value =>
-            model.updateSelectedEntity( model.selectedEntityVar.now().copy(unit = value) )
-          }
+          controlled(
+            value <-- model.selectedEntityVar.signal.map(_.unit),
+            onChange.mapToValue --> { value =>
+              model.updateSelectedEntity( model.selectedEntityVar.now().copy(unit = value) )
+            }
+          )
         },
         lbl("Added"),
         rotxt.amend {
