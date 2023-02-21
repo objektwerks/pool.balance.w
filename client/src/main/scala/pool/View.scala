@@ -8,7 +8,7 @@ enum Mode:
   case add, edit, readonly
 
 trait View:
-  private[this] val errorBus = new EventBus[String]
+  protected[this] val errorBus = new EventBus[String]
 
   def call(command: Command, handler: Event => Unit): Unit = Proxy.call(command, handler)
   

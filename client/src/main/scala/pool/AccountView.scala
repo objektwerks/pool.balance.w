@@ -36,6 +36,7 @@ object AccountView extends View:
       ),
       div(
         hdr("Account"),
+        err(errorBus),
         lbl("License"),
         rotxt.amend {
           value <-- accountVar.signal.map(_.license)
