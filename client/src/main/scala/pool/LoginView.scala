@@ -23,6 +23,7 @@ object LoginView extends View:
       
     div(      
       hdr("Login"),
+      err(errorBus),
       lbl("Email Address"),
       email.amend {
         value <-- emailAddressVar
