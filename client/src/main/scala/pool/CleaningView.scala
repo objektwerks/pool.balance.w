@@ -40,50 +40,62 @@ object CleaningView extends View:
         lbl("Brush"),
         checkbox.amend {
           value("Brush")
-          checked <-- model.selectedEntityVar.signal.map(_.brush)
-          onChange.mapToChecked --> { value =>
-            model.selectedEntityVar.update(cleaning => cleaning.copy(brush = value))
-          }
+          controlled(
+            checked <-- model.selectedEntityVar.signal.map(_.brush),
+            onChange.mapToChecked --> { value =>
+              model.selectedEntityVar.update(cleaning => cleaning.copy(brush = value))
+            }
+          )
         },
         lbl("Net"),
         checkbox.amend {
           value("Net")
-          checked <-- model.selectedEntityVar.signal.map(_.net)
-          onChange.mapToChecked --> { value =>
-            model.selectedEntityVar.update(cleaning => cleaning.copy(net = value))
-          }
+          controlled(
+            checked <-- model.selectedEntityVar.signal.map(_.net),
+            onChange.mapToChecked --> { value =>
+              model.selectedEntityVar.update(cleaning => cleaning.copy(net = value))
+            }
+          )
         },
         lbl("Skimmer Basket"),
         checkbox.amend {
           value("Skimmer Basket")
-          checked <-- model.selectedEntityVar.signal.map(_.skimmerBasket)
-          onChange.mapToChecked --> { value =>
-            model.selectedEntityVar.update(cleaning => cleaning.copy(skimmerBasket = value))
-          }
+          controlled(
+            checked <-- model.selectedEntityVar.signal.map(_.skimmerBasket),
+            onChange.mapToChecked --> { value =>
+              model.selectedEntityVar.update(cleaning => cleaning.copy(skimmerBasket = value))
+            }
+          )
         },
         lbl("Pump Basket"),
         checkbox.amend {
           value("Pump Basket")
-          checked <-- model.selectedEntityVar.signal.map(_.pumpBasket)
-          onChange.mapToChecked --> { value =>
-            model.selectedEntityVar.update(cleaning => cleaning.copy(pumpBasket = value))
-          }
+          controlled(
+            checked <-- model.selectedEntityVar.signal.map(_.pumpBasket),
+            onChange.mapToChecked --> { value =>
+              model.selectedEntityVar.update(cleaning => cleaning.copy(pumpBasket = value))
+            }
+          )
         },
         lbl("Pump Filter"),
         checkbox.amend {
           value("Pump Filter")
-          checked <-- model.selectedEntityVar.signal.map(_.pumpFilter)
-          onChange.mapToChecked --> { value =>
-            model.selectedEntityVar.update(cleaning => cleaning.copy(pumpFilter = value))
-          }
+          controlled(
+            checked <-- model.selectedEntityVar.signal.map(_.pumpFilter),
+            onChange.mapToChecked --> { value =>
+              model.selectedEntityVar.update(cleaning => cleaning.copy(pumpFilter = value))
+            }
+          )
         },
         lbl("Vacuum"),
         checkbox.amend {
           value("Vacuum")
-          checked <-- model.selectedEntityVar.signal.map(_.vacuum)
-          onChange.mapToChecked --> { value =>
-            model.selectedEntityVar.update(cleaning => cleaning.copy(vacuum = value))
-          }
+          controlled(
+            checked <-- model.selectedEntityVar.signal.map(_.vacuum),
+            onChange.mapToChecked --> { value =>
+              model.selectedEntityVar.update(cleaning => cleaning.copy(vacuum = value))
+            }
+          )
         },
         lbl("Cleaned"),
         rotxt.amend {
