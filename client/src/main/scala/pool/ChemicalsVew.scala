@@ -29,6 +29,7 @@ object ChemicalsVew extends View:
           call(command, handler)
         },
         hdr("Chemicals"),
+        err(errorBus),
         list(
           split(model.entitiesVar, (id: Long) => ChemicalPage(id))
         )
