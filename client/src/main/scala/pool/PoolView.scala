@@ -36,19 +36,19 @@ object PoolView extends View:
         btn("Cleanings").amend {
           onClick --> { _ =>
             log("Pool -> Cleanings menu item onClick")
-            route(PoolsPage)
+            route(CleaningsPage)
           }
         },
         btn("Measurements").amend {
           onClick --> { _ =>
             log("Pool -> Measurements menu item onClick")
-            route(PoolsPage)
+            route(MeasurementsPage)
           }
         },
         btn("Chemicals").amend {
           onClick --> { _ =>
             log("Pool -> Chemicals menu item onClick")
-            route(PoolsPage)
+            route(ChemicalsPage)
           }
         },
       ),
