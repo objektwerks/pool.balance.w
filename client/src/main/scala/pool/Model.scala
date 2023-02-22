@@ -44,6 +44,10 @@ object Model:
   val averageCyanuricAcid = Var(0)
   def cyanuricAcidInRange(value: Int): Boolean = cyanuricAcidRange.contains(value)
 
+  val currentTotalBromine = Var(0)
+  val averageTotalBromine = Var(0)
+  def totalBromineInRange(value: Int): Boolean = totalBromineRange.contains(value)
+
 final case class Model[E <: Entity](entitiesVar: Var[List[E]],
                                     selectedEntityVar: Var[E],
                                     emptyEntity: E):
