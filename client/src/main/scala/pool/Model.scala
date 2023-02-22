@@ -58,6 +58,14 @@ object Model:
   val averageTemperature = Var(0)
   def temperatureInRange(value: Int): Boolean = temperatureRange.contains(value)
 
+  private def dashboard(): Unit =
+    val numberFormat = NumberFormat.getNumberInstance()
+    numberFormat.setMaximumFractionDigits(1)
+    measurementsModel.entitiesVar.now().foreach { measurement =>
+      calculateCurrentMeasurements(measurement, numberFormat)
+      calculateAverageMeasurements(numberFormat)
+    }
+
   private def calculateCurrentMeasurements(measurement: Measurement, numberFormat: NumberFormat): Unit =
     currentTotalChlorine.set(measurement.totalChlorine)
     currentFreeChlorine.set(measurement.freeChlorine)
