@@ -4,6 +4,8 @@ import com.raquo.laminar.api.L.*
 
 import org.scalajs.dom.console.log
 
+import Measurement.*
+
 object Model:
   val emailAddressVar = Var("")
   val pinVar = Var("")
@@ -13,6 +15,10 @@ object Model:
   val cleaningsModel = Model[Cleaning](Var(List.empty[Cleaning]), Var(Cleaning()), Cleaning())
   val measurementsModel = Model[Measurement](Var(List.empty[Measurement]), Var(Measurement()), Measurement())
   val chemicalsModel = Model[Chemical](Var(List.empty[Chemical]), Var(Chemical()), Chemical())
+
+  val currentTotalChlorine = Var(0)
+  val averageTotalChlorine = Var(0)
+  def totalChlorineInRange(value: Int): Boolean = totalChlorineRange.contains(value)
 
 
 final case class Model[E <: Entity](entitiesVar: Var[List[E]],
