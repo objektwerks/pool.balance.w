@@ -24,6 +24,10 @@ object Model:
   val averageFreeChlorine = Var(0)
   def freeChlorineInRange(value: Int): Boolean = freeChlorineRange.contains(value)
 
+  val currentCombinedChlorine = Var(0)
+  val averageCombinedChlorine = Var(0)
+  def combinedChlorineInRange(value: Double): Boolean = combinedChlorineRange.contains(value)
+
 final case class Model[E <: Entity](entitiesVar: Var[List[E]],
                                     selectedEntityVar: Var[E],
                                     emptyEntity: E):
