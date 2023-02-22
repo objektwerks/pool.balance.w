@@ -2,6 +2,8 @@ package pool
 
 import com.raquo.laminar.api.L.*
 
+import java.text.NumberFormat
+
 import org.scalajs.dom.console.log
 
 import Measurement.*
@@ -55,6 +57,18 @@ object Model:
   val currentTemperature = Var(0)
   val averageTemperature = Var(0)
   def temperatureInRange(value: Int): Boolean = temperatureRange.contains(value)
+
+  private def calculateCurrentMeasurements(measurement: Measurement, numberFormat: NumberFormat): Unit =
+    currentTotalChlorine.set(measurement.totalChlorine)
+    currentFreeChlorine.set(measurement.freeChlorine)
+    currentCombinedChlorine.set(numberFormat.format( measurement.combinedChlorine ).toDouble)
+    currentPh.set(numberFormat.format( measurement.ph ).toDouble)
+    currentCalciumHardness.set(measurement.calciumHardness)
+    currentTotalAlkalinity.set(measurement.totalAlkalinity)
+    currentCyanuricAcid.set(measurement.cyanuricAcid)
+    currentTotalBromine.set(measurement.totalBromine)
+    currentSalt.set(measurement.salt)
+    currentTemperature.set(measurement.temperature)
 
 final case class Model[E <: Entity](entitiesVar: Var[List[E]],
                                     selectedEntityVar: Var[E],
