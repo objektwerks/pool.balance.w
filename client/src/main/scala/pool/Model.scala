@@ -48,6 +48,10 @@ object Model:
   val averageTotalBromine = Var(0)
   def totalBromineInRange(value: Int): Boolean = totalBromineRange.contains(value)
 
+  val currentSalt = Var(0)
+  val averageSalt = Var(0)
+  def saltInRange(value: Int): Boolean = saltRange.contains(value)
+
 final case class Model[E <: Entity](entitiesVar: Var[List[E]],
                                     selectedEntityVar: Var[E],
                                     emptyEntity: E):
