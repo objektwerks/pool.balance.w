@@ -18,6 +18,16 @@ object Model:
   val measurementsModel = Model[Measurement](Var(List.empty[Measurement]), Var(Measurement()), Measurement())
   val chemicalsModel = Model[Chemical](Var(List.empty[Chemical]), Var(Chemical()), Chemical())
 
+  measurementsModel
+    .entitiesVar
+    .toObservable
+    .changes
+    .collect( _ =>
+      log(s"dashboard calculating ...")
+      dashboard()
+      log(s"dashboard calculated.")
+    )
+
   val currentTotalChlorine = Var(0)
   val averageTotalChlorine = Var(0)
   def totalChlorineInRange(value: Int): Boolean = totalChlorineRange.contains(value)
