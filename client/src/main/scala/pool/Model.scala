@@ -40,6 +40,10 @@ object Model:
   val averageTotalAlkalinity = Var(0)
   def totalAlkalinityInRange(value: Int): Boolean = totalAlkalinityRange.contains(value)
 
+  val currentCyanuricAcid = Var(0)
+  val averageCyanuricAcid = Var(0)
+  def cyanuricAcidInRange(value: Int): Boolean = cyanuricAcidRange.contains(value)
+
 final case class Model[E <: Entity](entitiesVar: Var[List[E]],
                                     selectedEntityVar: Var[E],
                                     emptyEntity: E):
