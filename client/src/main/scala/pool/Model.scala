@@ -36,6 +36,10 @@ object Model:
   val averageCalciumHardness = Var(0)
   def calciumHardnessInRange(value: Int): Boolean = calciumHardnessRange.contains(value)
 
+  val currentTotalAlkalinity = Var(0)
+  val averageTotalAlkalinity = Var(0)
+  def totalAlkalinityInRange(value: Int): Boolean = totalAlkalinityRange.contains(value)
+
 final case class Model[E <: Entity](entitiesVar: Var[List[E]],
                                     selectedEntityVar: Var[E],
                                     emptyEntity: E):
