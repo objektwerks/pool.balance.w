@@ -52,6 +52,10 @@ object Model:
   val averageSalt = Var(0)
   def saltInRange(value: Int): Boolean = saltRange.contains(value)
 
+  val currentTemperature = Var(0)
+  val averageTemperature = Var(0)
+  def temperatureInRange(value: Int): Boolean = temperatureRange.contains(value)
+
 final case class Model[E <: Entity](entitiesVar: Var[List[E]],
                                     selectedEntityVar: Var[E],
                                     emptyEntity: E):
