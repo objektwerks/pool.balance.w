@@ -3,6 +3,7 @@ package pool
 import com.raquo.laminar.api.L.*
 
 import Component.*
+import Validator.*
 
 object ChemicalsVew extends View:
   def apply(poolId: Long, model: Model[Chemical], license: String): HtmlElement =

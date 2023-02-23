@@ -3,7 +3,6 @@ package pool
 import com.raquo.laminar.api.L.*
 
 import Component.*
-import Error.*
 import Validator.*
 
 object PoolView extends View:

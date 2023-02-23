@@ -1,4 +1,4 @@
-package pool.page
+package pool
 
 import com.raquo.laminar.api.L
 import com.raquo.laminar.api.L.*
@@ -8,8 +8,7 @@ import com.github.plokhotnyuk.jsoniter_scala.core.*
 import com.github.plokhotnyuk.jsoniter_scala.macros.*
 
 import Page.given
-import pool.Serializer.given
-import pool.view.*
+import Serializer.given
 
 object PageRouter:
   val poolRoute = Route[PoolPage, Long](

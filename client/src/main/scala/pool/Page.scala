@@ -1,4 +1,4 @@
-package pool.page
+package pool
 
 import com.raquo.laminar.api.L.*
 import com.github.plokhotnyuk.jsoniter_scala.core.*

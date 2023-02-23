@@ -3,16 +3,17 @@ package pool
 import com.raquo.laminar.api.L.*
 
 import Component.*
+import Validator.*
 
-object MeasurementsView extends View:
-  def apply(poolId: Long, model: Model[Measurement], license: String): HtmlElement =
+object CleaningsView extends View:
+  def apply(poolId: Long, model: Model[Cleaning], license: String): HtmlElement =
     def handler(event: Event): Unit =
       event match
         case Fault(cause, _) => emitError(cause)
-        case MeasurementsListed(measurements: List[Measurement]) =>
+        case CleaningsListed(cleanings: List[Cleaning]) =>
           clearErrors()
-          model.setEntities(measurements)
-        case _ => log(s"Measurements -> handler failed: $event")
+          model.setEntities(cleanings)
+        case _ => log(s"Cleanings -> handler failed: $event")
 
     div(
       bar(
@@ -25,26 +26,26 @@ object MeasurementsView extends View:
       ),
       div(
         onLoad --> { _ => 
-          val command = ListMeasurements(license, poolId)
+          val command = ListCleanings(license, poolId)
           call(command, handler)
         },
-        hdr("Measurements"),
+        hdr("Cleanings"),
         err(errorBus),
         list(
-          split(model.entitiesVar, (id: Long) => MeasurementPage(id))
+          split(model.entitiesVar, (id: Long) => CleaningPage(id))
         )
       ),
       cbar(
         btn("New").amend {
           onClick --> { _ =>
-            log(s"Measurements -> New button onClick")
-            route(MeasurementPage())
+            log(s"Cleanings -> New button onClick")
+            route(CleaningPage())
           }
         },        
         btn("Refresh").amend {
           onClick --> { _ =>
-            log(s"Measurements -> Refresh button onClick")
-            val command = ListMeasurements(license, poolId)
+            log(s"Cleanings -> Refresh button onClick")
+            val command = ListCleanings(license, poolId)
             call(command, handler)
           }
         }
