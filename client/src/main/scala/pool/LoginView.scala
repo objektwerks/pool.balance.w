@@ -3,15 +3,11 @@ package pool
 import com.raquo.laminar.api.L.*
 
 import Component.*
-import Error.*
 import Message.*
 import Validator.*
 
 object LoginView extends View:
   def apply(emailAddressVar: Var[String], pinVar: Var[String], accountVar: Var[Account]): HtmlElement =
-    val emailAddressErrorBus = new EventBus[String]
-    val pinErrorBus = new EventBus[String]
-
     def handler(event: Event): Unit =
       event match
         case Fault(cause, _) => emitError(cause)
@@ -28,21 +24,13 @@ object LoginView extends View:
       email.amend {
         value <-- emailAddressVar
         onInput.mapToValue.filter(_.nonEmpty).setAsValue --> emailAddressVar
-        onKeyUp.mapToValue --> { emailAddress =>
-          if emailAddress.isEmailAddress then clear(emailAddressErrorBus) else emit(emailAddressErrorBus, emailAddressError)
-        }
       },
-      err(emailAddressErrorBus),
       lbl("Pin"),
       pin.amend {
         value <-- pinVar
-        onInput.mapToValue.filter(_.nonEmpty).setAsValue --> pinVar
-        onKeyUp.mapToValue --> { pin =>
-          if pin.isPin then clear(pinErrorBus) else emit(pinErrorBus, pinError)
-        }      
+        onInput.mapToValue.filter(_.nonEmpty).setAsValue --> pinVar     
       },
       info(pinMessage),
-      err(pinErrorBus),
       cbar(
         btn("Login").amend {
           disabled <-- emailAddressVar.signal.combineWithFn(pinVar.signal) {
