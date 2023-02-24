@@ -30,9 +30,9 @@ private object TotalChlorinePane extends DashboardPane:
       hdr("Ph"),
       grid(
         List(
-          "Range:" -> lbl("6.2 - 8.4"),
-          "Ideal:" -> lbl("7.4"),
-          "Good:" -> lbl("7.2 - 7.6"),
+          "Range:" -> lbl("0 - 10"),
+          "Ideal:" -> lbl("1 - 5"),
+          "Good:" -> lbl("3"),
           "Current:" -> current.amend("0").amend {
             value <-- Model.currentTotalChlorine.signal.map(_.toString)
             onChange.mapToValue --> { value => if Model.totalChlorineInRange(value.toInt) then inRangeCurrent else outOfRangeCurrent }
