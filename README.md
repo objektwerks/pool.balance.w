@@ -5,8 +5,7 @@ Pool Balance ( Web Edition - **WIP** )
 
 Todo
 ----
-1. Build reactive measurements
-2. Build measurements dashboard
+1. Build measurement charts.
 
 Install
 -------
