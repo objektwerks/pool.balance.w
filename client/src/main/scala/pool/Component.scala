@@ -79,8 +79,8 @@ object Component:
     )
 
   def grid(labelInputs: List[(Label, Input)]): Div =
-    div( cls("w3-container",
-         styleAttr("padding-top: 6px; padding-bottom: 6px; padding-right: 6px; padding-left: 6px"),
+    div(cls("w3-container"),
+        styleAttr("padding-top: 6px; padding-bottom: 6px; padding-right: 6px; padding-left: 6px"),
       labelInputs.map { (label, input) =>
         div( cls("w3-row"),
           div( cls("w3-col"), styleAttr("width:30%"), label ),
