@@ -45,6 +45,27 @@ private object TotalChlorinePane extends DashboardPane:
       )
     )
 
+private object FreeChlorinePane extends DashboardPane:
+  def apply(): Div =
+    div(
+      hdr("Ph"),
+      grid(
+        List(
+          "Range:" -> lbl("0 - 10"),
+          "Ideal:" -> lbl("1 - 5"),
+          "Good:" -> lbl("3"),
+          "Current:" -> current.amend("0").amend {
+            value <-- Model.currentFreeChlorine.signal.map(_.toString)
+            onChange.mapToValue --> { value => if Model.freeChlorineInRange(value.toInt) then inRangeCurrent else outOfRangeCurrent }
+          },
+          "Average:" -> average.amend("0").amend {
+            value <-- Model.averageTotalChlorine.signal.map(_.toString)
+            onChange.mapToValue --> { value => if Model.totalChlorineInRange(value.toInt) then inRangeAverage else outOfRangeAverage }
+          }
+        )
+      )
+    )
+
 private object PhPane extends DashboardPane:
   def apply(): Div =
     div(
