@@ -24,6 +24,27 @@ sealed private trait DashboardPane:
   def inRangeAverage: Unit = average.amend { styleAttr(emptyStyle) }
   def outOfRangeAverage: Unit = average.amend { styleAttr(redBorderStyle) }
 
+private object TotalChlorinePane extends DashboardPane:
+  def apply(): Div =
+    div(
+      hdr("Ph"),
+      grid(
+        List(
+          "Range:" -> lbl("6.2 - 8.4"),
+          "Ideal:" -> lbl("7.4"),
+          "Good:" -> lbl("7.2 - 7.6"),
+          "Current:" -> current.amend("0").amend {
+            value <-- Model.currentTotalChlorine.signal.map(_.toString)
+            onChange.mapToValue --> { value => if Model.totalChlorineInRange(value.toInt) then inRangeCurrent else outOfRangeCurrent }
+          },
+          "Average:" -> average.amend("0").amend {
+            value <-- Model.averageTotalChlorine.signal.map(_.toString)
+            onChange.mapToValue --> { value => if Model.totalChlorineInRange(value.toInt) then inRangeAverage else outOfRangeAverage }
+          }
+        )
+      )
+    )
+
 private object PhPane extends DashboardPane:
   def apply(): Div =
     div(
