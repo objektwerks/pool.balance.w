@@ -128,3 +128,24 @@ private object CalciumHardnessPane extends DashboardPane:
         )
       )
     )
+
+private object TotalAlkalinityPane extends DashboardPane:
+  def apply(): Div =
+    div(
+      hdr("Total Alkalinity"),
+      grid(
+        List(
+          "Range:" -> lbl("0 - 240"),
+          "Ideal:" -> lbl("80 - 120"),
+          "Good:" -> lbl("100"),
+          "Current:" -> current.amend("0").amend {
+            value <-- Model.currentTotalAlkalinity.signal.map(_.toString)
+            onChange.mapToValue --> { value => if Model.totalAlkalinityInRange(value.toInt) then inRangeCurrent else outOfRangeCurrent }
+          },
+          "Average:" -> average.amend("0").amend {
+            value <-- Model.averageTotalAlkalinity.signal.map(_.toString)
+            onChange.mapToValue --> { value => if Model.totalAlkalinityInRange(value.toInt) then inRangeAverage else outOfRangeAverage }
+          }
+        )
+      )
+    )
