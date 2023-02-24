@@ -78,12 +78,12 @@ object Component:
       }
     )
 
-  def grid(labelInputs: List[(String, Input)]): Div =
+  def grid(labelElements: List[(String, HtmlElement)]): Div =
     div(cls("w3-container"), styleAttr("padding: 6px"),
-      labelInputs.map { (label, input) =>
+      labelElements.map { (label, element) =>
         div( cls("w3-row"),
           div( cls("w3-col"), styleAttr("width:30%"), lbl(label) ),
-          div( cls("w3-col"), styleAttr("width:70%"), input )
+          div( cls("w3-col"), styleAttr("width:70%"), element )
         )
       }
     )
