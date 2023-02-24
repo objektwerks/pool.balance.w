@@ -78,11 +78,11 @@ object Component:
       }
     )
 
-  def grid(labelInputs: List[(Label, Input)]): Div =
+  def grid(labelInputs: List[(String, Input)]): Div =
     div(cls("w3-container"), styleAttr("padding: 6px"),
       labelInputs.map { (label, input) =>
         div( cls("w3-row"),
-          div( cls("w3-col"), styleAttr("width:30%"), label ),
+          div( cls("w3-col"), styleAttr("width:30%"), lbl(label) ),
           div( cls("w3-col"), styleAttr("width:70%"), input )
         )
       }
