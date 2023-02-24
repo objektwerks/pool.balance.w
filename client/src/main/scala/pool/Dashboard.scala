@@ -149,3 +149,24 @@ private object TotalAlkalinityPane extends DashboardPane:
         )
       )
     )
+
+private object CyanuricAcidPane extends DashboardPane:
+  def apply(): Div =
+    div(
+      hdr("Cyanuric Acid"),
+      grid(
+        List(
+          "Range:" -> lbl("0 - 300"),
+          "Ideal:" -> lbl("30 - 100"),
+          "Good:" -> lbl("50"),
+          "Current:" -> current.amend("0").amend {
+            value <-- Model.currentCyanuricAcid.signal.map(_.toString)
+            onChange.mapToValue --> { value => if Model.cyanuricAcidInRange(value.toInt) then inRangeCurrent else outOfRangeCurrent }
+          },
+          "Average:" -> average.amend("0").amend {
+            value <-- Model.averageCyanuricAcid.signal.map(_.toString)
+            onChange.mapToValue --> { value => if Model.cyanuricAcidInRange(value.toInt) then inRangeAverage else outOfRangeAverage }
+          }
+        )
+      )
+    )
