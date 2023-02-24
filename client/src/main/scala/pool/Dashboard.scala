@@ -35,15 +35,11 @@ object PhPane extends DashboardPane:
           "Good:" -> lbl("7.2 - 7.6"),
           "Current:" -> current.amend("0").amend {
             value <-- Model.currentPh.signal.map(_.toString)
-            onChange.mapToValue --> { value =>
-              if Model.phInRange(value.toDouble) then inRangeCurrent else outOfRangeCurrent
-            }
+            onChange.mapToValue --> { value => if Model.phInRange(value.toDouble) then inRangeCurrent else outOfRangeCurrent }
           },
           "Average:" -> average.amend("0").amend {
             value <-- Model.averagePh.signal.map(_.toString)
-            onChange.mapToValue --> { value =>
-              if Model.phInRange(value.toDouble) then inRangeAverage else outOfRangeAverage
-            }
+            onChange.mapToValue --> { value => if Model.phInRange(value.toDouble) then inRangeAverage else outOfRangeAverage }
           }
         )
       )
