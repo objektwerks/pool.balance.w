@@ -11,7 +11,7 @@ object Dashboard:
       PhPane()
     )
 
-trait DashboardPane:
+sealed private trait DashboardPane:
   val current = lbl("0")
   val average = lbl("0")
 
@@ -24,7 +24,7 @@ trait DashboardPane:
   def inRangeAverage: Unit = average.amend { styleAttr(emptyStyle) }
   def outOfRangeAverage: Unit = average.amend { styleAttr(redBorderStyle) }
 
-object PhPane extends DashboardPane:
+private object PhPane extends DashboardPane:
   def apply(): Div =
     div(
       hdr("Ph"),
