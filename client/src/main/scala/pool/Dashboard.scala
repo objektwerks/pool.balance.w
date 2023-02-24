@@ -21,12 +21,14 @@ import Component.*
   }
 */
 object Dashboard:
-  def apply: HtmlElement = ???
-
-
-final class PhPane:
   def apply: HtmlElement =
+    div(
+      hdr("Dashboard"),
+      ph
+    )
 
+
+  private def ph: HtmlElement =
     div(
       hdr("Ph"),
       grid(
@@ -39,4 +41,3 @@ final class PhPane:
         )
       )
     )
-
