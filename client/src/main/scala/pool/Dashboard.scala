@@ -191,3 +191,24 @@ private object TotalBrominePane extends DashboardPane:
         )
       )
     )
+
+private object SaltPane extends DashboardPane:
+  def apply(): Div =
+    div(
+      hdr("Salt"),
+      grid(
+        List(
+          "Range:" -> lbl("0 - 3600"),
+          "Ideal:" -> lbl("2700 - 3400"),
+          "Good:" -> lbl("3200"),
+          "Current:" -> current.amend("0").amend {
+            value <-- Model.currentSalt.signal.map(_.toString)
+            onChange.mapToValue --> { value => if Model.saltInRange(value.toInt) then inRangeCurrent else outOfRangeCurrent }
+          },
+          "Average:" -> average.amend("0").amend {
+            value <-- Model.averageSalt.signal.map(_.toString)
+            onChange.mapToValue --> { value => if Model.saltInRange(value.toInt) then inRangeAverage else outOfRangeAverage }
+          }
+        )
+      )
+    )
