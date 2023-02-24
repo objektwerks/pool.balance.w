@@ -107,3 +107,24 @@ private object PhPane extends DashboardPane:
         )
       )
     )
+
+private object CalciumHardnessPane extends DashboardPane:
+  def apply(): Div =
+    div(
+      hdr("Calcium Hardness"),
+      grid(
+        List(
+          "Range:" -> lbl("0 - 1000"),
+          "Ideal:" -> lbl("250 - 500"),
+          "Good:" -> lbl("375"),
+          "Current:" -> current.amend("0").amend {
+            value <-- Model.currentCalciumHardness.signal.map(_.toString)
+            onChange.mapToValue --> { value => if Model.calciumHardnessInRange(value.toInt) then inRangeCurrent else outOfRangeCurrent }
+          },
+          "Average:" -> average.amend("0").amend {
+            value <-- Model.averageCalciumHardness.signal.map(_.toString)
+            onChange.mapToValue --> { value => if Model.calciumHardnessInRange(value.toInt) then inRangeAverage else outOfRangeAverage }
+          }
+        )
+      )
+    )
