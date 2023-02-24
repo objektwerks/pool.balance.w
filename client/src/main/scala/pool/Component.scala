@@ -77,3 +77,5 @@ object Component:
         }
       }
     )
+
+  def grid(labelInputs: List[(Label, Input)]): Div = ???
