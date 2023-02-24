@@ -170,3 +170,24 @@ private object CyanuricAcidPane extends DashboardPane:
         )
       )
     )
+
+private object TotalBrominePane extends DashboardPane:
+  def apply(): Div =
+    div(
+      hdr("Total Bromine"),
+      grid(
+        List(
+          "Range:" -> lbl("0 - 20"),
+          "Ideal:" -> lbl("2 - 10"),
+          "Good:" -> lbl("5"),
+          "Current:" -> current.amend("0").amend {
+            value <-- Model.currentTotalBromine.signal.map(_.toString)
+            onChange.mapToValue --> { value => if Model.totalBromineInRange(value.toInt) then inRangeCurrent else outOfRangeCurrent }
+          },
+          "Average:" -> average.amend("0").amend {
+            value <-- Model.averageTotalBromine.signal.map(_.toString)
+            onChange.mapToValue --> { value => if Model.totalBromineInRange(value.toInt) then inRangeAverage else outOfRangeAverage }
+          }
+        )
+      )
+    )
