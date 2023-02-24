@@ -66,6 +66,27 @@ private object FreeChlorinePane extends DashboardPane:
       )
     )
 
+private object CombinedChlorinePane extends DashboardPane:
+  def apply(): Div =
+    div(
+      hdr("Combined Chlorine"),
+      grid(
+        List(
+          "Range:" -> lbl("0.0 - 0.5"),
+          "Ideal:" -> lbl("0.0 - 0.2"),
+          "Good:" -> lbl("0.0"),
+          "Current:" -> current.amend("0.0").amend {
+            value <-- Model.currentCombinedChlorine.signal.map(_.toString)
+            onChange.mapToValue --> { value => if Model.combinedChlorineInRange(value.toDouble) then inRangeCurrent else outOfRangeCurrent }
+          },
+          "Average:" -> average.amend("0.0").amend {
+            value <-- Model.averagePh.signal.map(_.toString)
+            onChange.mapToValue --> { value => if Model.combinedChlorineInRange(value.toDouble) then inRangeAverage else outOfRangeAverage }
+          }
+        )
+      )
+    )
+
 private object PhPane extends DashboardPane:
   def apply(): Div =
     div(
@@ -75,11 +96,11 @@ private object PhPane extends DashboardPane:
           "Range:" -> lbl("6.2 - 8.4"),
           "Ideal:" -> lbl("7.4"),
           "Good:" -> lbl("7.2 - 7.6"),
-          "Current:" -> current.amend("0").amend {
+          "Current:" -> current.amend("0.0").amend {
             value <-- Model.currentPh.signal.map(_.toString)
             onChange.mapToValue --> { value => if Model.phInRange(value.toDouble) then inRangeCurrent else outOfRangeCurrent }
           },
-          "Average:" -> average.amend("0").amend {
+          "Average:" -> average.amend("0.0").amend {
             value <-- Model.averagePh.signal.map(_.toString)
             onChange.mapToValue --> { value => if Model.phInRange(value.toDouble) then inRangeAverage else outOfRangeAverage }
           }
