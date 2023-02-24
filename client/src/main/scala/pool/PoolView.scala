@@ -73,7 +73,7 @@ object PoolView extends View:
           )
         },
         lbl("Unit"),
-        list( UnitOfMeasure.toList ).amend {
+        listbox( UnitOfMeasure.toList ).amend {
           controlled(
             value <-- model.selectedEntityVar.signal.map(_.unit),
             onChange.mapToValue --> { value =>

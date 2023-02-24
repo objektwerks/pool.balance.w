@@ -56,7 +56,7 @@ object Component:
   def err(errBus: EventBus[String]): Div =
     div(cls("w3-container w3-border-white w3-text-red"), child.text <-- errBus.events)
 
-  def list(items: List[String]): Select =
+  def listbox(items: List[String]): Select =
     select(cls("w3-select w3-text-indigo"),
       children <-- Var(items.map(item => option(item))).signal
     )

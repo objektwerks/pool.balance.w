@@ -39,7 +39,7 @@ object ChemicalView extends View:
         hdr("Chemical"),
         err(errorBus),
         lbl("Type Of"),
-        list( TypeOfChemical.toList ).amend {
+        listbox( TypeOfChemical.toList ).amend {
           controlled(
             value <-- model.selectedEntityVar.signal.map(_.unit),
             onChange.mapToValue --> { value =>
@@ -57,7 +57,7 @@ object ChemicalView extends View:
           )
         },
         lbl("Unit"),
-        list( UnitOfMeasure.toList ).amend {
+        listbox( UnitOfMeasure.toList ).amend {
           controlled(
             value <-- model.selectedEntityVar.signal.map(_.unit),
             onChange.mapToValue --> { value =>
