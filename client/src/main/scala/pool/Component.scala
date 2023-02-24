@@ -78,4 +78,13 @@ object Component:
       }
     )
 
-  def grid(labelInputs: List[(Label, Input)]): Div = ???
+  def grid(labelInputs: List[(Label, Input)]): Div =
+    div(cls("w3-container"),
+      labelInputs.map { (label, input) => row(label, input) }
+    )
+
+  def row(label: Label, input: Input): Div =
+    div( cls("w3-row"),
+      div( cls("w3-col"), label ),
+      div( cls("w3-col"), input )
+    )
