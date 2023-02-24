@@ -78,12 +78,12 @@ object Component:
       }
     )
 
-  def grid(labelElements: List[(String, HtmlElement)]): Div =
+  def grid(labelElements: List[(String, HtmlElement)], leftWidth: Int = 50, rightWidth: Int = 50): Div =
     div(cls("w3-container"), styleAttr("padding: 6px"),
       labelElements.map { (label, element) =>
         div( cls("w3-row"),
-          div( cls("w3-col"), styleAttr("width:30%"), lbl(label) ),
-          div( cls("w3-col"), styleAttr("width:70%"), element )
+          div( cls("w3-col"), styleAttr(s"width:$leftWidth%"), lbl(label) ),
+          div( cls("w3-col"), styleAttr(s"width:$rightWidth%"), element )
         )
       }
     )
