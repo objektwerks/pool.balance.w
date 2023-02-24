@@ -8,7 +8,16 @@ object Dashboard:
   def apply: HtmlElement =
     div(
       hdr("Dashboard"),
-      PhPane()
+      TotalChlorinePane(),
+      FreeChlorinePane(),
+      CombinedChlorinePane(),
+      PhPane(),
+      CalciumHardnessPane(),
+      TotalAlkalinityPane(),
+      CyanuricAcidPane(),
+      TotalBrominePane(),
+      SaltPane(),
+      TemperaturePane()
     )
 
 sealed private trait DashboardPane:
