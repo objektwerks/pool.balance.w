@@ -27,7 +27,7 @@ sealed private trait DashboardPane:
 private object TotalChlorinePane extends DashboardPane:
   def apply(): Div =
     div(
-      hdr("Ph"),
+      hdr("Total Chlorine"),
       grid(
         List(
           "Range:" -> lbl("0 - 10"),
