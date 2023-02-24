@@ -212,3 +212,24 @@ private object SaltPane extends DashboardPane:
         )
       )
     )
+
+private object TemperaturePane extends DashboardPane:
+  def apply(): Div =
+    div(
+      hdr("Temperature"),
+      grid(
+        List(
+          "Range:" -> lbl("50 - 100"),
+          "Ideal:" -> lbl("75 - 85"),
+          "Good:" -> lbl("82"),
+          "Current:" -> current.amend("0").amend {
+            value <-- Model.currentTemperature.signal.map(_.toString)
+            onChange.mapToValue --> { value => if Model.temperatureInRange(value.toInt) then inRangeCurrent else outOfRangeCurrent }
+          },
+          "Average:" -> average.amend("0").amend {
+            value <-- Model.averageTemperature.signal.map(_.toString)
+            onChange.mapToValue --> { value => if Model.temperatureInRange(value.toInt) then inRangeAverage else outOfRangeAverage }
+          }
+        )
+      )
+    )
