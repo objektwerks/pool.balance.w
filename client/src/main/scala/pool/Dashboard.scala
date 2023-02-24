@@ -12,7 +12,7 @@ object Dashboard:
     )
 
 
-  private def ph: HtmlElement =
+  private def ph: Div =
     div(
       hdr("Ph"),
       grid(
