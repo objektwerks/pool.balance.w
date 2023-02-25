@@ -11,7 +11,7 @@ Todo
 Charts
 ------
 >Chart.js, via scalablytyped converter, does not work all too well at this time.
->Alternatively charts, as png files, could be generated via JFreeChart on the server.
+>Alternatively charts could be generated as png files via JFreeChart on the server.
 
 Install
 -------
