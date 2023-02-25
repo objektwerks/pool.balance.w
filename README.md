@@ -5,7 +5,8 @@ Pool Balance ( Web Edition - **WIP** )
 
 Todo
 ----
-1. Test UI.
+1. Integrate dashboard into UI.
+2. Test UI.
 
 Install
 -------
