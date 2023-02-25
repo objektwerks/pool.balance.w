@@ -8,6 +8,11 @@ Todo
 1. Integrate dashboard into UI.
 2. Test UI.
 
+Charts
+------
+>Chart.js, via scalablytyped converter, does not work all too well at this time.
+>An alternative, would be to generate png charts via JFreeChart on the server.
+
 Install
 -------
 1. brew install node
