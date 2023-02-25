@@ -7,19 +7,9 @@ import com.raquo.laminar.api.L.{*, given}
 
 import typings.chartJs.mod.*
 
-object Charts:
-  private val config = new ChartConfiguration {
-    `type` = ChartType.line,
-    data = new ChartData {
-      datasets = js.Array(new ChartDataSets {
-        label = "Value"
-        borderWidth = 1
-      }
-  }
-  
-  def apply(): HtmlElement =
-    canvasTag (
-      width := "100%",
-      height := "300px"
-
-    )
+/**
+ * Chart.js, via ScalaJs, is not exactly ready for prime
+ * time (2023.2.25). Try again later.
+ */
+object Charts:  
+  def apply(): HtmlElement = ???
