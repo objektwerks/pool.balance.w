@@ -105,6 +105,8 @@ object Model:
 final case class Model[E <: Entity](entitiesVar: Var[List[E]],
                                     selectedEntityVar: Var[E],
                                     emptyEntity: E):
+  import Entity.given
+
   given owner: Owner = new Owner {}
   entitiesVar.signal.foreach(entities => log(s"model entities -> ${entities.toString}"))
   selectedEntityVar.signal.foreach(entity => log(s"model selected entity -> ${entity.toString}"))
@@ -126,3 +128,8 @@ final case class Model[E <: Entity](entitiesVar: Var[List[E]],
         else entity
       }
     }
+
+  def sort(ordering: Ordering[E]): Var[List[E]] =
+    val sortedEntities = entitiesVar.now().sorted[E](ordering)
+    entitiesVar.set(sortedEntities)
+    entitiesVar
