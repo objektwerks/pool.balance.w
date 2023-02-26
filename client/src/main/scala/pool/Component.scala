@@ -89,3 +89,5 @@ object Component:
         )
       }
     )
+
+  def dashboard: HtmlElement = Dashboard()
