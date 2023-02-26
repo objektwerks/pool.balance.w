@@ -6,6 +6,7 @@ import java.text.NumberFormat
 
 import org.scalajs.dom.console.log
 
+import Entity.given
 import Measurement.*
 
 object Model:
@@ -13,10 +14,10 @@ object Model:
   val pinVar = Var("")
   val accountVar = Var(Account())
 
-  val poolsModel = Model[Pool](Var(List.empty[Pool]), Var(Pool()), Pool())
-  val cleaningsModel = Model[Cleaning](Var(List.empty[Cleaning]), Var(Cleaning()), Cleaning())
-  val measurementsModel = Model[Measurement](Var(List.empty[Measurement]), Var(Measurement()), Measurement())
-  val chemicalsModel = Model[Chemical](Var(List.empty[Chemical]), Var(Chemical()), Chemical())
+  val poolsModel = Model[Pool](Var(List.empty[Pool]), Var(Pool()), Pool(), poolOrdering)
+  val cleaningsModel = Model[Cleaning](Var(List.empty[Cleaning]), Var(Cleaning()), Cleaning(), cleaningOrdering)
+  val measurementsModel = Model[Measurement](Var(List.empty[Measurement]), Var(Measurement()), Measurement(), measurementOrdering)
+  val chemicalsModel = Model[Chemical](Var(List.empty[Chemical]), Var(Chemical()), Chemical(), chemicalOrdering)
 
   measurementsModel
     .entitiesVar
@@ -104,9 +105,8 @@ object Model:
 
 final case class Model[E <: Entity](entitiesVar: Var[List[E]],
                                     selectedEntityVar: Var[E],
-                                    emptyEntity: E):
-  import Entity.given
-
+                                    emptyEntity: E,
+                                    ordering: Ordering[E]):
   given owner: Owner = new Owner {}
   entitiesVar.signal.foreach(entities => log(s"model entities -> ${entities.toString}"))
   selectedEntityVar.signal.foreach(entity => log(s"model selected entity -> ${entity.toString}"))
@@ -129,7 +129,7 @@ final case class Model[E <: Entity](entitiesVar: Var[List[E]],
       }
     }
 
-  def sort(ordering: Ordering[E]): Var[List[E]] =
+  def sort: Var[List[E]] =
     val sortedEntities = entitiesVar.now().sorted[E](ordering)
     entitiesVar.set(sortedEntities)
     entitiesVar
