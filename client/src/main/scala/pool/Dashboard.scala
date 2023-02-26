@@ -5,7 +5,7 @@ import com.raquo.laminar.api.L.*
 import Component.*
 
 object Dashboard:
-  def apply: HtmlElement =
+  def apply(): HtmlElement =
     div(
       hdr("Dashboard"),
       TotalChlorinePane(),
