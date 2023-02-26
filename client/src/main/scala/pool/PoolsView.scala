@@ -32,8 +32,7 @@ object PoolsView extends View:
         err(errorBus),
         list(
           split(model.entitiesVar, (id: Long) => PoolPage(id))
-        ),
-        Dashboard()
+        )
       ),
       cbar(
         btn("New").amend {
@@ -49,5 +48,6 @@ object PoolsView extends View:
             call(command, handler)
           }
         }
-      )
+      ),
+      dashboard
     )
