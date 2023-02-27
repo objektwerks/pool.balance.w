@@ -123,7 +123,7 @@ final case class Model[E <: Entity](entitiesVar: Var[List[E]],
 
   def addEntity(entity: E): Unit =
     val updatedEntities = entity +: entitiesVar.now()
-    entitiesVar.set(updatedEntities)
+    entitiesVar.update(_ => updatedEntities)
 
   def updateSelectedEntity(updatedSelectedEntity: E): Unit =
     entitiesVar.update { entities =>
