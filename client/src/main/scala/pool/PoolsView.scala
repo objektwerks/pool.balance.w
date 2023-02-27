@@ -30,7 +30,7 @@ object PoolsView extends View:
         },
         hdr("Pools"),
         err(errorBus),
-        list(
+        listview(
           split(model.entitiesVar, (id: Long) => PoolPage(id))
         ).amend {
           height("100")
