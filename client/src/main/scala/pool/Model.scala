@@ -111,15 +111,19 @@ final case class Model[E <: Entity](entitiesVar: Var[List[E]],
   entitiesVar.signal.foreach(entities => log(s"model entities -> ${entities.toString}"))
   selectedEntityVar.signal.foreach(entity => log(s"model selected entity -> ${entity.toString}"))
 
-  def addEntity(entity: E): Unit =
-    val updatedEntities = entity +: entitiesVar.now()
-    entitiesVar.set(updatedEntities)
-
   def setEntities(entities: List[E]): Unit = entitiesVar.set(entities)
 
   def setSelectedEntityById(id: Long): Model[E] =
-    selectedEntityVar.set(entitiesVar.now().find(_.id == id).getOrElse(emptyEntity))
+    selectedEntityVar.set( entitiesVar.now().find(_.id == id).getOrElse(emptyEntity) )
     this
+
+  def sort(): Unit =
+    val sortedEntities = entitiesVar.now().sorted[E](ordering)
+    entitiesVar.set(sortedEntities)
+
+  def addEntity(entity: E): Unit =
+    val updatedEntities = entity +: entitiesVar.now()
+    entitiesVar.set(updatedEntities)
 
   def updateSelectedEntity(updatedSelectedEntity: E): Unit =
     entitiesVar.update { entities =>
@@ -130,7 +134,3 @@ final case class Model[E <: Entity](entitiesVar: Var[List[E]],
         else entity
       }
     }
-
-  def sort(): Unit =
-    val sortedEntities = entitiesVar.now().sorted[E](ordering)
-    entitiesVar.set(sortedEntities)
