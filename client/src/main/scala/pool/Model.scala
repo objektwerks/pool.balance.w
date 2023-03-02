@@ -17,7 +17,7 @@ object Model:
   val pools = Model[Pool](Var(List.empty[Pool]), Var(Pool()), Pool(), poolOrdering)
   val cleanings = Model[Cleaning](Var(List.empty[Cleaning]), Var(Cleaning()), Cleaning(), cleaningOrdering)
   val measurements = Model[Measurement](Var(List.empty[Measurement]), Var(Measurement()), Measurement(), measurementOrdering)
-  val chemicalsModel = Model[Chemical](Var(List.empty[Chemical]), Var(Chemical()), Chemical(), chemicalOrdering)
+  val chemicals = Model[Chemical](Var(List.empty[Chemical]), Var(Chemical()), Chemical(), chemicalOrdering)
 
   measurements
     .entitiesVar
