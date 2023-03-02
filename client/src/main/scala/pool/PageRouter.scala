@@ -67,11 +67,11 @@ object PageRouter:
     .collectStatic(LoginPage) { LoginView(Model.emailAddressVar, Model.pinVar, Model.accountVar) }
     .collectStatic(AppPage) { AppView(Model.accountVar) }
     .collectStatic(AccountPage) { AccountView(Model.accountVar) }
-    .collectStatic(PoolsPage) { PoolsView(Model.poolsModel, Model.accountVar.now().license) }
-    .collect[PoolPage] { page => PoolView(Model.poolsModel.setSelectedEntityById(page.id), Model.accountVar.now().license) }
-    .collectStatic(CleaningsPage) { CleaningsView(Model.poolsModel.selectedEntityVar.now().id, Model.cleaningsModel, Model.accountVar.now().license) }
+    .collectStatic(PoolsPage) { PoolsView(Model.pools, Model.accountVar.now().license) }
+    .collect[PoolPage] { page => PoolView(Model.pools.setSelectedEntityById(page.id), Model.accountVar.now().license) }
+    .collectStatic(CleaningsPage) { CleaningsView(Model.pools.selectedEntityVar.now().id, Model.cleaningsModel, Model.accountVar.now().license) }
     .collect[CleaningPage] { page => CleaningView(Model.cleaningsModel.setSelectedEntityById(page.id), Model.accountVar.now().license) }
-    .collectStatic(MeasurementsPage) { MeasurementsView(Model.poolsModel.selectedEntityVar.now().id, Model.measurementsModel, Model.accountVar.now().license) }
+    .collectStatic(MeasurementsPage) { MeasurementsView(Model.pools.selectedEntityVar.now().id, Model.measurementsModel, Model.accountVar.now().license) }
     .collect[MeasurementPage] { page => MeasurementView(Model.measurementsModel.setSelectedEntityById(page.id), Model.accountVar.now().license) }
-    .collectStatic(ChemicalsPage) { ChemicalsVew(Model.poolsModel.selectedEntityVar.now().id, Model.chemicalsModel, Model.accountVar.now().license) }
+    .collectStatic(ChemicalsPage) { ChemicalsVew(Model.pools.selectedEntityVar.now().id, Model.chemicalsModel, Model.accountVar.now().license) }
     .collect[ChemicalPage] { page => ChemicalView(Model.chemicalsModel.setSelectedEntityById(page.id), Model.accountVar.now().license) }

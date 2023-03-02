@@ -43,7 +43,7 @@ object ChemicalView extends View:
           controlled(
             value <-- model.selectedEntityVar.signal.map(_.unit),
             onChange.mapToValue --> { value =>
-              model.updateSelectedEntity( model.selectedEntityVar.now().copy(typeof = value) )
+              model.updateSelectedEntity( model.selectedEntityVar.now().copy(chemical = value) )
             }
           )
         },

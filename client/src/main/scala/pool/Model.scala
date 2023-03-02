@@ -14,7 +14,7 @@ object Model:
   val pinVar = Var("")
   val accountVar = Var(Account())
 
-  val poolsModel = Model[Pool](Var(List.empty[Pool]), Var(Pool()), Pool(), poolOrdering)
+  val pools = Model[Pool](Var(List.empty[Pool]), Var(Pool()), Pool(), poolOrdering)
   val cleaningsModel = Model[Cleaning](Var(List.empty[Cleaning]), Var(Cleaning()), Cleaning(), cleaningOrdering)
   val measurementsModel = Model[Measurement](Var(List.empty[Measurement]), Var(Measurement()), Measurement(), measurementOrdering)
   val chemicalsModel = Model[Chemical](Var(List.empty[Chemical]), Var(Chemical()), Chemical(), chemicalOrdering)
