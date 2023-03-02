@@ -270,7 +270,7 @@ final class Store(config: Config,
         Chemical(
           rs.long("id"),
           rs.long("pool_id"),
-          rs.string("typeof"),
+          rs.string("chemical"),
           rs.double("amount"),
           rs.string("unit"),
           rs.long("added")
@@ -281,15 +281,15 @@ final class Store(config: Config,
 
   def addChemical(chemical: Chemical): Long = DB localTx { implicit session =>
     sql"""
-      insert into chemical(pool_id, typeof, amount, unit, added)
-      values(${chemical.poolId}, ${chemical.typeof.toString}, ${chemical.amount}, ${chemical.unit.toString}, ${chemical.added})
+      insert into chemical(pool_id, chemical, amount, unit, added)
+      values(${chemical.poolId}, ${chemical.chemical.toString}, ${chemical.amount}, ${chemical.unit.toString}, ${chemical.added})
       """
       .updateAndReturnGeneratedKey()
   }
 
   def updateChemical(chemical: Chemical): Long = DB localTx { implicit session =>
     sql"""
-      update chemical set typeof = ${chemical.typeof.toString}, amount = ${chemical.amount}, unit = ${chemical.unit.toString},
+      update chemical set chemical = ${chemical.chemical.toString}, amount = ${chemical.amount}, unit = ${chemical.unit.toString},
       added = ${chemical.added} where id = ${chemical.id}
       """
       .update()
