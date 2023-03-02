@@ -67,11 +67,11 @@ object PageRouter:
     .collectStatic(LoginPage) { LoginView(Model.emailAddressVar, Model.pinVar, Model.accountVar) }
     .collectStatic(AppPage) { AppView(Model.accountVar) }
     .collectStatic(AccountPage) { AccountView(Model.accountVar) }
-    .collectStatic(PoolsPage) { PoolsView(Model.pools, Model.accountVar.now().license) }
-    .collect[PoolPage] { page => PoolView(Model.pools.setSelectedEntityById(page.id), Model.accountVar.now().license) }
-    .collectStatic(CleaningsPage) { CleaningsView(Model.pools.selectedEntityVar.now().id, Model.cleanings, Model.accountVar.now().license) }
-    .collect[CleaningPage] { page => CleaningView(Model.cleanings.setSelectedEntityById(page.id), Model.accountVar.now().license) }
-    .collectStatic(MeasurementsPage) { MeasurementsView(Model.pools.selectedEntityVar.now().id, Model.measurements, Model.accountVar.now().license) }
-    .collect[MeasurementPage] { page => MeasurementView(Model.measurements.setSelectedEntityById(page.id), Model.accountVar.now().license) }
-    .collectStatic(ChemicalsPage) { ChemicalsVew(Model.pools.selectedEntityVar.now().id, Model.chemicals, Model.accountVar.now().license) }
-    .collect[ChemicalPage] { page => ChemicalView(Model.chemicals.setSelectedEntityById(page.id), Model.accountVar.now().license) }
+    .collectStatic(PoolsPage) { PoolsView(Model.pools, Model.license) }
+    .collect[PoolPage] { page => PoolView(Model.pools.setSelectedEntityById(page.id), Model.license) }
+    .collectStatic(CleaningsPage) { CleaningsView(Model.pools.selectedEntityVar.now().id, Model.cleanings, Model.license) }
+    .collect[CleaningPage] { page => CleaningView(Model.cleanings.setSelectedEntityById(page.id), Model.license) }
+    .collectStatic(MeasurementsPage) { MeasurementsView(Model.pools.selectedEntityVar.now().id, Model.measurements, Model.license) }
+    .collect[MeasurementPage] { page => MeasurementView(Model.measurements.setSelectedEntityById(page.id), Model.license) }
+    .collectStatic(ChemicalsPage) { ChemicalsVew(Model.pools.selectedEntityVar.now().id, Model.chemicals, Model.license) }
+    .collect[ChemicalPage] { page => ChemicalView(Model.chemicals.setSelectedEntityById(page.id), Model.license) }
