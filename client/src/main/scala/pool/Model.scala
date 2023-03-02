@@ -90,18 +90,18 @@ object Model:
     currentTemperature.set(measurement.temperature)
 
   private def calculateAverageMeasurements(numberFormat: NumberFormat): Unit =
-    val measurements = measurements.entitiesVar.now()
-    val count = measurements.length
-    averageTotalChlorine.set(measurements.map(_.totalChlorine).sum / count)
-    averageFreeChlorine.set(measurements.map(_.freeChlorine).sum / count)
-    averageCombinedChlorine.set(numberFormat.format( measurements.map(_.combinedChlorine).sum / count ).toDouble)
-    averagePh.set(numberFormat.format( measurements.map(_.ph).sum / count ).toDouble)
-    averageCalciumHardness.set(measurements.map(_.calciumHardness).sum / count)
-    averageTotalAlkalinity.set(measurements.map(_.totalAlkalinity).sum / count)
-    averageCyanuricAcid.set(measurements.map(_.cyanuricAcid).sum / count)
-    averageTotalBromine.set(measurements.map(_.totalBromine).sum / count)
-    averageSalt.set(measurements.map(_.salt).sum / count)
-    averageTemperature.set(measurements.map(_.temperature).sum / count)
+    val measurementz = measurements.entitiesVar.now()
+    val count = measurementz.length
+    averageTotalChlorine.set(measurementz.map(_.totalChlorine).sum / count)
+    averageFreeChlorine.set(measurementz.map(_.freeChlorine).sum / count)
+    averageCombinedChlorine.set(numberFormat.format( measurementz.map(_.combinedChlorine).sum / count ).toDouble)
+    averagePh.set(numberFormat.format( measurementz.map(_.ph).sum / count ).toDouble)
+    averageCalciumHardness.set(measurementz.map(_.calciumHardness).sum / count)
+    averageTotalAlkalinity.set(measurementz.map(_.totalAlkalinity).sum / count)
+    averageCyanuricAcid.set(measurementz.map(_.cyanuricAcid).sum / count)
+    averageTotalBromine.set(measurementz.map(_.totalBromine).sum / count)
+    averageSalt.set(measurementz.map(_.salt).sum / count)
+    averageTemperature.set(measurementz.map(_.temperature).sum / count)
 
 final case class Model[E <: Entity](entitiesVar: Var[List[E]],
                                     selectedEntityVar: Var[E],
