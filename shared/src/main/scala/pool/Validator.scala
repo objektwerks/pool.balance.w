@@ -140,7 +140,7 @@ object Validator:
     def isValid: Boolean =
       chemical.id >= 0 &&
       chemical.poolId > 0 &&
-      chemical.typeof.nonEmpty &&
+      chemical.chemical.nonEmpty &&
       chemical.amount > 0.00 &&
       chemical.unit.nonEmpty
       chemical.added > 0

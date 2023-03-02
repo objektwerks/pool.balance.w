@@ -100,7 +100,7 @@ final case class Measurement(id: Long = 0,
 
 final case class Chemical(id: Long = 0,
                           poolId: Long = 0,
-                          typeof: String = TypeOfChemical.LiquidChlorine.toString,
+                          chemical: String = TypeOfChemical.LiquidChlorine.toString,
                           amount: Double = 1.0, 
                           unit: String = UnitOfMeasure.gl.toString,
                           added: Long = LocalDate.now.toEpochDay) extends Entity:
