@@ -16,10 +16,10 @@ object Model:
 
   val pools = Model[Pool](Var(List.empty[Pool]), Var(Pool()), Pool(), poolOrdering)
   val cleanings = Model[Cleaning](Var(List.empty[Cleaning]), Var(Cleaning()), Cleaning(), cleaningOrdering)
-  val measurementsModel = Model[Measurement](Var(List.empty[Measurement]), Var(Measurement()), Measurement(), measurementOrdering)
+  val measurements = Model[Measurement](Var(List.empty[Measurement]), Var(Measurement()), Measurement(), measurementOrdering)
   val chemicalsModel = Model[Chemical](Var(List.empty[Chemical]), Var(Chemical()), Chemical(), chemicalOrdering)
 
-  measurementsModel
+  measurements
     .entitiesVar
     .toObservable
     .changes
@@ -72,7 +72,7 @@ object Model:
   private def dashboard(): Unit =
     val numberFormat = NumberFormat.getNumberInstance()
     numberFormat.setMaximumFractionDigits(1)
-    measurementsModel.entitiesVar.now().foreach { measurement =>
+    measurements.entitiesVar.now().foreach { measurement =>
       calculateCurrentMeasurements(measurement, numberFormat)
       calculateAverageMeasurements(numberFormat)
     }
@@ -90,7 +90,7 @@ object Model:
     currentTemperature.set(measurement.temperature)
 
   private def calculateAverageMeasurements(numberFormat: NumberFormat): Unit =
-    val measurements = measurementsModel.entitiesVar.now()
+    val measurements = measurements.entitiesVar.now()
     val count = measurements.length
     averageTotalChlorine.set(measurements.map(_.totalChlorine).sum / count)
     averageFreeChlorine.set(measurements.map(_.freeChlorine).sum / count)
