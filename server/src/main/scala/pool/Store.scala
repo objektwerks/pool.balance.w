@@ -282,14 +282,14 @@ final class Store(config: Config,
   def addChemical(chemical: Chemical): Long = DB localTx { implicit session =>
     sql"""
       insert into chemical(pool_id, chemical, amount, unit, added)
-      values(${chemical.poolId}, ${chemical.chemical.toString}, ${chemical.amount}, ${chemical.unit.toString}, ${chemical.added})
+      values(${chemical.poolId}, ${chemical.chemical}, ${chemical.amount}, ${chemical.unit}, ${chemical.added})
       """
       .updateAndReturnGeneratedKey()
   }
 
   def updateChemical(chemical: Chemical): Long = DB localTx { implicit session =>
     sql"""
-      update chemical set chemical = ${chemical.chemical.toString}, amount = ${chemical.amount}, unit = ${chemical.unit.toString},
+      update chemical set chemical = ${chemical.chemical}, amount = ${chemical.amount}, unit = ${chemical.unit},
       added = ${chemical.added} where id = ${chemical.id}
       """
       .update()
