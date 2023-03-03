@@ -51,7 +51,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
         Registered( store.register(account) )
       else Fault(s"Registration failed because: $emailAddress is already registered.")
     }.recover { case NonFatal(error) =>
-      Fault(s"Registration failed for: $emailAddress, because: ${error.getMessage}")
+      Fault(s"Registration failed for: $emailAddress with error: ${error.getMessage}")
     }.get
 
   private val subject = "Account Registration"
