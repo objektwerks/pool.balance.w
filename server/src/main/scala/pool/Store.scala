@@ -99,7 +99,10 @@ final class Store(config: Config,
 
   def addAccount(account: Account): Account =
     val id = DB localTx { implicit session =>
-      sql"insert into account(license, email_address, pin, activated, deactivated) values(${account.license}, ${account.emailAddress}, ${account.pin}, ${account.activated}, ${account.deactivated})"
+      sql"""
+           insert into account(license, email_address, pin, activated, deactivated) 
+           values(${account.license}, ${account.emailAddress}, ${account.pin}, ${account.activated}, ${account.deactivated})
+         """
       .update()
     }
     account.copy(id = id)
