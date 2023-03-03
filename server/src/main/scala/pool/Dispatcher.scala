@@ -34,10 +34,10 @@ final class Dispatcher(store: Store, emailer: Emailer):
 
   private def isAuthorized(command: Command): Authorized =
     command match
-      case license: License =>
+      case commandWithLicense: License =>
         Try {
-          if store.isAuthorized(license.license) then Authorized(true)
-          else Authorized(false, s"Authorization failed for license: $license and command: $command")
+          if store.isAuthorized(commandWithLicense.license) then Authorized(true)
+          else Authorized(false, s"Unauthorized command: $command")
         }.recover { case NonFatal(error) =>
           Authorized(false, s"Authorization failed for command: $command with error: ${error.getMessage}")
         }.get
