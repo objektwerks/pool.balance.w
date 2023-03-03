@@ -43,24 +43,24 @@ final class Store(config: Config,
   def login(email: String, pin: String): Option[Account] =
     DB readOnly { implicit session =>
       sql"select * from account where email_address = $email and pin = $pin"
-        .map(rs =>
-          Account(
-            rs.long("id"),
-            rs.string("license"),
-            rs.string("email_address"),
-            rs.string("pin"),
-            rs.long("activated"),
-            rs.long("deactivated")
-          )
+      .map(rs =>
+        Account(
+          rs.long("id"),
+          rs.string("license"),
+          rs.string("email_address"),
+          rs.string("pin"),
+          rs.long("activated"),
+          rs.long("deactivated")
         )
-        .single()
+      )
+      .single()
     }
 
   def isEmailAddressUnique(emailAddress: String): Boolean =
     val count = DB readOnly { implicit session =>
       sql"select id from account where email_address = $emailAddress"
-        .map(rs => rs.long("id"))
-        .single()
+      .map(rs => rs.long("id"))
+      .single()
     }
     if count.isDefined then false else true
 
@@ -84,17 +84,17 @@ final class Store(config: Config,
   def listAccounts(): List[Account] =
     DB readOnly { implicit session =>
       sql"select * from account"
-        .map(rs =>
-          Account(
-            rs.long("id"),
-            rs.string("license"),
-            rs.string("email_address"),
-            rs.string("pin"),
-            rs.long("activated"),
-            rs.long("deactivated")
-          )
+      .map(rs =>
+        Account(
+          rs.long("id"),
+          rs.string("license"),
+          rs.string("email_address"),
+          rs.string("pin"),
+          rs.long("activated"),
+          rs.long("deactivated")
         )
-        .list()
+      )
+      .list()
     }
 
   def addAccount(account: Account): Account =
@@ -117,62 +117,62 @@ final class Store(config: Config,
   def deactivateAccount(license: String): Option[Account] =
     DB localTx { implicit session =>
       val deactivated = sql"update account set deactivated = ${LocalDate.now.toEpochDay}, activated = 0 where license = $license"
-      .update()
+                        .update()
       if deactivated > 0 then
         sql"select * from account where license = $license"
-          .map(rs =>
-            Account(
-              rs.long("id"),
-              rs.string("license"),
-              rs.string("email_address"),
-              rs.string("pin"),
-              rs.long("activated"),
-              rs.long("deactivated")
-            )
+        .map(rs =>
+          Account(
+            rs.long("id"),
+            rs.string("license"),
+            rs.string("email_address"),
+            rs.string("pin"),
+            rs.long("activated"),
+            rs.long("deactivated")
           )
-          .single()
+        )
+        .single()
       else None
     }
 
   def reactivateAccount(license: String): Option[Account] =
     DB localTx { implicit session =>
       val activated = sql"update account set activated = ${LocalDate.now.toEpochDay}, deactivated = 0 where license = $license"
-      .update()
+                      .update()
       if activated > 0 then
         sql"select * from account where license = $license"
-          .map(rs =>
-            Account(
-              rs.long("id"),
-              rs.string("license"),
-              rs.string("email_address"),
-              rs.string("pin"),
-              rs.long("activated"),
-              rs.long("deactivated")
-            )
+        .map(rs =>
+          Account(
+            rs.long("id"),
+            rs.string("license"),
+            rs.string("email_address"),
+            rs.string("pin"),
+            rs.long("activated"),
+            rs.long("deactivated")
           )
-          .single()
+        )
+        .single()
       else None
     }
 
   def listPools(license: String): List[Pool] = DB readOnly { implicit session =>
     sql"select * from pool where license = $license order by name"
-      .map(rs =>
-        Pool(
-          rs.long("id"),
-          rs.string("license"),
-          rs.string("name"), 
-          rs.int("volume"), 
-          rs.string("unit")
-        )
+    .map(rs =>
+      Pool(
+        rs.long("id"),
+        rs.string("license"),
+        rs.string("name"), 
+        rs.int("volume"), 
+        rs.string("unit")
       )
-      .list()
+    )
+    .list()
   }
 
   def addPool(pool: Pool): Long = DB localTx { implicit session =>
     sql"""
         insert into pool(name, license, volume, unit) values(${pool.name}, ${pool.license}, ${pool.volume}, ${pool.unit.toString})
        """
-      .updateAndReturnGeneratedKey()
+    .updateAndReturnGeneratedKey()
   }
 
   def updatePool(pool: Pool): Long = DB localTx { implicit session =>
@@ -180,26 +180,26 @@ final class Store(config: Config,
         update pool set name = ${pool.name}, volume = ${pool.volume}, unit = ${pool.unit.toString}
         where id = ${pool.id}
        """
-      .update()
+    .update()
     pool.id
   }
 
   def listCleanings(poolId: Long): List[Cleaning] = DB readOnly { implicit session =>
     sql"select * from cleaning where pool_id = $poolId order by cleaned desc"
-      .map(rs =>
-        Cleaning(
-          rs.long("id"),
-          rs.long("pool_id"),
-          rs.boolean("brush"),
-          rs.boolean("net"),
-          rs.boolean("skimmer_basket"),
-          rs.boolean("pump_basket"),
-          rs.boolean("pump_filter"),
-          rs.boolean("vacuum"),
-          rs.long("cleaned")
-        )
+    .map(rs =>
+      Cleaning(
+        rs.long("id"),
+        rs.long("pool_id"),
+        rs.boolean("brush"),
+        rs.boolean("net"),
+        rs.boolean("skimmer_basket"),
+        rs.boolean("pump_basket"),
+        rs.boolean("pump_filter"),
+        rs.boolean("vacuum"),
+        rs.long("cleaned")
       )
-      .list()
+    )
+    .list()
   }
 
   def addCleaning(cleaning: Cleaning): Long = DB localTx { implicit session =>
@@ -208,7 +208,7 @@ final class Store(config: Config,
         values(${cleaning.poolId}, ${cleaning.brush}, ${cleaning.net}, ${cleaning.skimmerBasket},
         ${cleaning.pumpBasket}, ${cleaning.pumpFilter}, ${cleaning.vacuum}, ${cleaning.cleaned})
        """
-      .updateAndReturnGeneratedKey()
+    .updateAndReturnGeneratedKey()
   }
 
   def updateCleaning(cleaning: Cleaning): Long = DB localTx { implicit session =>
@@ -217,30 +217,30 @@ final class Store(config: Config,
         pump_basket = ${cleaning.pumpBasket}, pump_filter = ${cleaning.pumpFilter}, vacuum = ${cleaning.vacuum},
         cleaned = ${cleaning.cleaned} where id = ${cleaning.id}
       """
-      .update()
+    .update()
     cleaning.id
   }
 
   def listMeasurements(poolId: Long): List[Measurement] = DB readOnly { implicit session =>
     sql"select * from measurement where pool_id = $poolId order by measured desc"
-      .map(rs =>
-        Measurement(
-          rs.long("id"),
-          rs.long("pool_id"),
-          rs.int("total_chlorine"),
-          rs.int("free_chlorine"),
-          rs.double("combined_chlorine"),
-          rs.double("ph"),
-          rs.int("calcium_hardness"),
-          rs.int("total_alkalinity"),
-          rs.int("cyanuric_acid"),
-          rs.int("total_bromine"),
-          rs.int("salt"),
-          rs.int("temperature"),
-          rs.long("measured")
-        )
+    .map(rs =>
+      Measurement(
+        rs.long("id"),
+        rs.long("pool_id"),
+        rs.int("total_chlorine"),
+        rs.int("free_chlorine"),
+        rs.double("combined_chlorine"),
+        rs.double("ph"),
+        rs.int("calcium_hardness"),
+        rs.int("total_alkalinity"),
+        rs.int("cyanuric_acid"),
+        rs.int("total_bromine"),
+        rs.int("salt"),
+        rs.int("temperature"),
+        rs.long("measured")
       )
-      .list()
+    )
+    .list()
   }
 
   def addMeasurement(measurement: Measurement): Long = DB localTx { implicit session =>
@@ -251,7 +251,7 @@ final class Store(config: Config,
         ${measurement.ph}, ${measurement.calciumHardness}, ${measurement.totalAlkalinity}, ${measurement.cyanuricAcid},
         ${measurement.totalBromine}, ${measurement.salt}, ${measurement.temperature}, ${measurement.measured})
       """
-      .updateAndReturnGeneratedKey()
+    .updateAndReturnGeneratedKey()
   }
 
   def updateMeasurement(measurement: Measurement): Long = DB localTx { implicit session =>
@@ -263,23 +263,23 @@ final class Store(config: Config,
         measured = ${measurement.measured}
         where id = ${measurement.id}
       """
-      .update()
+    .update()
     measurement.id
   }
 
   def listChemicals(poolId: Long): List[Chemical] = DB readOnly { implicit session =>
     sql"select * from chemical where pool_id = $poolId order by added desc"
-      .map(rs =>
-        Chemical(
-          rs.long("id"),
-          rs.long("pool_id"),
-          rs.string("chemical"),
-          rs.double("amount"),
-          rs.string("unit"),
-          rs.long("added")
-        )
+    .map(rs =>
+      Chemical(
+        rs.long("id"),
+        rs.long("pool_id"),
+        rs.string("chemical"),
+        rs.double("amount"),
+        rs.string("unit"),
+        rs.long("added")
       )
-      .list()
+    )
+    .list()
   }
 
   def addChemical(chemical: Chemical): Long = DB localTx { implicit session =>
@@ -301,16 +301,16 @@ final class Store(config: Config,
 
   def listFaults(): List[Fault] = DB readOnly { implicit session =>
     sql"select * from fault order by occurred desc"
-      .map(rs =>
-        Fault(
-          rs.string("cause"),
-          rs.string("occurred")
-        )
+    .map(rs =>
+      Fault(
+        rs.string("cause"),
+        rs.string("occurred")
       )
-      .list()
+    )
+    .list()
   }
 
   def addFault(fault: Fault): Long = DB localTx { implicit session =>
     sql"insert into fault(cause, occurred) values(${fault.cause}, ${fault.occurred})"
-      .updateAndReturnGeneratedKey()
+    .updateAndReturnGeneratedKey()
   }
