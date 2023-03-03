@@ -6,13 +6,13 @@ import scala.util.control.NonFatal
 import Serializer.given
 import Validator.*
 
+final case class Authorized(isAuthorized: Boolean, message: String = "")
+
 final class Dispatcher(store: Store, emailer: Emailer):
   def dispatch[E <: Event](command: Command): Event =
     if !command.isValid then Fault(s"Command is invalid: $command")
     isAuthorized(command) match
-      case Authorized(isAuthorized) => if !isAuthorized then Fault(s"License is unauthorized: $command")
-      case fault @ Fault(_, _) => fault
-      case _ =>
+      case Authorized(isAuthorized, message) => if !isAuthorized then Fault(message)
 
     command match
       case Register(emailAddress)            => register(emailAddress)
@@ -32,13 +32,15 @@ final class Dispatcher(store: Store, emailer: Emailer):
       case AddChemical(_, chemical)          => addChemical(chemical)
       case UpdateChemical(_, chemical)       => updateChemical(chemical)
 
-  private def isAuthorized(command: Command): Event =
+  private def isAuthorized(command: Command): Authorized =
     command match
       case license: License =>
         Try {
-          Authorized( store.isAuthorized(license.license) )
-        }.recover { case NonFatal(error) => Fault(s"Authorization failed: $error") }
-         .get
+          if store.isAuthorized(license.license) then Authorized(true)
+          else Authorized(false, s"Authorization failed for license: $license and command: $command")
+        }.recover { case NonFatal(error) =>
+          Authorized(false, s"Authorization failed for command: $command with error: ${error.getMessage}")
+        }.get
       case Register(_) | Login(_, _) => Authorized(true)
 
   private def register(emailAddress: String): Event =
