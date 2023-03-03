@@ -72,8 +72,8 @@ final class Store(config: Config,
       case None =>
         val optionalLicense = DB readOnly { implicit session =>
           sql"select license from account where license = $license"
-            .map(rs => rs.string("license"))
-            .single()
+          .map(rs => rs.string("license"))
+          .single()
         }
         if optionalLicense.isDefined then
           cache.put(license, license)
