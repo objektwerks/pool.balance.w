@@ -39,7 +39,7 @@ object CleaningsView extends View:
         btn("New").amend {
           onClick --> { _ =>
             log(s"Cleanings -> New button onClick")
-            route(CleaningPage())
+            route(CleaningPage(poolId, model.selectedEntityVar.now().id))
           }
         },        
         btn("Refresh").amend {
