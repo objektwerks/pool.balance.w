@@ -37,16 +37,22 @@ object PageRouter:
 
   val routees = List(
     Route.static(HomePage, root / endOfSegments),
+
     Route.static(RegisterPage, root / "register" / endOfSegments),
     Route.static(LoginPage, root / "login" / endOfSegments),
+
     Route.static(AppPage, root / "app" / endOfSegments),
     Route.static(AccountPage, root / "app" / "account" / endOfSegments),
+
     Route.static(PoolsPage, root / "app" / "pools" / endOfSegments),
     poolRoute,
+
     Route.static(CleaningsPage, root / "app" / "pool" / "cleanings" / endOfSegments),
     cleaningRoute,
+
     Route.static(MeasurementsPage, root / "app" / "pool" / "measurements" / endOfSegments),
     measurementRoute,
+    
     Route.static(ChemicalsPage, root / "app" / "pool" / "chemicals" / endOfSegments),
     chemicalRoute
   )
