@@ -39,7 +39,7 @@ object ChemicalsView extends View:
         btn("New").amend {
           onClick --> { _ =>
             log(s"Chemicals -> New button onClick")
-            route(ChemicalPage())
+            route(ChemicalPage(poolId, model.selectedEntityVar.now().id))
           }
         },        
         btn("Refresh").amend {
