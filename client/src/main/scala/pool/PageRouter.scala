@@ -11,6 +11,7 @@ import Page.given
 import Serializer.given
 
 object PageRouter:
+  val poolsRoute = Route.static(PoolsPage, root / "app" / "pools" / endOfSegments)
   val poolRoute = Route[PoolPage, Long](
     encode = page => page.id,
     decode = arg => PoolPage(id = arg),
@@ -44,7 +45,7 @@ object PageRouter:
     Route.static(AppPage, root / "app" / endOfSegments),
     Route.static(AccountPage, root / "app" / "account" / endOfSegments),
 
-    Route.static(PoolsPage, root / "app" / "pools" / endOfSegments),
+    poolsRoute,
     poolRoute,
 
     Route.static(CleaningsPage, root / "app" / "pool" / "cleanings" / endOfSegments),
@@ -84,6 +85,6 @@ object PageRouter:
 
     .collectStatic(MeasurementsPage) { MeasurementsView(Model.pools.selectedEntityVar.now().id, Model.measurements, Model.license) }
     .collect[MeasurementPage] { page => MeasurementView(Model.measurements.setSelectedEntityById(page.id), Model.license) }
-    
+
     .collectStatic(ChemicalsPage) { ChemicalsView(Model.pools.selectedEntityVar.now().id, Model.chemicals, Model.license) }
     .collect[ChemicalPage] { page => ChemicalView(Model.chemicals.setSelectedEntityById(page.id), Model.license) }
