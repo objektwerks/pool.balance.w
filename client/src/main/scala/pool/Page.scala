@@ -23,6 +23,6 @@ case object ChemicalsPage extends Page
 sealed trait EntityPage extends Page:
   val id: Long
 final case class PoolPage(id: Long = 0) extends EntityPage
-final case class CleaningPage(id: Long = 0) extends EntityPage
-final case class MeasurementPage(id: Long = 0) extends EntityPage
-final case class ChemicalPage(id: Long = 0) extends EntityPage
+final case class CleaningPage(poolId: Long, id: Long = 0) extends EntityPage
+final case class MeasurementPage(poolId: Long, id: Long = 0) extends EntityPage
+final case class ChemicalPage(poolId: Long, id: Long = 0) extends EntityPage
