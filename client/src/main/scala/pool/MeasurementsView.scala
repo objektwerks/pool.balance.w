@@ -39,7 +39,7 @@ object MeasurementsView extends View:
         btn("New").amend {
           onClick --> { _ =>
             log(s"Measurements -> New button onClick")
-            route(MeasurementPage())
+            route(MeasurementPage(poolId, model.selectedEntityVar.now().id))
           }
         },        
         btn("Refresh").amend {
