@@ -5,7 +5,8 @@ Pool Balance ( Web Edition - **WIP** )
 
 Todo
 ----
-1. Test UI.
+1. Refactor list views to contain parent id.
+2. Test UI.
 
 Charts
 ------
