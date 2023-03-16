@@ -16,7 +16,7 @@ object RegisterView extends View:
           accountVar.set(account)
           pinVar.set(account.pin)
           route(LoginPage)
-        case _ => log(s"Register -> handler failed: $event")
+        case _ => emitError(s"Register handler failed: $event")
       
     div(
       hdr("Register"),
