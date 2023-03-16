@@ -13,7 +13,7 @@ object ChemicalsView extends View:
         case ChemicalsListed(chemicals: List[Chemical]) =>
           clearErrors()
           model.setEntities(chemicals)
-        case _ => log(s"Chemicals -> handler failed: $event")
+        case _ => emitError(s"Chemicals handler failed: $event")
 
     div(
       bar(
