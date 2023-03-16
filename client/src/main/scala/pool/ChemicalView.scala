@@ -16,7 +16,7 @@ object ChemicalView extends View:
           clearErrors()
           model.addEntity(chemical)
           route(ChemicalsPage)
-        case _ => log(s"Chemical -> add handler failed: $event")
+        case _ => emitError(s"Chemical add handler failed: $event")
 
     def updateHandler(event: Event): Unit =
       event match
@@ -24,7 +24,7 @@ object ChemicalView extends View:
         case Updated(id) =>
           clearErrors()
           route(ChemicalsPage)
-        case _ => log(s"Chemicals -> update handler failed: $event")
+        case _ => emitError(s"Chemicals update handler failed: $event")
 
     div(
       bar(
