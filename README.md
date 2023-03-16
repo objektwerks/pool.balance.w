@@ -5,8 +5,7 @@ Pool Balance ( Web Edition - **WIP** )
 
 Todo
 ----
-1. Post handler errors to errorbus.
-2. Test UI.
+1. Test UI.
 
 Charts
 ------
