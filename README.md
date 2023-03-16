@@ -5,7 +5,7 @@ Pool Balance ( Web Edition - **WIP** )
 
 Todo
 ----
-1. Refactor list views to contain parent id.
+1. Post handler errors to errorbus.
 2. Test UI.
 
 Charts
