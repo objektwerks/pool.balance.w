@@ -16,7 +16,7 @@ object MeasurementView extends View:
           clearErrors()
           model.addEntity(measurement)
           route(MeasurementsPage)
-        case _ => log(s"Measurement -> add handler failed: $event")
+        case _ => emitError(s"Measurement add handler failed: $event")
 
     def updateHandler(event: Event): Unit =
       event match
@@ -24,7 +24,7 @@ object MeasurementView extends View:
         case Updated(id) =>
           clearErrors()
           route(MeasurementsPage)
-        case _ => log(s"Measurements -> update handler failed: $event")
+        case _ => emitError(s"Measurements update handler failed: $event")
 
     div(
       bar(
