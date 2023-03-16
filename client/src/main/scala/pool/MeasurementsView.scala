@@ -13,7 +13,7 @@ object MeasurementsView extends View:
         case MeasurementsListed(measurements: List[Measurement]) =>
           clearErrors()
           model.setEntities(measurements)
-        case _ => log(s"Measurements -> handler failed: $event")
+        case _ => emitError(s"Measurements handler failed: $event")
 
     div(
       bar(
