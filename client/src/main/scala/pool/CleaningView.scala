@@ -16,7 +16,7 @@ object CleaningView extends View:
           clearErrors()
           model.addEntity(cleaning)
           route(CleaningsPage)
-        case _ => log(s"Cleaning -> add handler failed: $event")
+        case _ => emitError(s"Cleaning add handler failed: $event")
 
     def updateHandler(event: Event): Unit =
       event match
@@ -24,7 +24,7 @@ object CleaningView extends View:
         case Updated(id) =>
           clearErrors()
           route(CleaningsPage)
-        case _ => log(s"Cleanings -> update handler failed: $event")
+        case _ => emitError(s"Cleanings update handler failed: $event")
 
     div(
       bar(
