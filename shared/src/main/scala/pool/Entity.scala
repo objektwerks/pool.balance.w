@@ -37,6 +37,9 @@ object Entity:
   given measurementOrdering: Ordering[Measurement] = Ordering.by[Measurement, Long](m => m.measured).reverse
   given chemicalOrdering: Ordering[Chemical] = Ordering.by[Chemical, Long](c => c.added).reverse
 
+  def localDateOfLongToString(epochDay: Long): String = LocalDate.ofEpochDay(epochDay).toString
+  def localDateOfStringToLong(localDate: String): Long = LocalDate.parse(localDate).toEpochDay
+
 final case class Account(id: Long = 0,
                          license: String = "",
                          emailAddress: String = "",
