@@ -32,13 +32,6 @@ sealed trait Entity:
   def display: String
 
 object Entity:
-  def applyLocalDateChanges(sourceLocalDate: LocalDate, targetLocalDateAsLong: Long): Long =
-    LocalDate.ofEpochDay(targetLocalDateAsLong)
-      .withYear(sourceLocalDate.getYear)
-      .withMonth(sourceLocalDate.getMonthValue)
-      .withDayOfMonth(sourceLocalDate.getDayOfMonth)
-      .toEpochDay
-
   given poolOrdering: Ordering[Pool] = Ordering.by[Pool, String](p => p.name).reverse
   given cleaningOrdering: Ordering[Cleaning] = Ordering.by[Cleaning, Long](c => c.cleaned).reverse
   given measurementOrdering: Ordering[Measurement] = Ordering.by[Measurement, Long](m => m.measured).reverse
