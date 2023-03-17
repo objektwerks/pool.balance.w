@@ -5,6 +5,7 @@ import com.raquo.laminar.api.L.*
 import java.time.LocalDate
 
 import Component.*
+import Entity.*
 import Validator.*
 
 object CleaningView extends View:
@@ -100,7 +101,7 @@ object CleaningView extends View:
         },
         lbl("Cleaned"),
         rotxt.amend {
-          value <-- model.selectedEntityVar.signal.map( cleaning => LocalDate.ofEpochDay(cleaning.cleaned).toString )
+          value <-- model.selectedEntityVar.signal.map( cleaning => localDateOfLongToString(cleaning.cleaned) )
         },
       ),
       cbar(
