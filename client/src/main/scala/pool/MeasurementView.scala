@@ -128,8 +128,13 @@ object MeasurementView extends View:
           )
         },
         lbl("Measured"),
-        rotxt.amend {
-          value <-- model.selectedEntityVar.signal.map( measurement => localDateOfLongToString(measurement.measured) )
+        date.amend {
+          controlled(
+            value <-- model.selectedEntityVar.signal.map(measurement => localDateOfLongToString(measurement.measured)),
+            onInput.mapToValue.filter(_.nonEmpty) --> { measured =>
+              model.updateSelectedEntity( model.selectedEntityVar.now().copy(measured = localDateOfStringToLong(measured)) )
+            }
+          )
         },
       ),
       cbar(
