@@ -37,6 +37,7 @@ object Entity:
   given measurementOrdering: Ordering[Measurement] = Ordering.by[Measurement, Long](m => m.measured).reverse
   given chemicalOrdering: Ordering[Chemical] = Ordering.by[Chemical, Long](c => c.added).reverse
 
+  def currentEpochDay(): Long = LocalDate.now.toEpochDay
   def localDateOfLongToString(epochDay: Long): String = LocalDate.ofEpochDay(epochDay).toString
   def localDateOfStringToLong(localDate: String): Long = LocalDate.parse(localDate).toEpochDay
 
@@ -44,7 +45,7 @@ final case class Account(id: Long = 0,
                          license: String = "",
                          emailAddress: String = "",
                          pin: String = "",
-                         activated: Long = LocalDate.now.toEpochDay,
+                         activated: Long = Entity.currentEpochDay(),
                          deactivated: Long = 0) extends Entity:
   def display = emailAddress
 
@@ -63,7 +64,7 @@ final case class Cleaning(id: Long = 0,
                           pumpBasket: Boolean = false,
                           pumpFilter: Boolean = false,
                           vacuum: Boolean = false,
-                          cleaned: Long = LocalDate.now.toEpochDay) extends Entity:
+                          cleaned: Long = Entity.currentEpochDay()) extends Entity:
   def display = LocalDate.ofEpochDay(cleaned).toString
 
 object Measurement:
@@ -90,7 +91,7 @@ final case class Measurement(id: Long = 0,
                              totalBromine: Int = 5,
                              salt: Int = 3200,
                              temperature: Int = 85,
-                             measured: Long = LocalDate.now.toEpochDay) extends Entity:
+                             measured: Long = Entity.currentEpochDay()) extends Entity:
   def display = LocalDate.ofEpochDay(measured).toString
 
 
@@ -99,5 +100,5 @@ final case class Chemical(id: Long = 0,
                           chemical: String = TypeOfChemical.LiquidChlorine.toString,
                           amount: Double = 1.0, 
                           unit: String = UnitOfMeasure.gl.toString,
-                          added: Long = LocalDate.now.toEpochDay) extends Entity:
+                          added: Long = Entity.currentEpochDay()) extends Entity:
   def display = LocalDate.ofEpochDay(added).toString
