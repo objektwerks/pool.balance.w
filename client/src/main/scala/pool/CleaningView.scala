@@ -98,8 +98,13 @@ object CleaningView extends View:
           )
         },
         lbl("Cleaned"),
-        rotxt.amend {
-          value <-- model.selectedEntityVar.signal.map( cleaning => localDateOfLongToString(cleaning.cleaned) )
+        date.amend {
+          controlled(
+            value <-- model.selectedEntityVar.signal.map(cleaning => localDateOfLongToString(cleaning.cleaned)),
+            onInput.mapToValue.filter(_.nonEmpty) --> { cleaned =>
+              model.updateSelectedEntity( model.selectedEntityVar.now().copy(cleaned = localDateOfStringToLong(cleaned)) )
+            }
+          )
         },
       ),
       cbar(
