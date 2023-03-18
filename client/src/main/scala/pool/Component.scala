@@ -5,6 +5,8 @@ import com.raquo.laminar.api.L.*
 import scala.scalajs.js.Date
 
 object Component:
+  private val inputCss = "w3-input w3-hover-light-gray w3-text-indigo"
+
   def bar(elms: HtmlElement*): Div =
     div(cls("w3-bar"), elms)
 
@@ -27,10 +29,10 @@ object Component:
     div(cls("w3-border-white w3-text-indigo"), b(text))
 
   def txt: Input =
-    input(cls("w3-input w3-hover-light-gray w3-text-indigo"), required(true))
+    input(cls(inputCss), required(true))
 
   def rotxt: Input =
-    input(cls("w3-input w3-light-gray w3-text-indigo"), readOnly(true))
+    input(cls(inputCss), readOnly(true))
 
   def txtarea(rowCount: Int = 2): TextArea =
     textArea(cls("w3-hover-light-gray w3-text-indigo"), rows(rowCount))
@@ -44,11 +46,14 @@ object Component:
   def dbl: Input =
     input(typ("number"), pattern("[0-9]+([.,][0-9]+)?"), stepAttr("0.01"), required(true))
 
+  def date: Input =
+    input(cls(inputCss), tpe("date"), required(true))
+
   def email: Input =
-    input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("email"), minLength(3), required(true))
+    input(cls(inputCss), typ("email"), minLength(3), required(true))
 
   def pin: Input =
-    input(cls("w3-input w3-hover-light-gray w3-text-indigo"), typ("text"), minLength(7), maxLength(7), required(true))
+    input(cls(inputCss), typ("text"), minLength(7), maxLength(7), required(true))
 
   def hdr(text: String): HtmlElement =
     h5(cls("w3-indigo"), text)
