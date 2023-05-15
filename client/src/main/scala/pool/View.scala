@@ -2,8 +2,6 @@ package pool
 
 import com.raquo.laminar.api.L.*
 
-import org.scalajs.dom.console.log
-
 enum Mode:
   case add, edit, readonly
 
