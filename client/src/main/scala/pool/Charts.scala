@@ -1,11 +1,6 @@
 package pool
 
-import scala.scalajs.js
-import scala.scalajs.js.JSConverters.*
-
-import com.raquo.laminar.api.L.{*, given}
-
-import typings.chartJs.mod.*
+import com.raquo.laminar.api.L.*
 
 /**
  * Chart.js, via ScalaJs, is not exactly ready
