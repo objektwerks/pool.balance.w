@@ -1,8 +1,6 @@
 package pool
 
-import com.raquo.laminar.api.L._
 import com.github.plokhotnyuk.jsoniter_scala.core.*
-import com.github.plokhotnyuk.jsoniter_scala.macros.*
 
 import org.scalajs.dom
 import org.scalajs.dom.Headers
