@@ -3,10 +3,8 @@ package pool
 import com.github.blemale.scaffeine.{Cache, Scaffeine}
 import com.typesafe.config.Config
 import com.typesafe.scalalogging.LazyLogging
-import com.zaxxer.hikari.HikariDataSource
 
 import java.time.LocalDate
-import javax.sql.DataSource
 
 import scalikejdbc.*
 import scala.concurrent.duration.FiniteDuration
