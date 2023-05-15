@@ -1,6 +1,6 @@
 package pool
 
-import com.sun.net.httpserver.{HttpExchange, HttpHandler, HttpServer}
+import com.sun.net.httpserver.HttpServer
 import com.typesafe.config.ConfigFactory
 import com.typesafe.scalalogging.LazyLogging
 
