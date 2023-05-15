@@ -3,7 +3,6 @@ package pool
 import scala.util.Try
 import scala.util.control.NonFatal
 
-import Serializer.given
 import Validator.*
 
 final case class Authorized(isAuthorized: Boolean, message: String = "")

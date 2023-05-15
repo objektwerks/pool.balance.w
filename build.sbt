@@ -10,7 +10,10 @@ lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
   version := "0.15-SNAPSHOT",
   scalaVersion := "3.3.0-RC5",
-  parallelExecution := false
+  parallelExecution := false,
+  scalacOptions ++= Seq(
+    "-Wunused:all"
+  )
 )
 
 lazy val poolbalance: Project = (project in file("."))
