@@ -1,9 +1,8 @@
 package pool
 
-import com.raquo.laminar.api.L._
+import com.raquo.laminar.api.L.*
 
-import org.scalajs.dom._
-import org.scalajs.dom.console.log
+import org.scalajs.dom.*
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
