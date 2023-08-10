@@ -73,7 +73,7 @@ lazy val server = (project in file("server"))
         "com.zaxxer" % "HikariCP" % "5.0.1" exclude("org.slf4j", "slf4j-api"),
         "org.postgresql" % "postgresql" % "42.6.0",
         "com.github.blemale" %% "scaffeine" % "5.2.1",
-        "org.jodd" % "jodd-mail" % "6.0.5",
+        "org.jodd" % "jodd-mail" % "7.0.0",
         "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core" % jsoniterVersion,
         "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5",
         "com.typesafe" % "config" % "1.4.2",
