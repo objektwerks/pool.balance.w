@@ -91,6 +91,12 @@ Chemicals
 7. MuriaticAcid ( gl/l )
 8. Salt ( lbs/kg )
 
+Products
+--------
+1. Chlorine for pool.
+2. Chlorine tablets for pool filtration system.
+3. Pool Shock
+
 Solutions
 ---------
 >Suggested solutions to chemical imbalances.
