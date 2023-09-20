@@ -91,6 +91,18 @@ Chemicals
 7. MuriaticAcid ( gl/l )
 8. Salt ( lbs/kg )
 
+Solutions
+---------
+>Suggested solutions to chemical imbalances.
+1. high ph - Sodium Bisulfate
+2. low ph - Sodium Carbonate, Soda Ash
+3. high alkalinity - Muriatic Acid, Sodium Bisulfate
+4. low alkalinity - Sodium Bicarbonate, Baking Soda
+5. calcium hardness - Calcium Chloride
+6. low chlorine - Chlorine Tablets, Granules, Liquid
+7. algae - Algaecide, Shock
+8. stains - Stain Identification Kit, Stain Remover
+
 Entity
 ------
 * Pool 1 --> * Cleaning | Measurement | Chemical
