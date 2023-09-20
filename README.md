@@ -168,20 +168,22 @@ Drop
 Environment
 -----------
 >The following environment variables must be defined:
-* export POOL_BALANCE_HOST="127.0.0.1"
-* export POOL_BALANCE_PORT=7272
+```
+export POOL_BALANCE_HOST="127.0.0.1"
+export POOL_BALANCE_PORT=7272
 
-* export POOL_BALANCE_POSTGRESQL_URL="jdbc:postgresql://localhost:5432/poolbalance"
-* export POOL_BALANCE_POSTGRESQL_USER="yourusername"
-* export POOL_BALANCE_POSTGRESQL_PASSWORD="poolbalance"
-* export POOL_BALANCE_POSTGRESQL_DRIVER="org.postgresql.ds.PGSimpleDataSource"
-* export POOL_BALANCE_POSTGRESQL_DB_NAME="poolbalance"
-* export POOL_BALANCE_POSTGRESQL_HOST="127.0.0.1"
-* export POOL_BALANCE_POSTGRESQL_PORT=5432
+export POOL_BALANCE_POSTGRESQL_URL="jdbc:postgresql://localhost:5432/poolbalance"
+export POOL_BALANCE_POSTGRESQL_USER="yourusername"
+export POOL_BALANCE_POSTGRESQL_PASSWORD="poolbalance"
+export POOL_BALANCE_POSTGRESQL_DRIVER="org.postgresql.ds.PGSimpleDataSource"
+export POOL_BALANCE_POSTGRESQL_DB_NAME="poolbalance"
+export POOL_BALANCE_POSTGRESQL_HOST="127.0.0.1"
+export POOL_BALANCE_POSTGRESQL_PORT=5432
 
-* export POOL_BALANCE_EMAIL_HOST="your-email.provider.com"
-* export POOL_BALANCE_EMAIL_ADDRESS="your-email@provider.com"
-* export POOL_BALANCE_EMAIL_PASSWORD="your-email-password"
+export POOL_BALANCE_EMAIL_HOST="your-email.provider.com"
+export POOL_BALANCE_EMAIL_ADDRESS="your-email@provider.com"
+export POOL_BALANCE_EMAIL_PASSWORD="your-email-password"
+```
 
 License
 -------
