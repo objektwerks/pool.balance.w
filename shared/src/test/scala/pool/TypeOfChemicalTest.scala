@@ -5,8 +5,8 @@ import org.scalatest.matchers.should.Matchers
 
 import TypeOfChemical.*
 
-class TypeOfChemicalTest extends AnyFunSuite with Matchers:
-  test("type of chemical") {
+final class TypeOfChemicalTest extends AnyFunSuite with Matchers:
+  test("type of chemical"):
     valueOf(LiquidChlorine.toString) shouldBe LiquidChlorine
     valueOf(Trichlor.toString) shouldBe Trichlor
     valueOf(Dichlor.toString) shouldBe Dichlor
@@ -24,4 +24,3 @@ class TypeOfChemicalTest extends AnyFunSuite with Matchers:
     toEnum(Algaecide.display) shouldBe Algaecide
     toEnum(MuriaticAcid.display) shouldBe MuriaticAcid
     toEnum(Salt.display) shouldBe Salt
- }
