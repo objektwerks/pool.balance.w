@@ -4,7 +4,7 @@ lazy val laminarVersion = "16.0.0"
 lazy val waypointVersion = "7.0.0"
 lazy val scalaJavaTimeVersion = "2.5.0"
 lazy val jsoniterVersion = "2.24.1"
-lazy val scalaTestVersion = "3.2.16"
+lazy val scalaTestVersion = "3.2.17"
 
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
@@ -78,7 +78,7 @@ lazy val server = (project in file("server"))
         "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5",
         "com.typesafe" % "config" % "1.4.2",
         "ch.qos.logback" % "logback-classic" % "1.4.11",
-        "org.scalatest" %% "scalatest" % "3.2.16" % Test
+        "org.scalatest" %% "scalatest" % scalaTestVersion % Test
       )
     }
   )
