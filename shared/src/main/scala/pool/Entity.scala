@@ -1,7 +1,6 @@
 package pool
 
 import java.time.LocalDate
-import java.util.UUID
 
 enum UnitOfMeasure:
   case gl, l, lb, kg, tablet
