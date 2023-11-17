@@ -43,7 +43,7 @@ object Entity:
   def localDateOfStringToLong(localDate: String): Long = LocalDate.parse(localDate).toEpochDay
 
 final case class Account(id: Long = 0,
-                         license: String = UUID.randomUUID.toString,
+                         license: String = "", // ScalaJs can't use UUID!
                          emailAddress: String = "",
                          pin: String = "",
                          activated: Long = Entity.currentEpochDay(),
