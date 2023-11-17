@@ -1,5 +1,7 @@
 package pool
 
+import java.util.UUID
+
 import scala.util.Try
 import scala.util.control.NonFatal
 
@@ -44,7 +46,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
 
   private def register(emailAddress: String): Event =
     Try {
-      val account = Account(emailAddress = emailAddress, pin = Pin.newInstance)
+      val account = Account(license = UUID.randomUUID.toString, emailAddress = emailAddress, pin = Pin.newInstance)
       if store.isEmailAddressUnique(emailAddress) then
         email(account.emailAddress, account.pin)
         Registered( store.register(account) )
