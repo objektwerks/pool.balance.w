@@ -20,7 +20,7 @@ object Server extends LazyLogging:
   private val port = config.getInt("port")
   private val address = InetSocketAddress(port)
   private val backlog = 0
-  private val handler = CommandHandler(dispatcher, store)
+  private val handler = Handler(dispatcher, store)
   private val filter = CorsFilter()
 
   private val http = HttpServer
