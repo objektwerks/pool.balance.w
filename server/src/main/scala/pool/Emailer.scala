@@ -13,6 +13,7 @@ final class Emailer(config: Config) extends LazyLogging:
   private val host = config.getString("email.host")
   private val sender = config.getString("email.sender")
   private val password = config.getString("email.password")
+  private val subject = config.getString("email.subject")
 
   private val smtpServer: SmtpServer = MailServer.create
     .host(host)
@@ -29,7 +30,6 @@ final class Emailer(config: Config) extends LazyLogging:
     }
 
   private def sendEmail(recipients: List[String],
-                        subject: String,
                         message: String): Unit =
     Using( smtpServer.createSession ) { session =>
       val email = Email.create
@@ -47,5 +47,4 @@ final class Emailer(config: Config) extends LazyLogging:
     }
 
   def send(recipients: List[String],
-           subject: String,
-           message: String): Unit = retry(1)(sendEmail(recipients, subject, message))
+           message: String): Unit = retry(1)(sendEmail(recipients, message))
