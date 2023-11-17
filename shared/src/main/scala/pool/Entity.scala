@@ -1,6 +1,7 @@
 package pool
 
 import java.time.LocalDate
+import java.util.UUID
 
 enum UnitOfMeasure:
   case gl, l, lb, kg, tablet
@@ -42,7 +43,7 @@ object Entity:
   def localDateOfStringToLong(localDate: String): Long = LocalDate.parse(localDate).toEpochDay
 
 final case class Account(id: Long = 0,
-                         license: String = "",
+                         license: String = UUID.randomUUID.toString,
                          emailAddress: String = "",
                          pin: String = "",
                          activated: Long = Entity.currentEpochDay(),
