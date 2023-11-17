@@ -44,7 +44,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
 
   private def register(emailAddress: String): Event =
     Try {
-      val account = Account(license = Ids.newLicense, emailAddress = emailAddress, pin = Ids.newPin)
+      val account = Account(emailAddress = emailAddress, pin = Pin.newInstance)
       if store.isEmailAddressUnique(emailAddress) then
         email(account.emailAddress, account.pin)
         Registered( store.register(account) )
