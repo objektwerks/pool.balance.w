@@ -1,47 +1,38 @@
 package pool
 
-import com.sun.net.httpserver.HttpServer
 import com.typesafe.config.ConfigFactory
 import com.typesafe.scalalogging.LazyLogging
 
-import java.net.InetSocketAddress
-import java.util.concurrent.Executors
+import io.helidon.webserver.WebServer
+import io.helidon.webserver.http.HttpRouting
 
-import scala.concurrent.duration.*
+import scala.concurrent.duration.DurationInt
 
 object Server extends LazyLogging:
-  private val config = ConfigFactory.load("server.conf")
-
-  private val store = Store(config, Store.cache(minSize = 4, maxSize = 10, expireAfter = 24.hour))
-  private val emailer = Emailer(config)
-  private val dispatcher = Dispatcher(store, emailer)
-
-  private val host = config.getString("host")
-  private val port = config.getInt("port")
-  private val address = InetSocketAddress(port)
-  private val backlog = 0
-  private val handler = Handler(dispatcher, store)
-  private val filter = CorsFilter()
-
-  private val http = HttpServer
-    .create(
-      address,
-      backlog,
-      "/command",
-      handler,
-      filter
-    )
-
   @main def main(): Unit =
-    http.setExecutor(Executors.newVirtualThreadPerTaskExecutor())
-    http.start()
+    val config = ConfigFactory.load("server.conf")
+    val host = config.getString("server.host")
+    val port = config.getInt("server.port")
+    val endpoint = config.getString("server.endpoint")
 
-    println(s"*** Press Control-C to shutdown server at: $host:$port")
-    logger.info(s"*** Http Server started at: $host:$port")
+    val store = Store(config, Store.cache(minSize = 4, maxSize = 10, expireAfter = 24.hour))
+    val emailer = Emailer(config)
+    val dispatcher = Dispatcher(store, emailer)
 
-    sys.addShutdownHook {
-      logger.info(s"*** Http Server shutting down at: $host:$port")
-      http.stop(10)
-    }
+    val handler = Handler(dispatcher, store, logger)
+
+    val builder = HttpRouting
+      .builder
+      .get(endpoint, handler)
+
+    WebServer
+      .builder
+      .port(port)
+      .routing(builder)
+      .build
+      .start
+
+    println(s"*** Press Control-C to shutdown Pool Balance Http Server at: $host:$port")
+    logger.info(s"*** Pool Balance Http Server started at: $host:$port")
 
     Thread.currentThread().join()
