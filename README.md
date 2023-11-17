@@ -1,16 +1,16 @@
 Pool Balance ( Web Edition )
 --------------------------------------
->Pool cleaning, measurement and chemical balancing distributed web app ScalaJs, JDK Http, Jsoniter,
+>Pool cleaning, measurement and chemical balancing distributed web app ScalaJs, Helidon, Jsoniter,
 >Scalikejdbc, Laminar, Waypoint, W3.CSS, Chart.js, Scaffeine, JoddMail, Postgresql, Snowpack and Scala 3.
 
 Todo
 ----
-1. Test UI.
+1. Test client.
+2. Build charts.
 
 Charts
 ------
 >Chart.js, via scalablytyped converter, does not work all too well at this time.
->Alternatively charts could be generated as png files via JFreeChart on the server.
 
 Install
 -------
