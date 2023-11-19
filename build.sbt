@@ -68,10 +68,8 @@ lazy val server = (project in file("server"))
   .settings(
     reStart / mainClass := Some("pool.Server"),
     libraryDependencies ++= {
-      val helidonVersion = "4.0.0"
       Seq(
-        "io.helidon.webserver" % "helidon-webserver" % helidonVersion,
-        "io.helidon.webclient" % "helidon-webclient" % helidonVersion,
+        "io.helidon.webserver" % "helidon-webserver" % "4.0.0",
         "org.scalikejdbc" %% "scalikejdbc" % "4.1.0",
         "com.zaxxer" % "HikariCP" % "5.0.1" exclude("org.slf4j", "slf4j-api"),
         "org.postgresql" % "postgresql" % "42.6.0",
