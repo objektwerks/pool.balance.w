@@ -7,7 +7,7 @@ Pool Balance ( Web Edition )
 Todo
 ----
 1. Test client.
-2. Build charts.
+2. Build charts ( see ScalablyTyped project! ).
 
 Install
 -------
