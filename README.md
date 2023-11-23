@@ -9,10 +9,6 @@ Todo
 1. Test client.
 2. Build charts.
 
-Charts
-------
->Chart.js, via scalablytyped converter, does not work all too well at this time.
-
 Install
 -------
 1. brew install node
