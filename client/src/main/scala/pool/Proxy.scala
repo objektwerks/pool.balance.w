@@ -33,7 +33,7 @@ object Proxy:
 
   def setServerUrl(url: String): Unit =
     serverUrl = url
-    log("server url: %s", serverUrl)
+    log("Server url: %s", serverUrl)
 
   def call(command: Command,
            handler: (event: Event) => Unit) =
