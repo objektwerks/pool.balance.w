@@ -42,7 +42,7 @@ lazy val sharedJvm = shared.jvm
 lazy val public = "public"
 
 lazy val client = (project in file("client"))
-  .enablePlugins(ScalaJSPlugin) // Doesn't support Sbt 1.9.6: ScalablyTypedConverterExternalNpmPlugin
+  .enablePlugins(ScalaJSPlugin, ScalablyTypedConverterExternalNpmPlugin)
   .dependsOn(sharedJs)
   .settings(common)
   .settings(
