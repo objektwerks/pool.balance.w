@@ -3,6 +3,9 @@ package pool
 import com.raquo.laminar.api.L.*
 
 import scala.scalajs.js
+import scala.scalajs.js.JSConverters.*
+
+import typings.chartJs.mod.*
 
 import ChartRegistrar.{
   CategoryScale, LineController, LineElement, LinearScale, PointElement, Chart => ChartJs
@@ -16,14 +19,10 @@ object Charts:
   )
 
   def buildLineChart(dataSignal: StrictSignal[List[DataItem]]): HtmlElement =
-    import scala.scalajs.js.JSConverters.*
-    import typings.chartJs.mod.*
-
     var optionalChart: Option[Chart] = None
 
     canvasTag(
       width := "100%",
-      height := "500px",
 
       onMountUnmountCallback(
         mount = { mountContext =>
