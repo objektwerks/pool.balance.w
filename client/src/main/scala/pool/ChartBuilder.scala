@@ -18,7 +18,7 @@ object ChartBuilder:
     CategoryScale, LinearScale, LineController, LineElement, PointElement
   )
 
-  def buildLineChart(dataSignal: StrictSignal[List[DataItem]]): HtmlElement =
+  def build(dataSignal: StrictSignal[List[DataItem]]): HtmlElement =
     var optionalChart: Option[Chart] = None
 
     canvasTag(
