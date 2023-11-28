@@ -6,7 +6,7 @@ import scala.scalajs.js.annotation.JSImport
 /**
   * Supports ChartType.bar, ChartType.line and ChartType.pie
   */
-object Registrar:
+object ChartRegistrar:
   @js.native
   @JSImport("chart.js")
   object Chart extends js.Object:
