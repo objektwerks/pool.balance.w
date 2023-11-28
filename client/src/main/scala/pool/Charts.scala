@@ -4,12 +4,12 @@ import com.raquo.laminar.api.L.*
 
 import scala.scalajs.js
 
+import ChartRegistrar.{
+  CategoryScale, LineController, LineElement, LinearScale, PointElement, Chart => ChartJs
+}
+
 object Charts:
   final case class DataItem(label: String, value: Double)
-
-  import ChartRegistrar.{
-    CategoryScale, LineController, LineElement, LinearScale, PointElement, Chart => ChartJs
-  }
 
   ChartJs.register(
     CategoryScale, LineController, LineElement, LinearScale, PointElement
