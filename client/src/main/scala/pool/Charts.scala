@@ -15,7 +15,6 @@ object Charts:
     CategoryScale, LineController, LineElement, LinearScale, PointElement
   )
 
-  
   def buildLineChart(dataSignal: StrictSignal[List[DataItem]]): HtmlElement =
     import scala.scalajs.js.JSConverters.*
     import typings.chartJs.mod.*
