@@ -2,7 +2,11 @@ package pool
 
 import com.raquo.laminar.api.L.*
 
+import scala.scalajs.js
+
 object Charts:
+  final case class DataItem(label: String, value: Double)
+
   import ChartRegistrar.{
     CategoryScale, LineController, LineElement, LinearScale, PointElement, Chart => ChartJs
   }
@@ -12,10 +16,9 @@ object Charts:
   )
 
   
-  def buildLineChart(dataSignal: StrictSignal[List[Double]]): HtmlElement = ???
-  /*
+  def buildLineChart(dataSignal: StrictSignal[List[DataItem]]): HtmlElement =
     import scala.scalajs.js.JSConverters.*
-    import typings.chartJs.mod.* // Broken import!!!
+    import typings.chartJs.mod.*
 
     var optionalChart: Option[Chart] = None
 
@@ -51,4 +54,3 @@ object Charts:
         }
       },
     )
-  */
