@@ -71,7 +71,6 @@ Model
 
 Charts
 ------
->Chart.js, via ScalaJs, is not exactly ready for prime time (2023.2.25). Try again later.
 * cleanings - line chart ( x = cleaned, y = ? )
 * measurements - line chart ( x = measured, y = measurement )
 * chemicals - bar chart ( x = added, y = amount/typeof )
