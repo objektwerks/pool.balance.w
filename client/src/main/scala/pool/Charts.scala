@@ -8,14 +8,14 @@ import scala.scalajs.js.JSConverters.*
 import typings.chartJs.mod.*
 
 import ChartRegistrar.{
-  CategoryScale, LineController, LineElement, LinearScale, PointElement, Chart => ChartJs
+  CategoryScale, LinearScale, LineController, LineElement, PointElement, Chart => ChartJs
 }
 
 object Charts:
   final case class DataItem(label: String, value: Double)
 
   ChartJs.register(
-    CategoryScale, LineController, LineElement, LinearScale, PointElement
+    CategoryScale, LinearScale, LineController, LineElement, PointElement
   )
 
   def buildLineChart(dataSignal: StrictSignal[List[DataItem]]): HtmlElement =
