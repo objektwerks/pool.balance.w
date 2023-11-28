@@ -11,7 +11,7 @@ import ChartRegistrar.{
   CategoryScale, LinearScale, LineController, LineElement, PointElement, Chart => ChartJs
 }
 
-object Charts:
+object ChartBuilder:
   final case class DataItem(label: String, value: Double)
 
   ChartJs.register(
