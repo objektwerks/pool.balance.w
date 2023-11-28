@@ -3,9 +3,7 @@ package pool
 import com.github.plokhotnyuk.jsoniter_scala.core.*
 
 import org.scalajs.dom
-import org.scalajs.dom.Headers
-import org.scalajs.dom.HttpMethod
-import org.scalajs.dom.RequestInit
+import org.scalajs.dom.{Headers, HttpMethod, RequestInit}
 import org.scalajs.dom.console.log
 
 import scala.concurrent.ExecutionContext.Implicits.global
