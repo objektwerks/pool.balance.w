@@ -71,7 +71,7 @@ Model
 
 Charts
 ------
-* chemicals - line chart ( x = added, y = amount/typeof )
+* chemicals - line chart ( x = added, y = amount per chemical )
 * measurements - line chart ( x = measured, y = measurement )
 
 Measurements
