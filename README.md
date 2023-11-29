@@ -70,6 +70,7 @@ Model
 
 Charts
 ------
+* cleanings - line chart ( x = cleaned, y = count of [true] cleanings )
 * chemicals - line chart ( x = added, y = chemical )
 * measurements - line chart ( x = measured, y = measurement )
 
