@@ -7,18 +7,6 @@ import java.time.format.DateTimeFormatter
 
 import ChartBuilder.DataItem
 
-/*
-enum TypeOfChemical(val display: String):
-  case LiquidChlorine extends TypeOfChemical("Liquid Chlorine")
-  case Trichlor extends TypeOfChemical("Trichlor")
-  case Dichlor extends TypeOfChemical("Dichlor")
-  case CalciumHypochlorite extends TypeOfChemical("Calcium Hypochlorite")
-  case Stabilizer extends TypeOfChemical("Stabilizer")
-  case Algaecide extends TypeOfChemical("Algaecide")
-  case MuriaticAcid extends TypeOfChemical("Muriatic Acid")
-  case Salt extends TypeOfChemical("Salt")
-*/
-
 object ChemicalsChart:
   private val dateFormat = DateTimeFormatter.ofPattern("M.dd")
 
