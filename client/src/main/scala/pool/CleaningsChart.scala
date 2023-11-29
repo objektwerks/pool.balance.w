@@ -10,7 +10,7 @@ import ChartBuilder.DataItem
 object CleaningsChart:
   private val dateFormat = DateTimeFormatter.ofPattern("M.dd")
 
-  private def cleaningsToInt(cleaning: Cleaning): Int =
+  private def sumOfCleanings(cleaning: Cleaning): Int =
     var count = 0
     if cleaning.brush then count += 1
     if cleaning.net then count += 1
@@ -24,5 +24,5 @@ object CleaningsChart:
     val dataItems = model
       .entitiesVar
       .now()
-      .map(c => DataItem( LocalDate.ofEpochDay(c.cleaned).format(dateFormat), cleaningsToInt(c) ))
+      .map(c => DataItem( LocalDate.ofEpochDay(c.cleaned).format(dateFormat), sumOfCleanings(c) ))
     ChartBuilder.build( Var(dataItems).signal )
