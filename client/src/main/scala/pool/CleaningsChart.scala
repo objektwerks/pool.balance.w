@@ -24,5 +24,5 @@ object CleaningsChart:
     val dataItems = model
       .entitiesVar
       .now()
-      .map(c => DataItem( LocalDate.ofEpochDay(c.cleaned).format(dateFormat), cleaningsToInt(c) ) )
+      .map(c => DataItem( LocalDate.ofEpochDay(c.cleaned).format(dateFormat), cleaningsToInt(c) ))
     ChartBuilder.build( Var(dataItems).signal )
