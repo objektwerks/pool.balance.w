@@ -42,3 +42,4 @@ object ChemicalsChart:
 
   def buildAlgaecideChart(model: Model[Chemical]): HtmlElement = build(model, TypeOfChemical.Algaecide)
 
+  def buildMuriaticAcidChart(model: Model[Chemical]): HtmlElement = build(model, TypeOfChemical.MuriaticAcid)
