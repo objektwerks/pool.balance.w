@@ -35,3 +35,5 @@ object ChemicalsChart:
   def buildTrichlorChart(model: Model[Chemical]): HtmlElement = build(model, TypeOfChemical.Trichlor)
 
   def buildDichlorChart(model: Model[Chemical]): HtmlElement = build(model, TypeOfChemical.Dichlor)
+
+  def buildCalciumHypochloriteChart(model: Model[Chemical]): HtmlElement = build(model, TypeOfChemical.CalciumHypochlorite)
