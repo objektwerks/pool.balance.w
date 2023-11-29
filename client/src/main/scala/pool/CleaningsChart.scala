@@ -8,9 +8,9 @@ import java.time.format.DateTimeFormatter
 import ChartBuilder.DataItem
 
 object CleaningsChart:
-  val dateFormat = DateTimeFormatter.ofPattern("M.dd")
+  private val dateFormat = DateTimeFormatter.ofPattern("M.dd")
 
-  def cleaningsToInt(cleaning: Cleaning): Int =
+  private def cleaningsToInt(cleaning: Cleaning): Int =
     var count = 0
     if cleaning.brush then count += 1
     if cleaning.net then count += 1
