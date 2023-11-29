@@ -7,11 +7,6 @@ import java.time.format.DateTimeFormatter
 
 import ChartBuilder.DataItem
 
-/*
-  salt: Int = 3200,
-  temperature: Int = 85,
-*/
-
 object MeasurementsChart:
   private val dateFormat = DateTimeFormatter.ofPattern("M.dd")
 
@@ -76,4 +71,11 @@ object MeasurementsChart:
       .entitiesVar
       .now()
       .map(m => DataItem( LocalDate.ofEpochDay(m.measured).format(dateFormat), m.salt ))
+    ChartBuilder.build( Var(dataItems).signal )
+
+  def buildTemperatureChart(model: Model[Measurement]): HtmlElement =
+    val dataItems = model
+      .entitiesVar
+      .now()
+      .map(m => DataItem( LocalDate.ofEpochDay(m.measured).format(dateFormat), m.temperature ))
     ChartBuilder.build( Var(dataItems).signal )
