@@ -46,3 +46,10 @@ object MeasurementsChart:
       .now()
       .map(m => DataItem( LocalDate.ofEpochDay(m.measured).format(dateFormat), m.ph ))
     ChartBuilder.build( Var(dataItems).signal )
+
+  def buildCalciumHardnessChart(model: Model[Measurement]): HtmlElement =
+    val dataItems = model
+      .entitiesVar
+      .now()
+      .map(m => DataItem( LocalDate.ofEpochDay(m.measured).format(dateFormat), m.calciumHardness ))
+    ChartBuilder.build( Var(dataItems).signal )
