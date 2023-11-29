@@ -36,3 +36,10 @@ object MeasurementsChart:
       .now()
       .map(m => DataItem( LocalDate.ofEpochDay(m.measured).format(dateFormat), m.freeChlorine ))
     ChartBuilder.build( Var(dataItems).signal )
+
+  def buildCombinedChlorineChart(model: Model[Measurement]): HtmlElement =
+    val dataItems = model
+      .entitiesVar
+      .now()
+      .map(m => DataItem( LocalDate.ofEpochDay(m.measured).format(dateFormat), m.combinedChlorine ))
+    ChartBuilder.build( Var(dataItems).signal )
