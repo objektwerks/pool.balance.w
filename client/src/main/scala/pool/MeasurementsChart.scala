@@ -8,7 +8,6 @@ import java.time.format.DateTimeFormatter
 import ChartBuilder.DataItem
 
 /*
-  totalAlkalinity: Int = 100,
   cyanuricAcid: Int = 50,
   totalBromine: Int = 5,
   salt: Int = 3200,
@@ -58,4 +57,11 @@ object MeasurementsChart:
       .entitiesVar
       .now()
       .map(m => DataItem( LocalDate.ofEpochDay(m.measured).format(dateFormat), m.totalAlkalinity ))
+    ChartBuilder.build( Var(dataItems).signal )
+
+  def buildCyanuricAcidChart(model: Model[Measurement]): HtmlElement =
+    val dataItems = model
+      .entitiesVar
+      .now()
+      .map(m => DataItem( LocalDate.ofEpochDay(m.measured).format(dateFormat), m.cyanuricAcid ))
     ChartBuilder.build( Var(dataItems).signal )
