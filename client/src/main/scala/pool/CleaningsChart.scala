@@ -25,4 +25,4 @@ object CleaningsChart:
       .entitiesVar
       .now()
       .map(c => DataItem( LocalDate.ofEpochDay(c.cleaned).format(dateFormat), sumOfCleanings(c) ))
-    ChartBuilder.build( Var(dataItems).signal )
+    ChartBuilder.build( Var(dataItems).signal, "Dates", "Cleanings" )
