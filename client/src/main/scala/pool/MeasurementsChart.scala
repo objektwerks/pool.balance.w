@@ -15,7 +15,7 @@ object MeasurementsChart:
       .entitiesVar
       .now()
       .map(m => DataItem( LocalDate.ofEpochDay(m.measured).format(dateFormat), m.totalChlorine ))
-    ChartBuilder.build( Var(dataItems).signal )
+    ChartBuilder.build( Var(dataItems).signal, "Date", "Total Chlorine" )
 
   def buildFreeChlorineChart(model: Model[Measurement]): HtmlElement =
     val dataItems = model
