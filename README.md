@@ -8,6 +8,13 @@ Todo
 1. Test client.
 2. Build chart views.
 
+Warning
+-------
+>Support for chart x and y axes labels was added; but fails with these errors:
+1. Invalid scale configuration for scale: xAxes
+2. Invalid scale configuration for scale: yAxes
+>So setting x/y axes labels does not currently work.
+
 Install
 -------
 1. brew install node
