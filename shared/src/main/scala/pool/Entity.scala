@@ -117,4 +117,5 @@ final case class Chemical(id: Long = 0,
   def display = LocalDate.ofEpochDay(added).toString
 
 object Chemical:
+  given JsonValueCodec[Chemical] = JsonCodecMaker.make[Chemical]( CodecMakerConfig.withDiscriminatorFieldName(None) )
   given chemicalOrdering: Ordering[Chemical] = Ordering.by[Chemical, Long](c => c.added).reverse
