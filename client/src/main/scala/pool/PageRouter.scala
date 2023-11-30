@@ -33,6 +33,7 @@ object PageRouter:
   )
 
   val chemicalsRoute = Route.static(ChemicalsPage, root / "app" / "pools" / "pool" / "chemicals" / endOfSegments)
+  val chemicalsChartRoute = Route.static(ChemicalsPage, root / "app" / "pools" / "pool" / "chemicals" / "chart" / endOfSegments)
   val chemicalRoute = Route[ChemicalPage, (Long, Long)](
     encode = page => (page.poolId, page.id),
     decode = (poolId, id) => ChemicalPage(poolId, id),
@@ -60,6 +61,7 @@ object PageRouter:
     measurementRoute,
 
     chemicalsRoute,
+    chemicalsChartRoute,
     chemicalRoute
   )
 
