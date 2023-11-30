@@ -60,6 +60,7 @@ final case class Pool(id: Long = 0,
   def display = name
 
 object Pool:
+  given JsonValueCodec[Pool] = JsonCodecMaker.make[Pool]( CodecMakerConfig.withDiscriminatorFieldName(None) )
   given poolOrdering: Ordering[Pool] = Ordering.by[Pool, String](p => p.name).reverse
 
 final case class Cleaning(id: Long = 0,
