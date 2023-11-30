@@ -19,8 +19,8 @@ object ChartBuilder:
   )
 
   def build(dataItemSignal: StrictSignal[List[DataItem]],
-            xAxesLabel: String = "Time",
-            yAxesLabel: String = "Series"): HtmlElement =
+            xAxesLabel: String,
+            yAxesLabel: String): HtmlElement =
     var optionalChart: Option[Chart] = None
 
     canvasTag(
