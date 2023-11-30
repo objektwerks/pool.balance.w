@@ -32,7 +32,6 @@ sealed trait Entity:
   def display: String
 
 object Entity:
-  given measurementOrdering: Ordering[Measurement] = Ordering.by[Measurement, Long](m => m.measured).reverse
   given chemicalOrdering: Ordering[Chemical] = Ordering.by[Chemical, Long](c => c.added).reverse
 
   def currentEpochDay(): Long = LocalDate.now.toEpochDay
@@ -72,6 +71,8 @@ object Cleaning:
   given cleaningOrdering: Ordering[Cleaning] = Ordering.by[Cleaning, Long](c => c.cleaned).reverse
 
 object Measurement:
+  given measurementOrdering: Ordering[Measurement] = Ordering.by[Measurement, Long](m => m.measured).reverse
+
   val totalChlorineRange = Range(1, 5).inclusive
   val freeChlorineRange = Range(1, 5).inclusive
   val combinedChlorineRange = Set(0.0, 0.1, 0.2, 0.3, 0.4, 0.5)
@@ -97,7 +98,6 @@ final case class Measurement(id: Long = 0,
                              temperature: Int = 85,
                              measured: Long = Entity.currentEpochDay()) extends Entity:
   def display = LocalDate.ofEpochDay(measured).toString
-
 
 final case class Chemical(id: Long = 0,
                           poolId: Long = 0,
