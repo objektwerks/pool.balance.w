@@ -57,7 +57,7 @@ object MeasurementsChart:
       .entitiesVar
       .now()
       .map(m => DataItem( LocalDate.ofEpochDay(m.measured).format(dateFormat), m.cyanuricAcid ))
-    ChartBuilder.build( Var(dataItems).signal )
+    ChartBuilder.build( Var(dataItems).signal, "Date", "Cyanuric Acid" )
 
   def buildTotalBromineChart(model: Model[Measurement]): HtmlElement =
     val dataItems = model
