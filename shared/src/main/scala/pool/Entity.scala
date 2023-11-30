@@ -32,8 +32,6 @@ sealed trait Entity:
   def display: String
 
 object Entity:
-  given poolOrdering: Ordering[Pool] = Ordering.by[Pool, String](p => p.name).reverse
-  given cleaningOrdering: Ordering[Cleaning] = Ordering.by[Cleaning, Long](c => c.cleaned).reverse
   given measurementOrdering: Ordering[Measurement] = Ordering.by[Measurement, Long](m => m.measured).reverse
   given chemicalOrdering: Ordering[Chemical] = Ordering.by[Chemical, Long](c => c.added).reverse
 
@@ -55,6 +53,9 @@ final case class Pool(id: Long = 0,
                       volume: Int = 0,
                       unit: String = UnitOfMeasure.gl.toString) extends Entity:
   def display = name
+
+object Pool:
+  given poolOrdering: Ordering[Pool] = Ordering.by[Pool, String](p => p.name).reverse
 
 final case class Cleaning(id: Long = 0,
                           poolId: Long = 0,
