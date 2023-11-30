@@ -29,7 +29,7 @@ object MeasurementsChart:
       .entitiesVar
       .now()
       .map(m => DataItem( LocalDate.ofEpochDay(m.measured).format(dateFormat), m.combinedChlorine ))
-    ChartBuilder.build( Var(dataItems).signal )
+    ChartBuilder.build( Var(dataItems).signal, "Date", "Combined Chlorine" )
 
   def buildPhChart(model: Model[Measurement]): HtmlElement =
     val dataItems = model
