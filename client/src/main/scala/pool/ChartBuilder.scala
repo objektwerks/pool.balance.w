@@ -33,8 +33,6 @@ object ChartBuilder:
             `type` = ChartType.line
             data = new ChartData {
               datasets = js.Array(new ChartDataSets {
-                label = "Value"
-                borderWidth = 1
               })
             }
             options = new ChartOptions {
