@@ -50,7 +50,7 @@ object MeasurementsChart:
       .entitiesVar
       .now()
       .map(m => DataItem( LocalDate.ofEpochDay(m.measured).format(dateFormat), m.totalAlkalinity ))
-    ChartBuilder.build( Var(dataItems).signal )
+    ChartBuilder.build( Var(dataItems).signal, "Date", "Total Alkalinity" )
 
   def buildCyanuricAcidChart(model: Model[Measurement]): HtmlElement =
     val dataItems = model
