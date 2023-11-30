@@ -12,8 +12,6 @@ import scala.scalajs.js
 import scala.scalajs.js.Thenable.Implicits.*
 import scala.util.control.NonFatal
 
-import Serializer.given
-
 object Proxy:
   private var serverUrl = ""
 
