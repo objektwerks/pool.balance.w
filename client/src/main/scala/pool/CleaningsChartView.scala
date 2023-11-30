@@ -8,5 +8,13 @@ object CleaningsChartView extends View:
   def apply(model: Model[Cleaning]): HtmlElement =
     div(
       hdr("Cleanings Chart"),
-      CleaningsChart.build(model)
+      CleaningsChart.build(model),
+      cbar(
+        btn("Cleanings").amend {
+          onClick --> { _ =>
+            log(s"Cleanings Chart -> Cleanings button onClick")
+            route(CleaningsPage)
+          }
+        }
+      )
     )
