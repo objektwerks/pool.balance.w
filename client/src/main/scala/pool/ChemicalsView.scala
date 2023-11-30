@@ -47,6 +47,12 @@ object ChemicalsView extends View:
             val command = ListChemicals(license, poolId)
             call(command, handler)
           }
+        },
+        btn("Chart").amend {
+          onClick --> { _ =>
+            log(s"Chemicals -> Chart button onClick")
+            route(ChemicalsChartPage)
+          }
         }
       )
     )
