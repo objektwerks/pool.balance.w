@@ -75,6 +75,7 @@ final case class Cleaning(id: Long = 0,
   def display = LocalDate.ofEpochDay(cleaned).toString
 
 object Cleaning:
+  given JsonValueCodec[Cleaning] = JsonCodecMaker.make[Cleaning]( CodecMakerConfig.withDiscriminatorFieldName(None) )
   given cleaningOrdering: Ordering[Cleaning] = Ordering.by[Cleaning, Long](c => c.cleaned).reverse
 
 object Measurement:
