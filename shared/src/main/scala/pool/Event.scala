@@ -1,8 +1,26 @@
 package pool
 
+import com.github.plokhotnyuk.jsoniter_scala.core.*
+import com.github.plokhotnyuk.jsoniter_scala.macros.*
+
 import java.time.Instant
 
 sealed trait Event
+
+object Event:
+  given JsonValueCodec[Event] = JsonCodecMaker.make[Event]( CodecMakerConfig.withDiscriminatorFieldName(None) )
+  given JsonValueCodec[Registered] = JsonCodecMaker.make[Registered]( CodecMakerConfig.withDiscriminatorFieldName(None) )
+  given JsonValueCodec[LoggedIn] = JsonCodecMaker.make[LoggedIn]( CodecMakerConfig.withDiscriminatorFieldName(None) )
+  given JsonValueCodec[Updated] = JsonCodecMaker.make[Updated]( CodecMakerConfig.withDiscriminatorFieldName(None) )
+  given JsonValueCodec[PoolsListed] = JsonCodecMaker.make[PoolsListed]( CodecMakerConfig.withDiscriminatorFieldName(None) )
+  given JsonValueCodec[PoolAdded] = JsonCodecMaker.make[PoolAdded]( CodecMakerConfig.withDiscriminatorFieldName(None) )
+  given JsonValueCodec[CleaningsListed] = JsonCodecMaker.make[CleaningsListed]( CodecMakerConfig.withDiscriminatorFieldName(None) )
+  given JsonValueCodec[CleaningAdded] = JsonCodecMaker.make[CleaningAdded]( CodecMakerConfig.withDiscriminatorFieldName(None) )
+  given JsonValueCodec[MeasurementsListed] = JsonCodecMaker.make[MeasurementsListed]( CodecMakerConfig.withDiscriminatorFieldName(None) )
+  given JsonValueCodec[MeasurementAdded] = JsonCodecMaker.make[MeasurementAdded]( CodecMakerConfig.withDiscriminatorFieldName(None) )
+  given JsonValueCodec[ChemicalsListed] = JsonCodecMaker.make[ChemicalsListed]( CodecMakerConfig.withDiscriminatorFieldName(None) )
+  given JsonValueCodec[ChemicalAdded] = JsonCodecMaker.make[ChemicalAdded]( CodecMakerConfig.withDiscriminatorFieldName(None) )
+  given JsonValueCodec[Fault] = JsonCodecMaker.make[Fault]( CodecMakerConfig.withDiscriminatorFieldName(None) )
 
 final case class Registered(account: Account) extends Event
 final case class LoggedIn(account: Account) extends Event
