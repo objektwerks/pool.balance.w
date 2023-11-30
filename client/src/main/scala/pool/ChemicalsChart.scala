@@ -10,13 +10,14 @@ import ChartBuilder.DataItem
 object ChemicalsChart:
   private val dateFormat = DateTimeFormatter.ofPattern("M.dd")
 
-  private def build(model: Model[Chemical], chemical: TypeOfChemical): HtmlElement =
+  private def build(model: Model[Chemical],
+                   chemical: TypeOfChemical): HtmlElement =
     val dataItems = model
       .entitiesVar
       .now()
       .filter(c => c.chemical == chemical.toString)
       .map(c => DataItem( LocalDate.ofEpochDay(c.added).format(dateFormat), c.amount ))
-    ChartBuilder.build( Var(dataItems).signal )
+    ChartBuilder.build( Var(dataItems).signal, "Date", "Chemical" )
 
   def buildLiquidChlorineChart(model: Model[Chemical]): HtmlElement = build(model, TypeOfChemical.LiquidChlorine)
 
