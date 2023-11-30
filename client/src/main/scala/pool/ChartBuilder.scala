@@ -18,7 +18,7 @@ object ChartBuilder:
     CategoryScale, LinearScale, LineController, LineElement, PointElement
   )
 
-  def build(dataSignal: StrictSignal[List[DataItem]]): HtmlElement =
+  def build(dataItemSignal: StrictSignal[List[DataItem]]): HtmlElement =
     var optionalChart: Option[Chart] = None
 
     canvasTag(
@@ -44,10 +44,10 @@ object ChartBuilder:
         }
       ),
 
-      dataSignal --> { data =>
+      dataItemSignal --> { dataItem =>
         optionalChart.foreach { chart =>
-          chart.data.labels = data.map(_.label).toJSArray
-          chart.data.datasets.get(0).data = data.map(_.value).toJSArray
+          chart.data.labels = dataItem.map(_.label).toJSArray
+          chart.data.datasets.get(0).data = dataItem.map(_.value).toJSArray
           chart.update()
         }
       },
