@@ -49,6 +49,9 @@ final case class Account(id: Long = 0,
                          deactivated: Long = 0) extends Entity:
   def display = emailAddress
 
+object Account:
+  given JsonValueCodec[Account] = JsonCodecMaker.make[Account]( CodecMakerConfig.withDiscriminatorFieldName(None) )
+
 final case class Pool(id: Long = 0,
                       license: String = "",
                       name: String = "", 
