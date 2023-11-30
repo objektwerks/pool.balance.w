@@ -18,7 +18,9 @@ object ChartBuilder:
     CategoryScale, LinearScale, LineController, LineElement, PointElement
   )
 
-  def build(dataItemSignal: StrictSignal[List[DataItem]]): HtmlElement =
+  def build(dataItemSignal: StrictSignal[List[DataItem]],
+            xAxesLabel: String = "Time",
+            yAxesLabel: String = "Series"): HtmlElement =
     var optionalChart: Option[Chart] = None
 
     canvasTag(
@@ -34,6 +36,22 @@ object ChartBuilder:
                 label = "Value"
                 borderWidth = 1
               })
+            }
+            options = new ChartOptions {
+              scales = new ChartScales {
+                xAxes = js.Array(new ChartXAxe {
+                  title = new ChartTitleOptions {
+                    display = true
+                    text = xAxesLabel
+                  }
+                })
+                yAxes = js.Array(new ChartYAxe {
+                  title = new ChartTitleOptions {
+                    display = true
+                    text = yAxesLabel
+                  }
+                })
+              }
             }
           })
           optionalChart = Some(chart)
