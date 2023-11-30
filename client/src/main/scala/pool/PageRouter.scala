@@ -88,6 +88,7 @@ object PageRouter:
     .collect[PoolPage] { page => PoolView(Model.pools.setSelectedEntityById(page.id), Model.license) }
 
     .collectStatic(CleaningsPage) { CleaningsView(Model.pools.selectedEntityVar.now().id, Model.cleanings, Model.license) }
+    .collectStatic(CleaningsChartPage) { CleaningsChartView(Model.cleanings) }
     .collect[CleaningPage] { page => CleaningView(Model.cleanings.setSelectedEntityById(page.id), Model.license) }
 
     .collectStatic(MeasurementsPage) { MeasurementsView(Model.pools.selectedEntityVar.now().id, Model.measurements, Model.license) }
