@@ -71,7 +71,7 @@ object MeasurementsChart:
       .entitiesVar
       .now()
       .map(m => DataItem( LocalDate.ofEpochDay(m.measured).format(dateFormat), m.salt ))
-    ChartBuilder.build( Var(dataItems).signal )
+    ChartBuilder.build( Var(dataItems).signal, "Date", "Salt" )
 
   def buildTemperatureChart(model: Model[Measurement]): HtmlElement =
     val dataItems = model
