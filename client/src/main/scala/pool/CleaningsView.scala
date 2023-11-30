@@ -51,7 +51,7 @@ object CleaningsView extends View:
         btn("Chart").amend {
           onClick --> { _ =>
             log(s"Cleanings -> Chart button onClick")
-            // route(CleaningsChartPage)
+            route(CleaningsChartPage)
           }
         }
       )

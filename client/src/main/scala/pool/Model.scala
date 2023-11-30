@@ -6,7 +6,6 @@ import java.text.NumberFormat
 
 import org.scalajs.dom.console.log
 
-import Entity.given
 import Measurement.*
 
 object Model:
@@ -16,10 +15,10 @@ object Model:
 
   def license = accountVar.now().license
 
-  val pools = Model[Pool](Var(List.empty[Pool]), Var(Pool()), Pool(), poolOrdering)
-  val cleanings = Model[Cleaning](Var(List.empty[Cleaning]), Var(Cleaning()), Cleaning(), cleaningOrdering)
-  val measurements = Model[Measurement](Var(List.empty[Measurement]), Var(Measurement()), Measurement(), measurementOrdering)
-  val chemicals = Model[Chemical](Var(List.empty[Chemical]), Var(Chemical()), Chemical(), chemicalOrdering)
+  val pools = Model[Pool](Var(List.empty[Pool]), Var(Pool()), Pool(), Pool.poolOrdering)
+  val cleanings = Model[Cleaning](Var(List.empty[Cleaning]), Var(Cleaning()), Cleaning(), Cleaning.cleaningOrdering)
+  val measurements = Model[Measurement](Var(List.empty[Measurement]), Var(Measurement()), Measurement(), Measurement.measurementOrdering)
+  val chemicals = Model[Chemical](Var(List.empty[Chemical]), Var(Chemical()), Chemical(), Chemical.chemicalOrdering)
 
   measurements
     .entitiesVar
