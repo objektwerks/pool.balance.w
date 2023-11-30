@@ -4,6 +4,8 @@ import com.raquo.laminar.api.L.*
 import com.github.plokhotnyuk.jsoniter_scala.core.*
 import com.github.plokhotnyuk.jsoniter_scala.macros.*
 
+import Entity.given
+
 object Page:
   given JsonValueCodec[Page] = JsonCodecMaker.make[Page]( CodecMakerConfig.withDiscriminatorFieldName(None) )
 
@@ -26,3 +28,8 @@ final case class PoolPage(id: Long = 0) extends EntityPage
 final case class CleaningPage(poolId: Long, id: Long = 0) extends EntityPage
 final case class MeasurementPage(poolId: Long, id: Long = 0) extends EntityPage
 final case class ChemicalPage(poolId: Long, id: Long = 0) extends EntityPage
+
+sealed trait ChartPage extends Page
+final case class CleaningsChartPage(model: Model[Cleaning]) extends ChartPage
+final case class MeasurementsChartPage(model: Model[Measurement]) extends ChartPage
+final case class ChemicalsChartPage(model: Model[Chemical]) extends ChartPage
