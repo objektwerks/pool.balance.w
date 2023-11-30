@@ -47,6 +47,12 @@ object CleaningsView extends View:
             val command = ListCleanings(license, poolId)
             call(command, handler)
           }
+        },
+        btn("Chart").amend {
+          onClick --> { _ =>
+            log(s"Cleanings -> Chart button onClick")
+            // route(CleaningsChartPage)
+          }
         }
       )
     )
