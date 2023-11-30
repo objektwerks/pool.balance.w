@@ -47,6 +47,12 @@ object MeasurementsView extends View:
             val command = ListMeasurements(license, poolId)
             call(command, handler)
           }
+        },
+        btn("Chart").amend {
+          onClick --> { _ =>
+            log(s"Measurements -> Chart button onClick")
+            route(MeasurementsChartPage)
+          }
         }
       )
     )
