@@ -1,5 +1,8 @@
 package pool
 
+import com.github.plokhotnyuk.jsoniter_scala.core.*
+import com.github.plokhotnyuk.jsoniter_scala.macros.*
+
 import java.time.LocalDate
 
 enum UnitOfMeasure:
@@ -32,6 +35,8 @@ sealed trait Entity:
   def display: String
 
 object Entity:
+  given JsonValueCodec[Entity] = JsonCodecMaker.make[Entity]( CodecMakerConfig.withDiscriminatorFieldName(None) )
+
   def currentEpochDay(): Long = LocalDate.now.toEpochDay
   def localDateOfLongToString(epochDay: Long): String = LocalDate.ofEpochDay(epochDay).toString
   def localDateOfStringToLong(localDate: String): Long = LocalDate.parse(localDate).toEpochDay
