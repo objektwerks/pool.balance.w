@@ -96,4 +96,5 @@ object PageRouter:
     .collect[MeasurementPage] { page => MeasurementView(Model.measurements.setSelectedEntityById(page.id), Model.license) }
 
     .collectStatic(ChemicalsPage) { ChemicalsView(Model.pools.selectedEntityVar.now().id, Model.chemicals, Model.license) }
+    .collectStatic(ChemicalsChartPage) { ChemicalsChartView(Model.chemicals) }
     .collect[ChemicalPage] { page => ChemicalView(Model.chemicals.setSelectedEntityById(page.id), Model.license) }
