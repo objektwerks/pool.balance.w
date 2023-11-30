@@ -32,8 +32,6 @@ sealed trait Entity:
   def display: String
 
 object Entity:
-  given chemicalOrdering: Ordering[Chemical] = Ordering.by[Chemical, Long](c => c.added).reverse
-
   def currentEpochDay(): Long = LocalDate.now.toEpochDay
   def localDateOfLongToString(epochDay: Long): String = LocalDate.ofEpochDay(epochDay).toString
   def localDateOfStringToLong(localDate: String): Long = LocalDate.parse(localDate).toEpochDay
@@ -106,3 +104,6 @@ final case class Chemical(id: Long = 0,
                           unit: String = UnitOfMeasure.gl.toString,
                           added: Long = Entity.currentEpochDay()) extends Entity:
   def display = LocalDate.ofEpochDay(added).toString
+
+object Chemical:
+  given chemicalOrdering: Ordering[Chemical] = Ordering.by[Chemical, Long](c => c.added).reverse
