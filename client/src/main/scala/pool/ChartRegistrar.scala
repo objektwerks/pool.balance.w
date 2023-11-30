@@ -47,3 +47,7 @@ object ChartRegistrar:
   @js.native
   @JSImport("chart.js")
   object LinearScale extends js.Object
+
+  @js.native
+  @JSImport("chart.js")
+  object Legend extends js.Object
