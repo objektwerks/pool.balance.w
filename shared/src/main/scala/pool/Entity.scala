@@ -67,6 +67,9 @@ final case class Cleaning(id: Long = 0,
                           cleaned: Long = Entity.currentEpochDay()) extends Entity:
   def display = LocalDate.ofEpochDay(cleaned).toString
 
+object Cleaning:
+  given cleaningOrdering: Ordering[Cleaning] = Ordering.by[Cleaning, Long](c => c.cleaned).reverse
+
 object Measurement:
   val totalChlorineRange = Range(1, 5).inclusive
   val freeChlorineRange = Range(1, 5).inclusive
