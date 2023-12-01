@@ -16,6 +16,18 @@ object UnitOfMeasure:
   def poundsToKilograms(pounds: Double): Double = pounds * 0.454
   def kilogramsToPounds(kilograms: Double): Double = kilograms * 2.205
 
+enum TypeOfMeasurement(val display: String):
+  case TotalChlorine extends TypeOfMeasurement("Total Chlorine")
+  case FreeChlorine extends TypeOfMeasurement("Free Chlorine")
+  case CombinedChlorine extends TypeOfMeasurement("Combined Chlorine")
+  case pH extends TypeOfMeasurement("pH")
+  case CalciumHardness extends TypeOfMeasurement("Calcium Hardness")
+  case TotalAlkalinity extends TypeOfMeasurement("Total Alkalinity")
+  case CyanuricAcid extends TypeOfMeasurement("Cyanuric Acid")
+  case TotalBromine extends TypeOfMeasurement("Total Bromine")
+  case Salt extends TypeOfMeasurement("Salt")
+  case Temperature extends TypeOfMeasurement("Temperature")
+
 enum TypeOfChemical(val display: String):
   case LiquidChlorine extends TypeOfChemical("Liquid Chlorine")
   case Trichlor extends TypeOfChemical("Trichlor")
