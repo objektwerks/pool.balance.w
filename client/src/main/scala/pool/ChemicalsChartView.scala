@@ -6,7 +6,6 @@ import Component.*
 import TypeOfChemical.*
 
 object ChemicalsChartView extends View:
-  private val chemicals = TypeOfChemical.toList
   private val chartBus = EventBus[HtmlElement]()
 
   private def buildChart(selected: String, model: Model[Chemical]): HtmlElement =
@@ -24,7 +23,7 @@ object ChemicalsChartView extends View:
     div(
       hdr("Chemicals Chart"),
       div(
-        listbox(chemicals).amend(
+        listbox(TypeOfChemical.toList).amend(
           onChange.mapToValue --> { value => chartBus.emit( buildChart(value, model) ) }
         )
       ),
