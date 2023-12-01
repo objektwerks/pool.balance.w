@@ -32,8 +32,7 @@ object ChartBuilder:
           val chart = Chart.apply.newInstance2(canvas, new ChartConfiguration {
             `type` = ChartType.line
             data = new ChartData {
-              datasets = js.Array(new ChartDataSets {
-              })
+              datasets = js.Array(new ChartDataSets {})
             }
             options = new ChartOptions {
               scales = new ChartScales {
