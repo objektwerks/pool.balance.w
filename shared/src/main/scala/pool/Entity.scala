@@ -20,7 +20,7 @@ enum TypeOfMeasurement(val display: String):
   case TotalChlorine extends TypeOfMeasurement("Total Chlorine")
   case FreeChlorine extends TypeOfMeasurement("Free Chlorine")
   case CombinedChlorine extends TypeOfMeasurement("Combined Chlorine")
-  case Ph extends TypeOfMeasurement("pH")
+  case Ph extends TypeOfMeasurement("Ph")
   case CalciumHardness extends TypeOfMeasurement("Calcium Hardness")
   case TotalAlkalinity extends TypeOfMeasurement("Total Alkalinity")
   case CyanuricAcid extends TypeOfMeasurement("Cyanuric Acid")
