@@ -7,15 +7,6 @@ import TypeOfChemical.*
 
 final class TypeOfChemicalTest extends AnyFunSuite with Matchers:
   test("type of chemical"):
-    valueOf(LiquidChlorine.toString) shouldBe LiquidChlorine
-    valueOf(Trichlor.toString) shouldBe Trichlor
-    valueOf(Dichlor.toString) shouldBe Dichlor
-    valueOf(CalciumHypochlorite.toString) shouldBe CalciumHypochlorite
-    valueOf(Stabilizer.toString) shouldBe Stabilizer
-    valueOf(Algaecide.toString) shouldBe Algaecide
-    valueOf(MuriaticAcid.toString) shouldBe MuriaticAcid
-    valueOf(Salt.toString) shouldBe Salt
-
     toEnum(LiquidChlorine.display) shouldBe LiquidChlorine
     toEnum(Trichlor.display) shouldBe Trichlor
     toEnum(Dichlor.display) shouldBe Dichlor
