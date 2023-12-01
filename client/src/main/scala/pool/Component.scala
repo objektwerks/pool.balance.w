@@ -61,6 +61,7 @@ object Component:
 
   def listbox(items: List[String]): Select =
     select(cls("w3-select w3-text-indigo"),
+      option(selected(true), disabled(true), hidden(true), ""),
       children <-- Var(items.map(item => option(item))).signal
     )
 
