@@ -6,7 +6,6 @@ Pool Balance ( Web Edition )
 Todo
 ----
 1. Test client.
-2. Build chart views.
 
 Warning
 -------
