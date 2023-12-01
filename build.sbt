@@ -1,3 +1,5 @@
+import org.scalajs.linker.interface.ModuleSplitStyle
+
 name := "pool.balance.w"
 
 lazy val laminarVersion = "16.0.0"
@@ -53,6 +55,10 @@ lazy val client = (project in file("client"))
       "com.github.plokhotnyuk.jsoniter-scala" %%% "jsoniter-scala-macros" % jsoniterVersion % "compile-internal",
       "io.github.cquiroz" %%% "scala-java-time" % scalaJavaTimeVersion
     ),
+    scalaJSLinkerConfig ~= {
+      _.withModuleKind(ModuleKind.ESModule)
+        .withModuleSplitStyle(ModuleSplitStyle.SmallModulesFor(List("pool")))
+    },
     useYarn := true,
     externalNpm := {
       poolbalance.base.getAbsoluteFile()
