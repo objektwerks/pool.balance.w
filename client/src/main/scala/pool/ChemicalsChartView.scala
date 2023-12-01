@@ -16,6 +16,7 @@ object ChemicalsChartView extends View:
           onChange.mapToValue --> selectedVar.writer
         )
       ),
+      div(idAttr("chemicals-chart-id")),
       cbar(
         btn("Chemicals").amend {
           onClick --> { _ =>
