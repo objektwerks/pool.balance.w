@@ -13,7 +13,7 @@ object ChemicalsChartView extends View:
       hdr("Chemicals Chart"),
       div(
         listbox(chemicals).amend(
-          onChange.mapToValue --> selectedVar.writer
+          onChange.mapToValue --> value.
         )
       ),
       div(idAttr("chemicals-chart-id")),
