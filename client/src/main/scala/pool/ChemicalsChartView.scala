@@ -9,7 +9,7 @@ object ChemicalsChartView extends View:
   private val chartBus = EventBus[HtmlElement]()
 
   private def buildChart(selected: String, model: Model[Chemical]): HtmlElement =
-      TypeOfChemical.valueOf(selected) match
+      TypeOfChemical.toEnum(selected) match
         case LiquidChlorine => ChemicalsChart.buildLiquidChlorineChart(model)
         case Trichlor => ChemicalsChart.buildTrichlorChart(model)
         case Dichlor => ChemicalsChart.buildDichlorChart(model)
