@@ -6,12 +6,15 @@ import Component.*
 
 object ChemicalsChartView extends View:
   private val chemicals = TypeOfChemical.toList
+  private val selectedVar = Var(chemicals.head)
 
   def apply(model: Model[Chemical]): HtmlElement =
     div(
       hdr("Chemicals Chart"),
       div(
-        listbox(chemicals)
+        listbox(chemicals).amend(
+          onChange.mapToValue --> selectedVar.writer
+        )
       ),
       cbar(
         btn("Chemicals").amend {
