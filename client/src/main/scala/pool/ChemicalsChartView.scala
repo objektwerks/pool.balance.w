@@ -28,7 +28,7 @@ object ChemicalsChartView extends View:
           onChange.mapToValue --> { value => chartBus.emit( buildChart(value, model) ) }
         )
       ),
-      div(idAttr("chemicals-chart-id"),
+      div(
         child <-- chartBus.events
       ),
       cbar(
