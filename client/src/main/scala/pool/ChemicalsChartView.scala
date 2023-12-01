@@ -8,7 +8,9 @@ object ChemicalsChartView extends View:
   def apply(model: Model[Chemical]): HtmlElement =
     div(
       hdr("Chemicals Chart"),
-      // TODO - build chart!
+      div(
+        listbox( TypeOfChemical.toList )
+      ),
       cbar(
         btn("Chemicals").amend {
           onClick --> { _ =>
