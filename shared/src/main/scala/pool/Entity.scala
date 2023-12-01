@@ -109,9 +109,6 @@ object Measurement:
   val saltRange = Range(2700, 3400).inclusive
   val temperatureRange = Range(50, 100).inclusive
 
-  def toList: List[String] = List("TotalChlorine", "FreeChlorine", "CombinedChlorine", "pH", "CalciumHardness",
-                                  "TotalAlkalinity", "CyanuricAcid", "TotalBromine", "Salt", "Temperature")
-
 final case class Measurement(id: Long = 0,
                              poolId: Long = 0,
                              totalChlorine: Int = 3,
