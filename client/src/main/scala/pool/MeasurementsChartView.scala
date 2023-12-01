@@ -9,7 +9,7 @@ object MeasurementsChartView extends View:
     div(
       hdr("Measurements Chart"),
       div(
-        listbox( List() )
+        listbox( Measurement.toList )
       ),      cbar(
         btn("Measurements").amend {
           onClick --> { _ =>
