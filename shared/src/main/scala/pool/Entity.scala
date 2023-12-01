@@ -28,6 +28,10 @@ enum TypeOfMeasurement(val display: String):
   case Salt extends TypeOfMeasurement("Salt")
   case Temperature extends TypeOfMeasurement("Temperature")
 
+object TypeOfMeasurement:
+  def toEnum(display: String): TypeOfMeasurement = TypeOfMeasurement.valueOf(display.filterNot(_.isWhitespace))
+  def toList: List[String] = TypeOfMeasurement.values.map(tom => tom.display).toList
+
 enum TypeOfChemical(val display: String):
   case LiquidChlorine extends TypeOfChemical("Liquid Chlorine")
   case Trichlor extends TypeOfChemical("Trichlor")
