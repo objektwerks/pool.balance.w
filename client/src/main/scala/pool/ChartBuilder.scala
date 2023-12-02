@@ -24,7 +24,7 @@ object ChartBuilder:
     var optionalChart: Option[Chart] = None
 
     canvasTag(
-      width := "100%",
+      width("100%"),
 
       onMountUnmountCallback(
         mount = { mountContext =>
