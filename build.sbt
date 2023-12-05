@@ -5,7 +5,7 @@ name := "pool.balance.w"
 lazy val laminarVersion = "16.0.0"
 lazy val waypointVersion = "7.0.0"
 lazy val scalaJavaTimeVersion = "2.5.0"
-lazy val jsoniterVersion = "2.24.4"
+lazy val jsoniterVersion = "2.25.0"
 lazy val scalaTestVersion = "3.2.17"
 
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
