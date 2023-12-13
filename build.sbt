@@ -75,7 +75,7 @@ lazy val server = (project in file("server"))
     reStart / mainClass := Some("pool.Server"),
     libraryDependencies ++= {
       Seq(
-        "io.helidon.webserver" % "helidon-webserver" % "4.0.0",
+        "io.helidon.webserver" % "helidon-webserver" % "4.0.1",
         "org.scalikejdbc" %% "scalikejdbc" % "4.1.0",
         "com.zaxxer" % "HikariCP" % "5.0.1" exclude("org.slf4j", "slf4j-api"),
         "org.postgresql" % "postgresql" % "42.6.0",
