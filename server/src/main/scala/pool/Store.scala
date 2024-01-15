@@ -27,8 +27,7 @@ final class Store(config: Config,
   private val url = config.getString("db.url")
   private val user = config.getString("db.user")
   private val password = config.getString("db.password")
-
-  val dataSource: DataSource = {
+  private val dataSource: DataSource = {
     val ds = new HikariDataSource()
     ds.setDataSourceClassName(driverClassName)
     ds.addDataSourceProperty("url", url)
