@@ -23,16 +23,12 @@ object Store:
 
 final class Store(config: Config,
                   cache: Cache[String, String]) extends LazyLogging:
-  private val driverClassName = config.getString("db.driverClassName")
-  private val url = config.getString("db.url")
-  private val user = config.getString("db.user")
-  private val password = config.getString("db.password")
   private val dataSource: DataSource = {
     val ds = new HikariDataSource()
-    ds.setDataSourceClassName(driverClassName)
-    ds.addDataSourceProperty("url", url)
-    ds.addDataSourceProperty("user", user)
-    ds.addDataSourceProperty("password", password)
+    ds.setDataSourceClassName(config.getString("db.driverClassName"))
+    ds.addDataSourceProperty("url", config.getString("db.url"))
+    ds.addDataSourceProperty("user", config.getString("db.user"))
+    ds.addDataSourceProperty("password", config.getString("db.password"))
     ds
   }
   ConnectionPool.singleton(new DataSourceConnectionPool(dataSource))
