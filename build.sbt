@@ -59,7 +59,6 @@ lazy val client = (project in file("client"))
       _.withModuleKind(ModuleKind.ESModule)
         .withModuleSplitStyle(ModuleSplitStyle.SmallModulesFor(List("pool")))
     },
-    useYarn := true,
     externalNpm := {
       poolbalance.base.getAbsoluteFile()
     },
