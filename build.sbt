@@ -2,7 +2,7 @@ import org.scalajs.linker.interface.ModuleSplitStyle
 
 name := "pool.balance.w"
 
-lazy val laminarVersion = "17.0.0-M8"
+lazy val laminarVersion = "17.0.0-RC1"
 lazy val waypointVersion = "8.0.0-M3"
 lazy val scalaJavaTimeVersion = "2.5.0"
 lazy val jsoniterVersion = "2.28.4"
