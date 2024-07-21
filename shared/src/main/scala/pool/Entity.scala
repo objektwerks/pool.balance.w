@@ -62,7 +62,7 @@ final case class Account(id: Long = 0,
                          emailAddress: String = "",
                          pin: String = "",
                          activated: Long = Entity.currentEpochDay(),
-                         deactivated: Long = 0) extends Entity:
+                         deactivated: Long = 0) extends Entity derives CanEqual:
   def display = emailAddress
 
 object Account:
