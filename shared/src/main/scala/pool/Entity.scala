@@ -121,7 +121,7 @@ final case class Measurement(id: Long = 0,
                              totalBromine: Int = 5,
                              salt: Int = 3200,
                              temperature: Int = 85,
-                             measured: Long = Entity.currentEpochDay()) extends Entity:
+                             measured: Long = Entity.currentEpochDay()) extends Entity derives CanEqual:
   def display = LocalDate.ofEpochDay(measured).toString
 
 final case class Chemical(id: Long = 0,
