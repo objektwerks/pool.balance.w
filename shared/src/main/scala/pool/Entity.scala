@@ -129,7 +129,7 @@ final case class Chemical(id: Long = 0,
                           chemical: String = TypeOfChemical.LiquidChlorine.toString,
                           amount: Double = 1.0, 
                           unit: String = UnitOfMeasure.gl.toString,
-                          added: Long = Entity.currentEpochDay()) extends Entity:
+                          added: Long = Entity.currentEpochDay()) extends Entity derives CanEqual:
   def display = LocalDate.ofEpochDay(added).toString
 
 object Chemical:
