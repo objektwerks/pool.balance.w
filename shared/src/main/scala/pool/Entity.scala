@@ -87,7 +87,7 @@ final case class Cleaning(id: Long = 0,
                           pumpBasket: Boolean = false,
                           pumpFilter: Boolean = false,
                           vacuum: Boolean = false,
-                          cleaned: Long = Entity.currentEpochDay()) extends Entity:
+                          cleaned: Long = Entity.currentEpochDay()) extends Entity derives CanEqual:
   def display = LocalDate.ofEpochDay(cleaned).toString
 
 object Cleaning:
