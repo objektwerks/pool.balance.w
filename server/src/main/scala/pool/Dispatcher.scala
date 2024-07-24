@@ -20,7 +20,7 @@ final class Dispatcher(store: Store,
         isAuthorized(command) match
           case Unauthorized(cause) => addFault( Fault(cause) )
           case Authorized =>
-            command match
+            val event = command match
               case Register(emailAddress)            => register(emailAddress)
               case Login(emailAddress, pin)          => login(emailAddress, pin)
               case Deactivate(license)               => deactivateAccount(license)
@@ -37,6 +37,10 @@ final class Dispatcher(store: Store,
               case ListChemicals(_, poolId)          => listChemicals(poolId)
               case AddChemical(_, chemical)          => addChemical(chemical)
               case UpdateChemical(_, chemical)       => updateChemical(chemical)
+            event match
+              case fault @ Fault(_, _) => addFault(fault)
+              case _ => event
+            
 
   private def isAuthorized(command: Command): Security =
     command match
