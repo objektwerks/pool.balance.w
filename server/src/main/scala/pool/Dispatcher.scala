@@ -7,31 +7,32 @@ import scala.util.control.NonFatal
 
 import Validator.*
 
-final case class Authorized(isAuthorized: Boolean, message: String = "")
 
 final class Dispatcher(store: Store, emailer: Emailer):
   def dispatch[E <: Event](command: Command): Event =
-    if !command.isValid then Fault(s"Command is invalid: $command")
-    isAuthorized(command) match
-      case Authorized(isAuthorized, message) => if !isAuthorized then Fault(message)
+    command.isValid match
+      case false => Fault(s"Command is invalid: $command")
+      case true =>
+        isAuthorized(command) match
+          case Authorized(isAuthorized, message) => if !isAuthorized then Fault(message)
 
-    command match
-      case Register(emailAddress)            => register(emailAddress)
-      case Login(emailAddress, pin)          => login(emailAddress, pin)
-      case Deactivate(license)               => deactivateAccount(license)
-      case Reactivate(license)               => reactivateAccount(license)
-      case ListPools(license)                => listPools(license)
-      case AddPool(_, pool)                  => addPool(pool)
-      case UpdatePool(_, pool)               => updatePool(pool)
-      case ListCleanings(_, poolId)          => listCleanings(poolId)
-      case AddCleaning(_, cleaning)          => addCleaning(cleaning)
-      case UpdateCleaning(_, cleaning)       => updateCleaning(cleaning)
-      case ListMeasurements(_, poolId)       => listMeasurements(poolId)
-      case AddMeasurement(_, measurement)    => addMeasurement(measurement)
-      case UpdateMeasurement(_, measurement) => updateMeasurement(measurement)
-      case ListChemicals(_, poolId)          => listChemicals(poolId)
-      case AddChemical(_, chemical)          => addChemical(chemical)
-      case UpdateChemical(_, chemical)       => updateChemical(chemical)
+        command match
+          case Register(emailAddress)            => register(emailAddress)
+          case Login(emailAddress, pin)          => login(emailAddress, pin)
+          case Deactivate(license)               => deactivateAccount(license)
+          case Reactivate(license)               => reactivateAccount(license)
+          case ListPools(license)                => listPools(license)
+          case AddPool(_, pool)                  => addPool(pool)
+          case UpdatePool(_, pool)               => updatePool(pool)
+          case ListCleanings(_, poolId)          => listCleanings(poolId)
+          case AddCleaning(_, cleaning)          => addCleaning(cleaning)
+          case UpdateCleaning(_, cleaning)       => updateCleaning(cleaning)
+          case ListMeasurements(_, poolId)       => listMeasurements(poolId)
+          case AddMeasurement(_, measurement)    => addMeasurement(measurement)
+          case UpdateMeasurement(_, measurement) => updateMeasurement(measurement)
+          case ListChemicals(_, poolId)          => listChemicals(poolId)
+          case AddChemical(_, chemical)          => addChemical(chemical)
+          case UpdateChemical(_, chemical)       => updateChemical(chemical)
 
   private def isAuthorized(command: Command): Authorized =
     command match
