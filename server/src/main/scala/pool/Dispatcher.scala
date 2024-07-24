@@ -160,3 +160,9 @@ final class Dispatcher(store: Store,
       Updated( store.updateChemical(chemical) )
     }.recover { case NonFatal(error) => Fault("Update chemical failed:", error) }
      .get
+
+  private def addFault(fault: Fault): Event =
+    Try {
+      store.addFault(fault)
+    }.recover { case NonFatal(error) => Fault("Add fault failed:", error) }
+     .get
