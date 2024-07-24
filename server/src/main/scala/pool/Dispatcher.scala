@@ -37,16 +37,16 @@ final class Dispatcher(store: Store, emailer: Emailer):
           case AddChemical(_, chemical)          => addChemical(chemical)
           case UpdateChemical(_, chemical)       => updateChemical(chemical)
 
-  private def isAuthorized(command: Command): Authorized =
+  private def isAuthorized(command: Command): Security =
     command match
-      case commandWithLicense: License =>
+      case license: License =>
         Try {
-          if store.isAuthorized(commandWithLicense.license) then Authorized(true)
-          else Authorized(false, s"Unauthorized command: $command")
-        }.recover { case NonFatal(error) =>
-          Authorized(false, s"Authorization failed for command: $command with error: ${error.getMessage}")
+          if store.isAuthorized(license.license) then Authorized
+          else Unauthorized(s"Unauthorized: $command")
+        }.recover {
+          case NonFatal(error) => Unauthorized(s"Unauthorized: $command, cause: $error")
         }.get
-      case Register(_) | Login(_, _) => Authorized(true)
+      case Register(_) | Login(_, _) => Authorized
 
   private def register(emailAddress: String): Event =
     Try {
