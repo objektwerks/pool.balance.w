@@ -11,31 +11,32 @@ sealed trait Security
 case object Authorized extends Security
 final case class Unauthorized(cause: String) extends Security
 
-final class Dispatcher(store: Store, emailer: Emailer):
-  def dispatch[E <: Event](command: Command): Event =
+final class Dispatcher(store: Store,
+                       emailer: Emailer):
+  def dispatch(command: Command): Event =
     command.isValid match
-      case false => Fault(s"Command is invalid: $command")
+      case false => addFault( Fault(s"Invalid command: $command") )
       case true =>
         isAuthorized(command) match
-          case Authorized(isAuthorized, message) => if !isAuthorized then Fault(message)
-
-        command match
-          case Register(emailAddress)            => register(emailAddress)
-          case Login(emailAddress, pin)          => login(emailAddress, pin)
-          case Deactivate(license)               => deactivateAccount(license)
-          case Reactivate(license)               => reactivateAccount(license)
-          case ListPools(license)                => listPools(license)
-          case AddPool(_, pool)                  => addPool(pool)
-          case UpdatePool(_, pool)               => updatePool(pool)
-          case ListCleanings(_, poolId)          => listCleanings(poolId)
-          case AddCleaning(_, cleaning)          => addCleaning(cleaning)
-          case UpdateCleaning(_, cleaning)       => updateCleaning(cleaning)
-          case ListMeasurements(_, poolId)       => listMeasurements(poolId)
-          case AddMeasurement(_, measurement)    => addMeasurement(measurement)
-          case UpdateMeasurement(_, measurement) => updateMeasurement(measurement)
-          case ListChemicals(_, poolId)          => listChemicals(poolId)
-          case AddChemical(_, chemical)          => addChemical(chemical)
-          case UpdateChemical(_, chemical)       => updateChemical(chemical)
+          case Unauthorized(cause) => addFault( Fault(cause) )
+          case Authorized =>
+            command match
+              case Register(emailAddress)            => register(emailAddress)
+              case Login(emailAddress, pin)          => login(emailAddress, pin)
+              case Deactivate(license)               => deactivateAccount(license)
+              case Reactivate(license)               => reactivateAccount(license)
+              case ListPools(license)                => listPools(license)
+              case AddPool(_, pool)                  => addPool(pool)
+              case UpdatePool(_, pool)               => updatePool(pool)
+              case ListCleanings(_, poolId)          => listCleanings(poolId)
+              case AddCleaning(_, cleaning)          => addCleaning(cleaning)
+              case UpdateCleaning(_, cleaning)       => updateCleaning(cleaning)
+              case ListMeasurements(_, poolId)       => listMeasurements(poolId)
+              case AddMeasurement(_, measurement)    => addMeasurement(measurement)
+              case UpdateMeasurement(_, measurement) => updateMeasurement(measurement)
+              case ListChemicals(_, poolId)          => listChemicals(poolId)
+              case AddChemical(_, chemical)          => addChemical(chemical)
+              case UpdateChemical(_, chemical)       => updateChemical(chemical)
 
   private def isAuthorized(command: Command): Security =
     command match
