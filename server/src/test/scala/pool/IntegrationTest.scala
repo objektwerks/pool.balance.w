@@ -175,6 +175,5 @@ final class IntegrationTest extends AnyFunSuite with Matchers:
 
   def fault: Unit =
     val fault = Fault("error message")
-    val id = store.addFault(fault)
-    assert(id > 0)
+    fault shouldBe store.addFault(fault)
     store.listFaults().length shouldBe 1
