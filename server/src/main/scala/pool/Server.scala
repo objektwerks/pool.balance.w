@@ -35,7 +35,7 @@ object Server extends LazyLogging:
       .addCrossOrigin(CrossOriginConfig.create())
       .build()
 
-    val handler = Handler(dispatcher, store, logger)
+    val handler = Handler(dispatcher)
 
     val builder = HttpRouting
       .builder
