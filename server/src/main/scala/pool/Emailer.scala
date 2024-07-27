@@ -23,11 +23,9 @@ final class Emailer(config: Config) extends LazyLogging:
 
   @tailrec
   private def retry[T](attempts: Int)(fn: => T): T =
-    Try { fn } match {
+    Try( fn ) match
       case Success(result) => result
-      case _ if attempts >= 1 => retry(attempts - 1)(fn)
-      case Failure(error) => throw error
-    }
+      case Failure(error)  => if attempts >= 1 then retry(attempts - 1)(fn) else throw error
 
   private def sendEmail(recipients: List[String],
                         message: String): Unit =
@@ -35,7 +33,7 @@ final class Emailer(config: Config) extends LazyLogging:
       val email = Email.create
         .from(sender)
         .subject(subject)
-        .htmlMessage(message, "UTF-8")
+        .textMessage(message, "UTF-8")
         .cc(sender)
       recipients.foreach( recipient => email.to(recipient) )
       session.open
