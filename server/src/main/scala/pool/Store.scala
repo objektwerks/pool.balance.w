@@ -8,8 +8,9 @@ import java.util.concurrent.TimeUnit
 import java.time.LocalDate
 import javax.sql.DataSource
 
-import scalikejdbc.*
 import scala.concurrent.duration.FiniteDuration
+
+import scalikejdbc.*
 
 object Store:
   def cache(config: Config): Cache[String, String] =
