@@ -19,6 +19,14 @@ object Store:
       .expireAfterWrite( FiniteDuration( config.getLong("cache.expireAfter"), TimeUnit.HOURS) )
       .build[String, String]()
 
+  def dataSource(config: Config): DataSource =
+    val ds = HikariDataSource()
+    ds.setDataSourceClassName(config.getString("db.driver"))
+    ds.addDataSourceProperty("url", config.getString("db.url"))
+    ds.addDataSourceProperty("user", config.getString("db.user"))
+    ds.addDataSourceProperty("password", config.getString("db.password"))
+    ds
+
 final class Store(config: Config,
                   cache: Cache[String, String]) extends LazyLogging:
   private val dataSource: DataSource = {
