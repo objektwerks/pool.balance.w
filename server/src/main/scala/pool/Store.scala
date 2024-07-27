@@ -60,9 +60,7 @@ final class Store(cache: Cache[String, String],
 
   def isAuthorized(license: String): Boolean =
     cache.getIfPresent(license) match
-      case Some(_) =>
-        logger.debug(s"*** store cache get: $license")
-        true
+      case Some(_) => true
       case None =>
         val optionalLicense = DB readOnly { implicit session =>
           sql"select license from account where license = $license"
@@ -71,7 +69,6 @@ final class Store(cache: Cache[String, String],
         }
         if optionalLicense.isDefined then
           cache.put(license, license)
-          logger.debug(s"*** store cache put: $license")
           true
         else false
 
