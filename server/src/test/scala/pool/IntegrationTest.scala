@@ -5,7 +5,6 @@ import com.typesafe.config.ConfigFactory
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.duration.*
 import scala.sys.process.Process
 
 import Validator.*
