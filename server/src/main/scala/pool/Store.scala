@@ -5,6 +5,7 @@ import com.typesafe.config.Config
 import com.typesafe.scalalogging.LazyLogging
 import com.zaxxer.hikari.HikariDataSource
 
+import java.util.concurrent.TimeUnit
 import java.time.LocalDate
 import javax.sql.DataSource
 
