@@ -2,7 +2,6 @@ package pool
 
 import com.github.blemale.scaffeine.{Cache, Scaffeine}
 import com.typesafe.config.Config
-import com.typesafe.scalalogging.LazyLogging
 import com.zaxxer.hikari.HikariDataSource
 
 import java.util.concurrent.TimeUnit
