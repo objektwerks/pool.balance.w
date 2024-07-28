@@ -9,7 +9,7 @@ import scala.sys.process.Process
 
 import Validator.*
 
-final class IntegrationTest extends AnyFunSuite with Matchers:
+final class DispatcherTest extends AnyFunSuite with Matchers:
   val exitCode = Process("psql -d poolbalance -f ddl.sql").run().exitValue()
   exitCode shouldBe 0
 
@@ -27,7 +27,7 @@ final class IntegrationTest extends AnyFunSuite with Matchers:
   var testMeasurement = Measurement(poolId = 0)
   var testChemical = Chemical(poolId = 0)
 
-  test("integration"):
+  test("dispatcher"):
     register
     login
 
