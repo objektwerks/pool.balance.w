@@ -14,7 +14,7 @@ addCompilerPlugin("com.softwaremill.ox" %% "plugin" % oxVersion)
 
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
-  version := "0.34-SNAPSHOT",
+  version := "0.34",
   scalaVersion := "3.5.0",
   parallelExecution := false,
   scalacOptions ++= Seq(
