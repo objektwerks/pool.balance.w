@@ -53,10 +53,11 @@ final class DispatcherTest extends AnyFunSuite with Matchers:
     val register = Register(config.getString("email.sender"))
     dispatcher.dispatch(register) match
       case Registered(account) =>
+        println(s"*** $account")
         assert( account.isActivated )
         testAccount = account
       case fault => fail(s"Invalid registered event: $fault")
-    
+
   def login: Unit =
     val login = Login(testAccount.emailAddress, testAccount.pin)
     dispatcher.dispatch(login) match
@@ -93,7 +94,7 @@ final class DispatcherTest extends AnyFunSuite with Matchers:
     dispatcher.dispatch(updatePool) match
       case Updated(id) => testPool.id shouldBe id
       case fault => fail(s"Invalid pool saved event: $fault")
-    
+
   def listPools: Unit =
     val listPools = ListPools(testAccount.license)
     dispatcher.dispatch(listPools) match
@@ -124,7 +125,7 @@ final class DispatcherTest extends AnyFunSuite with Matchers:
         cleanings.length shouldBe 1
         cleanings.head shouldBe testCleaning
       case fault => fail(s"Invalid cleanings listed event: $fault")
-    
+
   def addMeasurement: Unit =
     val addMeasurement = AddMeasurement(testAccount.license, testMeasurement)
     dispatcher.dispatch(addMeasurement) match
@@ -154,7 +155,7 @@ final class DispatcherTest extends AnyFunSuite with Matchers:
       case ChemicalAdded(chemical) =>
         chemical.id should not be 0
         testChemical = testChemical.copy(id = chemical.id)
-      case fault => fail(s"Invalid chemical saved event: $fault")    
+      case fault => fail(s"Invalid chemical saved event: $fault")
 
   def updateChemical: Unit =
     testChemical = testChemical.copy(amount = 2.0)
