@@ -111,7 +111,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
       case NonFatal(error) => Fault("List pools failed:", error)
     .get
 
-  private def addPool(pool: Pool): Event =
+  private def addPool(pool: Pool)(using IO): Event =
     Try:
       PoolAdded(
         supervised:
