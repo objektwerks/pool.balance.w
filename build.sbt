@@ -2,11 +2,11 @@ import org.scalajs.linker.interface.ModuleSplitStyle
 
 name := "pool.balance.w"
 
-lazy val laminarVersion = "17.1.0"
-lazy val waypointVersion = "8.0.1"
-lazy val scalaJavaTimeVersion = "2.5.0"
-lazy val jsoniterVersion = "2.30.8"
-lazy val scalaTestVersion = "3.2.19"
+val laminarVersion = "17.1.0"
+val waypointVersion = "8.0.1"
+val scalaJavaTimeVersion = "2.5.0"
+val jsoniterVersion = "2.30.8"
+val scalaTestVersion = "3.2.19"
 val oxVersion = "0.3.3"
 
 autoCompilerPlugins := true
