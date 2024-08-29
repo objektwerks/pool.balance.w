@@ -2,9 +2,9 @@ package pool
 
 object Validator:
   extension (value: String)
-    def isLicense: Boolean = if value.nonEmpty && value.length == 36 then true else false
+    def isLicense: Boolean = value.length == 36
     def isPin: Boolean = value.length == 7
-    def isEmailAddress: Boolean = value.nonEmpty && value.length >= 3 && value.contains("@")
+    def isEmailAddress: Boolean = value.length >= 3 && value.contains("@")
     def isName: Boolean = value.length >= 2
     def isInt(text: String): Boolean = text.matches("\\d+")
     def isDouble(text: String): Boolean = text.matches("\\d{0,7}([\\.]\\d{0,4})?")

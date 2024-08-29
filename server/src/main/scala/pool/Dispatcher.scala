@@ -1,5 +1,7 @@
 package pool
 
+import java.util.UUID
+
 import ox.{IO, supervised}
 import ox.resilience.{retry, RetryConfig}
 
@@ -60,7 +62,8 @@ final class Dispatcher(store: Store, emailer: Emailer):
   private def register(emailAddress: String)(using IO): Event =
     Try:
       supervised:
-        val account = Account(emailAddress = emailAddress)
+        val license = UUID.randomUUID().toString()
+        val account = Account(license = license, emailAddress = emailAddress)
         val message = s"Your new pin is: ${account.pin}\n\nWelcome aboard!"
         retry( RetryConfig.delay(1, 600.millis) )( sendEmail(account.emailAddress, message) )
         Registered( store.register(account) )
