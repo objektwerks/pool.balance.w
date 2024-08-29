@@ -55,21 +55,20 @@ final class Dispatcher(store: Store, emailer: Emailer):
         .get
       case Register(_) | Login(_, _) => Authorized
 
-  private def register(emailAddress: String): Event =
-    Try {
-      val account = Account(license = UUID.randomUUID.toString, emailAddress = emailAddress, pin = Pin.newInstance)
-      if store.isEmailAddressUnique(emailAddress) then
-        email(account.emailAddress, account.pin)
-        Registered( store.register(account) )
-      else Fault(s"Registration failed because: $emailAddress is already registered.")
-    }.recover { case NonFatal(error) =>
-      Fault(s"Registration failed for: $emailAddress with error: ${error.getMessage}")
-    }.get
-
-  private def email(emailAddress: String, pin: String): Unit =
+  private def sendEmail(emailAddress: String, message: String): Unit =
     val recipients = List(emailAddress)
-    val message = s"Your new pin is: $pin\n\nWelcome aboard!"
     emailer.send(recipients, message)
+
+  private def register(emailAddress: String)(using IO): Event =
+    Try:
+      supervised:
+        val account = Account(emailAddress = emailAddress)
+        val message = s"Your new pin is: ${account.pin}\n\nWelcome aboard!"
+        retry( RetryConfig.delay(1, 600.millis) )( sendEmail(account.emailAddress, message) )
+        Registered( store.register(account) )
+    .recover:
+      case NonFatal(error) => Fault(s"Registration failed for: $emailAddress, because: ${error.getMessage}")
+    .get
 
   private def login(emailAddress: String, pin: String): Event =
     Try { store.login(emailAddress, pin) }.fold(
