@@ -81,8 +81,11 @@ final class Dispatcher(store: Store, emailer: Emailer):
         else Fault(s"Login failed for email address: $emailAddress and pin: $pin")
     )
 
-  private def deactivateAccount(license: String): Event =
-    Try { store.deactivateAccount(license) }.fold(
+  private def deactivateAccount(license: String)(using IO): Event =
+    Try:
+      supervised:
+        retry( RetryConfig.delay(1, 100.millis) )( store.deactivateAccount(license) )
+    .fold(
       error => Fault("Deactivate account failed:", error),
       optionalAccount =>
         if optionalAccount.isDefined then Deactivated(optionalAccount.get)
