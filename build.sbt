@@ -9,6 +9,9 @@ lazy val jsoniterVersion = "2.30.8"
 lazy val scalaTestVersion = "3.2.19"
 val oxVersion = "0.3.3"
 
+autoCompilerPlugins := true
+addCompilerPlugin("com.softwaremill.ox" %% "plugin" % oxVersion)
+
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
   version := "0.34-SNAPSHOT",
