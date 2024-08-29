@@ -7,10 +7,6 @@ import scala.util.control.NonFatal
 
 import Validator.*
 
-sealed trait Security
-case object Authorized extends Security
-final case class Unauthorized(cause: String) extends Security
-
 final class Dispatcher(store: Store,
                        emailer: Emailer):
   def dispatch(command: Command): Event =
@@ -40,7 +36,7 @@ final class Dispatcher(store: Store,
             event match
               case fault @ Fault(_, _) => addFault(fault)
               case _ => event
-            
+
 
   private def isAuthorized(command: Command): Security =
     command match
@@ -128,7 +124,7 @@ final class Dispatcher(store: Store,
       Updated( store.updateCleaning(cleaning) )
     }.recover { case NonFatal(error) => Fault(s"Update cleaning failed:", error) }
      .get
-    
+
   private def listMeasurements(poolId: Long): Event =
     Try {
       MeasurementsListed( store.listMeasurements(poolId) )
@@ -146,7 +142,7 @@ final class Dispatcher(store: Store,
       Updated( store.updateMeasurement(measurement) )
     }.recover { case NonFatal(error) => Fault("Update measurement failed:", error) }
      .get
-    
+
   private def listChemicals(poolId: Long): Event =
     Try {
       ChemicalsListed( store.listChemicals(poolId) )
