@@ -124,10 +124,14 @@ final class Dispatcher(store: Store, emailer: Emailer):
     .get
 
   private def updatePool(pool: Pool): Event =
-    Try {
-      Updated( store.updatePool(pool) )
-    }.recover { case NonFatal(error) => Fault("Update pool failed:", error) }
-     .get
+    Try:
+      Updated(
+        supervised:
+          retry( RetryConfig.delay(1, 100.millis) )( store.updatePool(pool) )
+      )
+    .recover:
+      case NonFatal(error) => Fault("Update pool failed:", error)
+    .get
 
   private def listCleanings(poolId: Long): Event =
     Try {
