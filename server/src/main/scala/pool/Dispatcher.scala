@@ -63,7 +63,8 @@ final class Dispatcher(store: Store, emailer: Emailer):
     Try:
       supervised:
         val license = UUID.randomUUID().toString()
-        val account = Account(license = license, emailAddress = emailAddress)
+        val pin = Pin.newInstance
+        val account = Account(license = license, emailAddress = emailAddress, pin = pin)
         val message = s"Your new pin is: ${account.pin}\n\nWelcome aboard!"
         retry( RetryConfig.delay(1, 600.millis) )( sendEmail(account.emailAddress, message) )
         Registered( store.register(account) )
