@@ -171,11 +171,15 @@ final class Dispatcher(store: Store, emailer: Emailer):
       case NonFatal(error) => Fault("List measurements failed:", error)
     .get
 
-  private def addMeasurement(measurement: Measurement): Event =
-    Try {
-      MeasurementAdded( measurement.copy(id = store.addMeasurement(measurement)) )
-    }.recover { case NonFatal(error) => Fault("Add measurement failed:", error) }
-     .get
+  private def addMeasurement(measurement: Measurement)(using IO): Event =
+    Try:
+      MeasurementAdded(
+        supervised:
+          retry( RetryConfig.delay(1, 100.millis) )( measurement.copy(id = store.addMeasurement(measurement)) )
+      )
+    .recover:
+      case NonFatal(error) => Fault("Add measurement failed:", error)
+    .get
 
   private def updateMeasurement(measurement: Measurement): Event =
     Try {
