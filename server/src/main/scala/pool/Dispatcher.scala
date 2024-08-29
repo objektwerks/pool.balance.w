@@ -92,8 +92,11 @@ final class Dispatcher(store: Store, emailer: Emailer):
         else Fault(s"Deactivate account failed for license: $license")
     )
 
-  private def reactivateAccount(license: String): Event =
-    Try { store.reactivateAccount(license) }.fold(
+  private def reactivateAccount(license: String)(using IO): Event =
+    Try:
+      supervised:
+        retry( RetryConfig.delay(1, 100.millis) )( store.reactivateAccount(license) )
+    .fold(
       error => Fault("Reactivate account failed:", error),
       optionalAccount =>
         if optionalAccount.isDefined then Reactivated(optionalAccount.get)
