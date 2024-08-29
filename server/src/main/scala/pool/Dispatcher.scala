@@ -164,8 +164,11 @@ final class Dispatcher(store: Store, emailer: Emailer):
     }.recover { case NonFatal(error) => Fault("Update chemical failed:", error) }
      .get
 
-  private def addFault(fault: Fault): Event =
-    Try {
-      store.addFault(fault)
-    }.recover { case NonFatal(error) => Fault("Add fault failed:", error) }
-     .get
+  private def addFault(fault: Fault)(using IO): Event =
+    Try:
+      supervised:
+        retry( RetryConfig.delay(1, 100.millis) )( store.addFault(fault) )
+        FaultAdded()
+    .recover:
+      case NonFatal(error) => Fault("Add fault failed:", error)
+    .get
