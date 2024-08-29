@@ -5,30 +5,28 @@ import com.typesafe.scalalogging.LazyLogging
 
 import jodd.mail.{Email, MailServer, SmtpServer}
 
-import scala.annotation.tailrec
 import scala.language.postfixOps
-import scala.util.{Failure, Success, Using, Try}
+import scala.util.Using
 
-final class Emailer(config: Config) extends LazyLogging:
-  private val host = config.getString("email.host")
-  private val sender = config.getString("email.sender")
-  private val password = config.getString("email.password")
-  private val subject = config.getString("email.subject")
+object Emailer:
+  def apply(config: Config): Emailer =
+    val host = config.getString("email.host")
+    val sender = config.getString("email.sender")
+    val password = config.getString("email.password")
+    val subject = config.getString("email.subject")
+    new Emailer(host, sender, password, subject)
 
+private final class Emailer(host: String,
+                            sender: String,
+                            password: String,
+                            subject: String) extends LazyLogging:
   private val smtpServer: SmtpServer = MailServer.create
     .host(host)
     .ssl(true)
     .auth(sender, password)
     .buildSmtpMailServer
 
-  @tailrec
-  private def retry[T](attempts: Int)(fn: => T): T =
-    Try( fn ) match
-      case Success(result) => result
-      case Failure(error)  => if attempts >= 1 then retry(attempts - 1)(fn) else throw error
-
-  private def sendEmail(recipients: List[String],
-                        message: String): Unit =
+  private def sendEmail(recipients: List[String], message: String): Unit =
     Using( smtpServer.createSession ) { session =>
       val email = Email.create
         .from(sender)
@@ -44,5 +42,4 @@ final class Emailer(config: Config) extends LazyLogging:
       throw error
     }
 
-  def send(recipients: List[String],
-           message: String): Unit = retry(1)(sendEmail(recipients, message))
+  def send(recipients: List[String], message: String): Unit = sendEmail(recipients, message)
