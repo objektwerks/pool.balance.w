@@ -208,7 +208,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
           retry( RetryConfig.delay(1, 100.millis) )( chemical.copy(id = store.addChemical(chemical)) )
       )
     .recover:
-      case NonFatal(error) => Fault("Add chemical failed:", error) }
+      case NonFatal(error) => Fault("Add chemical failed:", error)
     .get
 
   private def updateChemical(chemical: Chemical)(using IO): Event =
