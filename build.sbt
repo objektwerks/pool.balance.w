@@ -81,6 +81,7 @@ lazy val server = (project in file("server"))
       Seq(
         "io.helidon.webserver" % "helidon-webserver" % helidonVersion,
         "io.helidon.webserver" % "helidon-webserver-cors" % helidonVersion,
+        "com.softwaremill.ox" %% "core" % oxVersion,
         "org.scalikejdbc" %% "scalikejdbc" % "4.3.1",
         "com.zaxxer" % "HikariCP" % "5.1.0" exclude("org.slf4j", "slf4j-api"),
         "org.postgresql" % "postgresql" % "42.7.3",
