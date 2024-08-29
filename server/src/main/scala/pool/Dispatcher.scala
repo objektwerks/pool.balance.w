@@ -103,11 +103,15 @@ final class Dispatcher(store: Store, emailer: Emailer):
         else Fault(s"Reactivate account failed for license: $license")
     )
 
-  private def listPools(license: String): Event =
-    Try {
-      PoolsListed(store.listPools(license))
-    }.recover { case NonFatal(error) => Fault("List pools failed:", error) }
-     .get
+  private def listPools(license: String)(using IO): Event =
+    Try:
+      PoolsListed(
+        supervised:
+          retry( RetryConfig.delay(1, 100.millis) )( store.listPools(license) )
+      )
+    .recover:
+      case NonFatal(error) => Fault("List pools failed:", error)
+    .get
 
   private def addPool(pool: Pool): Event =
     Try {
