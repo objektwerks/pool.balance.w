@@ -211,11 +211,15 @@ final class Dispatcher(store: Store, emailer: Emailer):
       case NonFatal(error) => Fault("Add chemical failed:", error) }
     .get
 
-  private def updateChemical(chemical: Chemical): Event =
-    Try {
-      Updated( store.updateChemical(chemical) )
-    }.recover { case NonFatal(error) => Fault("Update chemical failed:", error) }
-     .get
+  private def updateChemical(chemical: Chemical)(using IO): Event =
+    Try:
+      Updated(
+        supervised:
+          retry( RetryConfig.delay(1, 100.millis) )( store.updateChemical(chemical) )
+      )
+    .recover:
+      case NonFatal(error) => Fault("Update chemical failed:", error)
+    .get
 
   private def addFault(fault: Fault)(using IO): Event =
     Try:
