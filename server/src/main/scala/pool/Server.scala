@@ -8,8 +8,10 @@ import io.helidon.webserver.WebServer
 import io.helidon.webserver.cors.CorsSupport
 import io.helidon.webserver.http.HttpRouting
 
-object Server extends LazyLogging:
-  @main def main(): Unit =
+import ox.{ExitCode, IO, Ox, OxApp}
+
+object Server extends OxApp with LazyLogging:
+  override def run(args: Vector[String])(using Ox, IO): ExitCode =
     val config = ConfigFactory.load("server.conf")
     val host = config.getString("server.host")
     val port = config.getInt("server.port")
@@ -18,9 +20,8 @@ object Server extends LazyLogging:
     val store = Store(config)
     val emailer = Emailer(config)
     val dispatcher = Dispatcher(store, emailer)
-
     val cors = CorsSupport
-      .builder()  
+      .builder()
       .addCrossOrigin(
         CrossOriginConfig
           .builder()
@@ -29,12 +30,10 @@ object Server extends LazyLogging:
           .allowMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
           .allowOrigins("http://localhost")
           .build()
-      ) 
+      )
       .addCrossOrigin(CrossOriginConfig.create())
       .build()
-
     val handler = Handler(dispatcher)
-
     val builder = HttpRouting
       .builder
       .get(endpoint, cors, handler)
@@ -50,3 +49,5 @@ object Server extends LazyLogging:
     logger.info(s"*** Pool Balance Http Server started at: $host:$port")
 
     Thread.currentThread().join()
+
+    ExitCode.Success
