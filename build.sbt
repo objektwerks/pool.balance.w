@@ -5,7 +5,7 @@ name := "pool.balance.w"
 val laminarVersion = "17.1.0"
 val waypointVersion = "8.0.1"
 val scalaJavaTimeVersion = "2.5.0"
-val jsoniterVersion = "2.30.8"
+val jsoniterVersion = "2.30.9"
 val scalaTestVersion = "3.2.19"
 val oxVersion = "0.3.3"
 
