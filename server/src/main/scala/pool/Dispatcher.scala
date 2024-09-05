@@ -44,15 +44,14 @@ final class Dispatcher(store: Store, emailer: Emailer):
   private def isAuthorized(command: Command)(using IO): Security =
     command match
       case license: License =>
-        Try:
+        try
           supervised:
             retry( RetryConfig.delay(1, 100.millis) )(
               if store.isAuthorized(license.license) then Authorized
               else Unauthorized(s"Unauthorized: $command")
             )
-        .recover:
+        catch
           case NonFatal(error) => Unauthorized(s"Unauthorized: $command, cause: $error")
-        .get
       case Register(_) | Login(_, _) => Authorized
 
   private def sendEmail(emailAddress: String, message: String): Unit =
