@@ -149,14 +149,13 @@ final class Dispatcher(store: Store, emailer: Emailer):
       case NonFatal(error) => Fault("Add Cleaning failed:", error)
 
   private def updateCleaning(cleaning: Cleaning)(using IO): Event =
-    Try:
+    try
       Updated(
         supervised:
           retry( RetryConfig.delay(1, 100.millis) )( store.updateCleaning(cleaning) )
       )
-    .recover:
+    catch
       case NonFatal(error) => Fault(s"Update cleaning failed:", error)
-    .get
 
   private def listMeasurements(poolId: Long)(using IO): Event =
     Try:
