@@ -176,14 +176,13 @@ final class Dispatcher(store: Store, emailer: Emailer):
       case NonFatal(error) => Fault("Add measurement failed:", error)
 
   private def updateMeasurement(measurement: Measurement)(using IO): Event =
-    Try:
+    try
       Updated(
         supervised:
           retry( RetryConfig.delay(1, 100.millis) )( store.updateMeasurement(measurement) )
       )
-    .recover:
+    catch
       case NonFatal(error) => Fault("Update measurement failed:", error)
-    .get
 
   private def listChemicals(poolId: Long)(using IO): Event =
     Try:
