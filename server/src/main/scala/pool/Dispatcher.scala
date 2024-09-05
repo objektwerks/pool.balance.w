@@ -140,14 +140,13 @@ final class Dispatcher(store: Store, emailer: Emailer):
       case NonFatal(error) => Fault("List cleanings failed:", error)
 
   private def addCleaning(cleaning: Cleaning)(using IO): Event =
-    Try:
+    try
       CleaningAdded(
         supervised:
           retry( RetryConfig.delay(1, 100.millis) )( cleaning.copy(id = store.addCleaning(cleaning)) )
       )
-    .recover:
+    catch
       case NonFatal(error) => Fault("Add Cleaning failed:", error)
-    .get
 
   private def updateCleaning(cleaning: Cleaning)(using IO): Event =
     Try:
