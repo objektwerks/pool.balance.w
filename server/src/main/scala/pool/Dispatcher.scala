@@ -194,14 +194,13 @@ final class Dispatcher(store: Store, emailer: Emailer):
       case NonFatal(error) => Fault("List chemicals failed:", error)
 
   private def addChemical(chemical: Chemical)(using IO): Event =
-    Try:
+    try
       ChemicalAdded(
         supervised:
           retry( RetryConfig.delay(1, 100.millis) )( chemical.copy(id = store.addChemical(chemical)) )
       )
-    .recover:
+    catch
       case NonFatal(error) => Fault("Add chemical failed:", error)
-    .get
 
   private def updateChemical(chemical: Chemical)(using IO): Event =
     Try:
