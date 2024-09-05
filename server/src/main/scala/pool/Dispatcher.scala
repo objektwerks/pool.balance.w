@@ -59,7 +59,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
     emailer.send(recipients, message)
 
   private def register(emailAddress: String)(using IO): Event =
-    Try:
+    try
       supervised:
         val license = UUID.randomUUID().toString()
         val pin = Pin.newInstance
@@ -67,9 +67,8 @@ final class Dispatcher(store: Store, emailer: Emailer):
         val message = s"Your new pin is: ${account.pin}\n\nWelcome aboard!"
         retry( RetryConfig.delay(1, 600.millis) )( sendEmail(account.emailAddress, message) )
         Registered( store.register(account) )
-    .recover:
+    catch
       case NonFatal(error) => Fault(s"Registration failed for: $emailAddress, because: ${error.getMessage}")
-    .get
 
   private def login(emailAddress: String, pin: String)(using IO): Event =
     Try:
