@@ -131,14 +131,13 @@ final class Dispatcher(store: Store, emailer: Emailer):
       case NonFatal(error) => Fault("Update pool failed:", error)
 
   private def listCleanings(poolId: Long)(using IO): Event =
-    Try:
+    try
       CleaningsListed(
         supervised:
           retry( RetryConfig.delay(1, 100.millis) )( store.listCleanings(poolId) )
       )
-    .recover:
+    catch
       case NonFatal(error) => Fault("List cleanings failed:", error)
-    .get
 
   private def addCleaning(cleaning: Cleaning)(using IO): Event =
     Try:
