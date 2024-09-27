@@ -2,7 +2,7 @@ package pool
 
 import java.util.UUID
 
-import ox.{IO, supervised}
+import ox.supervised
 import ox.resilience.{retry, RetryConfig}
 
 import scala.concurrent.duration.*
@@ -13,35 +13,34 @@ import Validator.*
 
 final class Dispatcher(store: Store, emailer: Emailer):
   def dispatch(command: Command): Event =
-    IO.unsafe:
-      command.isValid match
-        case false => addFault( Fault(s"Invalid command: $command") )
-        case true =>
-          isAuthorized(command) match
-            case Unauthorized(cause) => addFault( Fault(cause) )
-            case Authorized =>
-              val event = command match
-                case Register(emailAddress)            => register(emailAddress)
-                case Login(emailAddress, pin)          => login(emailAddress, pin)
-                case Deactivate(license)               => deactivateAccount(license)
-                case Reactivate(license)               => reactivateAccount(license)
-                case ListPools(license)                => listPools(license)
-                case AddPool(_, pool)                  => addPool(pool)
-                case UpdatePool(_, pool)               => updatePool(pool)
-                case ListCleanings(_, poolId)          => listCleanings(poolId)
-                case AddCleaning(_, cleaning)          => addCleaning(cleaning)
-                case UpdateCleaning(_, cleaning)       => updateCleaning(cleaning)
-                case ListMeasurements(_, poolId)       => listMeasurements(poolId)
-                case AddMeasurement(_, measurement)    => addMeasurement(measurement)
-                case UpdateMeasurement(_, measurement) => updateMeasurement(measurement)
-                case ListChemicals(_, poolId)          => listChemicals(poolId)
-                case AddChemical(_, chemical)          => addChemical(chemical)
-                case UpdateChemical(_, chemical)       => updateChemical(chemical)
-              event match
-                case fault: Fault => addFault(fault)
-                case _ => event
+    command.isValid match
+      case false => addFault( Fault(s"Invalid command: $command") )
+      case true =>
+        isAuthorized(command) match
+          case Unauthorized(cause) => addFault( Fault(cause) )
+          case Authorized =>
+            val event = command match
+              case Register(emailAddress)            => register(emailAddress)
+              case Login(emailAddress, pin)          => login(emailAddress, pin)
+              case Deactivate(license)               => deactivateAccount(license)
+              case Reactivate(license)               => reactivateAccount(license)
+              case ListPools(license)                => listPools(license)
+              case AddPool(_, pool)                  => addPool(pool)
+              case UpdatePool(_, pool)               => updatePool(pool)
+              case ListCleanings(_, poolId)          => listCleanings(poolId)
+              case AddCleaning(_, cleaning)          => addCleaning(cleaning)
+              case UpdateCleaning(_, cleaning)       => updateCleaning(cleaning)
+              case ListMeasurements(_, poolId)       => listMeasurements(poolId)
+              case AddMeasurement(_, measurement)    => addMeasurement(measurement)
+              case UpdateMeasurement(_, measurement) => updateMeasurement(measurement)
+              case ListChemicals(_, poolId)          => listChemicals(poolId)
+              case AddChemical(_, chemical)          => addChemical(chemical)
+              case UpdateChemical(_, chemical)       => updateChemical(chemical)
+            event match
+              case fault: Fault => addFault(fault)
+              case _ => event
 
-  private def isAuthorized(command: Command)(using IO): Security =
+  private def isAuthorized(command: Command): Security =
     command match
       case license: License =>
         try
@@ -58,7 +57,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
     val recipients = List(emailAddress)
     emailer.send(recipients, message)
 
-  private def register(emailAddress: String)(using IO): Event =
+  private def register(emailAddress: String): Event =
     try
       supervised:
         val license = UUID.randomUUID().toString()
@@ -70,7 +69,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
     catch
       case NonFatal(error) => Fault(s"Registration failed for: $emailAddress, because: ${error.getMessage}")
 
-  private def login(emailAddress: String, pin: String)(using IO): Event =
+  private def login(emailAddress: String, pin: String): Event =
     Try:
       supervised:
         retry( RetryConfig.delay(1, 100.millis) )( store.login(emailAddress, pin) )
@@ -81,7 +80,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
         else Fault(s"Login failed for email address: $emailAddress and pin: $pin")
     )
 
-  private def deactivateAccount(license: String)(using IO): Event =
+  private def deactivateAccount(license: String): Event =
     Try:
       supervised:
         retry( RetryConfig.delay(1, 100.millis) )( store.deactivateAccount(license) )
@@ -92,7 +91,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
         else Fault(s"Deactivate account failed for license: $license")
     )
 
-  private def reactivateAccount(license: String)(using IO): Event =
+  private def reactivateAccount(license: String): Event =
     Try:
       supervised:
         retry( RetryConfig.delay(1, 100.millis) )( store.reactivateAccount(license) )
@@ -103,7 +102,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
         else Fault(s"Reactivate account failed for license: $license")
     )
 
-  private def listPools(license: String)(using IO): Event =
+  private def listPools(license: String): Event =
     try
       PoolsListed(
         supervised:
@@ -112,7 +111,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
     catch
       case NonFatal(error) => Fault("List pools failed:", error)
 
-  private def addPool(pool: Pool)(using IO): Event =
+  private def addPool(pool: Pool): Event =
     try
       PoolAdded(
         supervised:
@@ -121,7 +120,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
     catch
       case NonFatal(error) => Fault("Add pool failed:", error)
 
-  private def updatePool(pool: Pool)(using IO): Event =
+  private def updatePool(pool: Pool): Event =
     try
       Updated(
         supervised:
@@ -130,7 +129,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
     catch
       case NonFatal(error) => Fault("Update pool failed:", error)
 
-  private def listCleanings(poolId: Long)(using IO): Event =
+  private def listCleanings(poolId: Long): Event =
     try
       CleaningsListed(
         supervised:
@@ -139,7 +138,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
     catch
       case NonFatal(error) => Fault("List cleanings failed:", error)
 
-  private def addCleaning(cleaning: Cleaning)(using IO): Event =
+  private def addCleaning(cleaning: Cleaning): Event =
     try
       CleaningAdded(
         supervised:
@@ -148,7 +147,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
     catch
       case NonFatal(error) => Fault("Add Cleaning failed:", error)
 
-  private def updateCleaning(cleaning: Cleaning)(using IO): Event =
+  private def updateCleaning(cleaning: Cleaning): Event =
     try
       Updated(
         supervised:
@@ -157,7 +156,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
     catch
       case NonFatal(error) => Fault(s"Update cleaning failed:", error)
 
-  private def listMeasurements(poolId: Long)(using IO): Event =
+  private def listMeasurements(poolId: Long): Event =
     try
       MeasurementsListed(
         supervised:
@@ -166,7 +165,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
     catch
       case NonFatal(error) => Fault("List measurements failed:", error)
 
-  private def addMeasurement(measurement: Measurement)(using IO): Event =
+  private def addMeasurement(measurement: Measurement): Event =
     try
       MeasurementAdded(
         supervised:
@@ -175,7 +174,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
     catch
       case NonFatal(error) => Fault("Add measurement failed:", error)
 
-  private def updateMeasurement(measurement: Measurement)(using IO): Event =
+  private def updateMeasurement(measurement: Measurement): Event =
     try
       Updated(
         supervised:
@@ -184,7 +183,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
     catch
       case NonFatal(error) => Fault("Update measurement failed:", error)
 
-  private def listChemicals(poolId: Long)(using IO): Event =
+  private def listChemicals(poolId: Long): Event =
     try
       ChemicalsListed(
         supervised:
@@ -193,7 +192,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
     catch
       case NonFatal(error) => Fault("List chemicals failed:", error)
 
-  private def addChemical(chemical: Chemical)(using IO): Event =
+  private def addChemical(chemical: Chemical): Event =
     try
       ChemicalAdded(
         supervised:
@@ -202,7 +201,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
     catch
       case NonFatal(error) => Fault("Add chemical failed:", error)
 
-  private def updateChemical(chemical: Chemical)(using IO): Event =
+  private def updateChemical(chemical: Chemical): Event =
     try
       Updated(
         supervised:
@@ -211,7 +210,7 @@ final class Dispatcher(store: Store, emailer: Emailer):
     catch
       case NonFatal(error) => Fault("Update chemical failed:", error)
 
-  private def addFault(fault: Fault)(using IO): Event =
+  private def addFault(fault: Fault): Event =
     try
       supervised:
         retry( RetryConfig.delay(1, 100.millis) )( store.addFault(fault) )
