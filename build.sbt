@@ -7,7 +7,7 @@ val waypointVersion = "8.0.1"
 val scalaJavaTimeVersion = "2.5.0"
 val jsoniterVersion = "2.30.15"
 val scalaTestVersion = "3.2.19"
-val oxVersion = "0.4.0"
+val oxVersion = "0.5.0"
 
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
