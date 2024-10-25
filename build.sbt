@@ -15,7 +15,7 @@ lazy val common = Defaults.coreDefaultSettings ++ Seq(
   scalaVersion := "3.6.1",
   parallelExecution := false,
   scalacOptions ++= Seq(
-    "-Wunused:all"
+    "-Wall"
   )
 )
 
