@@ -87,7 +87,7 @@ lazy val server = (project in file("server"))
         "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core" % jsoniterVersion,
         "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5",
         "com.typesafe" % "config" % "1.4.3",
-        "ch.qos.logback" % "logback-classic" % "1.5.15",
+        "ch.qos.logback" % "logback-classic" % "1.5.16",
         "org.scalatest" %% "scalatest" % scalaTestVersion % Test
       )
     }
