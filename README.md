@@ -1,7 +1,8 @@
 Pool Balance ( Web Edition )
 ----------------------------
 >Pool cleaning, measurement and chemical balancing distributed web app ScalaJs, Jsoniter, Scalikejdbc,
->Laminar, Waypoint, W3.CSS, Chart.js, Scaffeine, JoddMail, Postgresql, Helidon, Ox, Snowpack and Scala 3.
+>Laminar, Waypoint, W3.CSS, Chart.js, Scaffeine, JoddMail, Postgresql, HikariCP, Helidon, Ox, Snowpack
+>and Scala 3.
 
 Todo
 ----
