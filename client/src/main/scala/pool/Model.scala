@@ -118,7 +118,7 @@ final case class Model[E <: Entity](entitiesVar: Var[List[E]],
     selectedEntityVar.set( entitiesVar.now().find(_.id == id).getOrElse(emptyEntity) )
     this
 
-  def sort(): Unit = entitiesVar.update( entities => entities.sorted[E](ordering) )
+  def sort(): Unit = entitiesVar.update( entities => entities.sorted[E](using ordering) )
 
   def addEntity(entity: E): Unit = entitiesVar.update( entities => (entity +: entities) )
 

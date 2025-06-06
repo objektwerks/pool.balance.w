@@ -6,8 +6,8 @@ object Validator:
     def isPin: Boolean = value.length == 7
     def isEmailAddress: Boolean = value.length >= 3 && value.contains("@")
     def isName: Boolean = value.length >= 2
-    def isInt(text: String): Boolean = text.matches("\\d+")
-    def isDouble(text: String): Boolean = text.matches("\\d{0,7}([\\.]\\d{0,4})?")
+    def isInt: Boolean = value.matches("\\d+")
+    def isDouble: Boolean = value.matches("\\d{0,7}([\\.]\\d{0,4})?")
 
   extension (value: Int)
     def isGreaterThan1899 = value > 1899
