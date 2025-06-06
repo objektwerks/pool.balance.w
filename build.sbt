@@ -3,7 +3,7 @@ import org.scalajs.linker.interface.ModuleSplitStyle
 name := "pool.balance.w"
 
 val laminarVersion = "17.2.1"
-val waypointVersion = "9.0.0"
+val waypointVersion = "8.0.1" // Don't upgrade; breakers PagerRouter!
 val scalaJavaTimeVersion = "2.6.0"
 val jsoniterVersion = "2.36.2"
 val scalaTestVersion = "3.2.19"
