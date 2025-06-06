@@ -7,7 +7,7 @@ val waypointVersion = "8.0.1" // Don't upgrade; breakers PagerRouter!
 val scalaJavaTimeVersion = "2.6.0"
 val jsoniterVersion = "2.36.2"
 val scalaTestVersion = "3.2.19"
-val oxVersion = "0.5.15"
+val oxVersion = "0.6.0"
 
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
