@@ -75,7 +75,7 @@ object Component:
     entities.signal.split(_.id)( (id, _, entitySignal) =>
       item( entitySignal.map(_.display) ).amend {
         onClick --> { _ =>
-          entities.now().find(_.id == id).foreach { entity =>
+          entities.now().find(_.id == id).foreach { _ =>
             PageRouter.router.pushState(toEntityPage(id))
           }
         }
