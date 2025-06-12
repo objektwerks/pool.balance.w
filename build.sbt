@@ -5,7 +5,7 @@ name := "pool.balance.w"
 val laminarVersion = "17.2.1"
 val waypointVersion = "8.0.1" // Don't upgrade; breakers PagerRouter!
 val scalaJavaTimeVersion = "2.6.0"
-val jsoniterVersion = "2.36.3"
+val jsoniterVersion = "2.36.4"
 val scalaTestVersion = "3.2.19"
 val oxVersion = "0.6.0"
 
