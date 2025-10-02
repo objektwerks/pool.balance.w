@@ -74,7 +74,7 @@ lazy val server = (project in file("server"))
   .settings(
     reStart / mainClass := Some("pool.Server"),
     libraryDependencies ++= {
-      val helidonVersion = "4.3.0-M4"
+      val helidonVersion = "4.3.0"
       Seq(
         "io.helidon.webserver" % "helidon-webserver" % helidonVersion,
         "io.helidon.webserver" % "helidon-webserver-cors" % helidonVersion,
